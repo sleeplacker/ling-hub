@@ -1,0 +1,9 @@
+﻿/**
+ *
+ * ${project_name}/${package_name}.${file_name}
+ *
+ * author ${user}
+ *
+ * createTime ${currentDate:date('yyyy-MM-dd HH:mm:ss')} 
+ *
+ */
