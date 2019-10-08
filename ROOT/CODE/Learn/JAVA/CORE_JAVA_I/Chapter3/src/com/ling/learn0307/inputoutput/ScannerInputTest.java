@@ -25,8 +25,11 @@ public class ScannerInputTest {
 		System.out.println("年龄 ：" + age);
 
 		System.out.println("输入多个字符串参数，空格隔开，回车结束输入：");
-		while (true) {
-			System.out.println(in.next()); // 读取字符串，空格隔开，回车结束输入
+		String word = in.next();
+		while (!word.equals(".")) {
+			System.out.println(word); // 读取字符串，空格隔开，回车结束输入
+			word = in.next();
 		}
+		in.close();
 	}
 }
