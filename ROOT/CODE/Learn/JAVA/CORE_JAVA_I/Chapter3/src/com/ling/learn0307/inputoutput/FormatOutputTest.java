@@ -64,6 +64,11 @@ public class FormatOutputTest {
 		/* 4. 可以用n$多次格式化同一个参数，n从1开始，而不是0开始*/
 		System.out.printf("\n%1$s = %2$.2f or = %2$.3f", "1/3", 1.0/3);
 		
+		/* 5. String.format 方法可以将格式化后的字符串保存到String变量，而不必打印 */
+		String formatMsg = String.format("\n%1$s = %2$.2f or = %2$.3f", "1/3", 1.0/3);
+		System.out.println(formatMsg);
+		
+		
 	}
 
 }
