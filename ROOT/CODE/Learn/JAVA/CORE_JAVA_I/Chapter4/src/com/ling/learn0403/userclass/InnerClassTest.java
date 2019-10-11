@@ -1,4 +1,4 @@
-package com.ling.learn0402.userclass;
+package com.ling.learn0403.userclass;
 
 /**
  * 同一个java文件放了两个类
