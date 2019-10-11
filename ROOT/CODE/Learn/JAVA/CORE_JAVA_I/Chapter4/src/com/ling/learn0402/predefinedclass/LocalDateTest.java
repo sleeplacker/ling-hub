@@ -1,15 +1,15 @@
-package com.ling.learn0402.classandobject;
+package com.ling.learn0402.predefinedclass;
 
 import java.time.LocalDate;
 
 /**
  * LocalDate类的使用
  *
- * Chapter4/com.ling.learn0402.classandobject.LocalDateTest.java
+ * Chapter4/com.ling.learn0402.predefinedclass.LocalDateTest.java
  *
  * author lingang
  *
- * createTime 2019-10-10 23:30:02
+ * createTime 2019-10-11 23:24:21 
  *
  */
 public class LocalDateTest {
