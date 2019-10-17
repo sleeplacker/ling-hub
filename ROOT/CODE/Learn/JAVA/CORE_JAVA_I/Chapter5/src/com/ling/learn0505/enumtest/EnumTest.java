@@ -40,7 +40,7 @@ enum Size {
 	/**
 	 * @param fieldValue
 	 */
-	private Size(String fieldValue) {
+	private Size(String fieldValue) { // 枚举类型也可以定义构造器
 		this.fieldValue = fieldValue;
 	}
 
