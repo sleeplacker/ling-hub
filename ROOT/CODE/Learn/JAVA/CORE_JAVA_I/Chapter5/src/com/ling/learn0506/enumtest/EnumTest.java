@@ -1,4 +1,4 @@
-package com.ling.learn0505.enumtest;
+package com.ling.learn0506.enumtest;
 
 import java.util.Arrays;
 
