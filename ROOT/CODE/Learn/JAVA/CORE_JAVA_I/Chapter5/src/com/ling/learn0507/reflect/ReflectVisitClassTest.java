@@ -27,6 +27,7 @@ public class ReflectVisitClassTest {
 			System.out.println("Input Class Name(like java.util.Date) : ");
 			Scanner scan = new Scanner(System.in);
 			className = scan.nextLine();
+			scan.close();
 		}
 
 		Class cl = Class.forName(className);
@@ -56,11 +57,12 @@ public class ReflectVisitClassTest {
 		String name = cl.getSimpleName();// 构造器方法名称和类名一样
 		for (Constructor cst : constructors) {
 			String modifiers = Modifier.toString(cst.getModifiers());// 修饰符
+			modifiers = (modifiers != null && !"".equals(modifiers)) ? modifiers + " " : modifiers;
 			Class[] params = cst.getParameterTypes(); // 参数列表
 			String paramsStr = joinTypeName(params);
 			Class[] exceptions = cst.getExceptionTypes();// 抛出异常类型列表
 			String exceptionsStr = joinTypeName(exceptions);
-			System.out.println("\n\t" + modifiers + " " + name + "(" + (paramsStr == null ? "" : paramsStr) + ")"
+			System.out.println("\t" + modifiers + name + "(" + (paramsStr == null ? "" : paramsStr) + ")"
 					+ (exceptionsStr == null ? "" : " throws " + exceptionsStr) + ";");
 		}
 	}
@@ -71,14 +73,15 @@ public class ReflectVisitClassTest {
 			return;
 		for (Method method : methods) {
 			String modifiers = Modifier.toString(method.getModifiers());
+			modifiers = (modifiers != null && !"".equals(modifiers)) ? modifiers + " " : modifiers;
 			String returnType = method.getReturnType().getSimpleName();
 			Class[] params = method.getParameterTypes();
 			String paramsStr = joinTypeName(params);
 			Class[] exceptions = method.getExceptionTypes();
 			String exceptionsStr = joinTypeName(exceptions);
-			System.out.println("\n\t" + modifiers + " " + returnType + " " + method.getName() + "("
-					+ (paramsStr == null ? "" : paramsStr) + ")"
-					+ (exceptionsStr == null ? "" : " throws " + exceptionsStr) + ";");
+			System.out.println(
+					"\t" + modifiers + returnType + " " + method.getName() + "(" + (paramsStr == null ? "" : paramsStr)
+							+ ")" + (exceptionsStr == null ? "" : " throws " + exceptionsStr) + ";");
 		}
 		System.out.println("\r}");
 	}
@@ -89,8 +92,10 @@ public class ReflectVisitClassTest {
 			return;
 		for (Field field : fields) {
 			String modifiers = Modifier.toString(field.getModifiers());
+			modifiers = (modifiers != null && !"".equals(modifiers)) ? modifiers + " " : modifiers;
+			String typeName = field.getType().getSimpleName();
 			String name = field.getName();
-			System.out.println(modifiers + " " + name + ";");
+			System.out.println("\t" + modifiers + typeName + " " + name + ";");
 		}
 	}
 
