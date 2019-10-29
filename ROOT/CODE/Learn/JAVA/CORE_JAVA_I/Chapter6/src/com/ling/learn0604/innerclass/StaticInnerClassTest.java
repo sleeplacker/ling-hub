@@ -23,6 +23,7 @@ public class StaticInnerClassTest {
 }
 
 class OuterClass {
+	@SuppressWarnings("unused")
 	public static void fun() {
 		/* 静态方法中只能构造静态内部类对象 */
 		StaticInnerClass sic = new StaticInnerClass();
