@@ -17,6 +17,7 @@ import java.util.Date;
  *
  */
 public class DebuggingTips {
+	@SuppressWarnings("serial")
 	public static void main(String[] args) {
 		/* 日志代理-使用匿名内部类的方式扩展一个类，并重写方法，在方法前后加入日志记录信息 */
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd") {

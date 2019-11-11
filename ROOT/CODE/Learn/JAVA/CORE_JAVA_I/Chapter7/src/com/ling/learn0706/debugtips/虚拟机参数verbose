@@ -1,0 +1,2 @@
+在该工程目录的bin目录下执行：
+	java -verbose com.ling.learn0706.debugtips.VerboseTest 1> ./com/ling/learn0706/debugtips/loadClass.log 2>&1
