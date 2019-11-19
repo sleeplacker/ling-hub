@@ -1,9 +1,12 @@
 package com.ling.learn0806.constraintandlimit;
 
+import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.IntFunction;
 
 /**
  * 泛型使用的约束和局限性
@@ -67,7 +70,7 @@ public class ConstraintAndLimitForGeneric {
 		// Class cl = T.class;//编译错误
 	}
 
-	/*下面的方式才可以得到泛型类型变量的Class对象*/
+	/* 下面的方式才可以得到泛型类型变量的Class对象 */
 	@SuppressWarnings("serial")
 	public static <T> List<T> getCL(Class<T> ct) throws InstantiationException, IllegalAccessException {
 		return new ArrayList<T>() {
@@ -77,11 +80,32 @@ public class ConstraintAndLimitForGeneric {
 		};
 	}
 
+	/* 6. 不能构造泛型数组 */
+	// public static <T extends Comparable> T[] minmax(T[] ts, int length) {
+	// T[] ts = new T[length]; // 编译错误
+	// return mm;
+	// }
+	/* 可以使用下面的方式生成泛型数组 */
+	public static <T extends Comparable> T[] minmax(IntFunction<T[]> cons, int length) {
+		T[] ts = cons.apply(length);
+		return ts;
+	}
+
+	/* 老式方法是使用反射机制生成泛型数组 */
+	public static <T extends Comparable> T[] minmaxold(T... tt) {
+		T[] ts = (T[]) Array.newInstance(tt.getClass().getComponentType().getClass(), tt.length);
+		return ts;
+	}
+
 }
 
 class Pair<T> {
 	private T first;
 	private T second;
+
+	/* 7. 泛型类的静态域或静态方法中类型变量无需 */
+	// private static T t;// 编译错误
+	// public static void fun(T t) {}// 编译错误
 
 	/**
 	 * @param first
@@ -98,3 +122,66 @@ class Pair<T> {
 	}
 
 }
+
+/* 8. 不能抛出或捕获泛型类型的实例 */
+/* 泛型类不能扩展Throwable */
+// class problem<T> extends Exception{}//编译错误
+// class problem<T> extends Throwable{}//编译错误
+class Temp {
+	public static <T extends Throwable> void temp() throws T { // 可以在异常声明中使用类型变量
+		/* catch字句中不能使用类型变量 */
+		// try {
+		// } catch (T e) {// 编译错误
+		// }
+	}
+}
+
+/* 9. 消除对受查异常的检查 */
+class Temp1 {
+	/* 定义一个会抛出受查异常的方法 */
+	public static <T extends Exception> void throwRunEx(Throwable t) throws T {
+		throw (T) t;
+	}
+
+	public static void throwEx(Throwable t) throws Throwable {
+		throw t;
+	}
+
+	public static void call() {
+		Temp1.throwRunEx(new FileNotFoundException());// 没有提示要捕获异常
+		Temp1.<RuntimeException>throwRunEx(new FileNotFoundException());// 没有提示要捕获异常，RuntimeException类型参数骗了编译器异常类型为运行时异常
+		// Temp1.<FileNotFoundException>throwRunEx(new
+		// FileNotFoundException());//提示要捕获异常
+		// throwEx(new FileNotFoundException());// 提示要捕获异常
+	}
+}
+
+/* 10. 泛型擦除后的冲突 */
+class GenericConflictTest<T> {
+	/*
+	 * 下面的方法会有编译错误，因为equals(T)会被擦除为equals(Object)，然而该类已经从Object类中继承了该方法，所以方法名冲突，
+	 * 此时应该换个方法名
+	 */
+	// public boolean equals(T obj) {
+	// return false;
+	// }
+
+}
+
+class A implements Comparable<String> {
+
+	@Override
+	public int compareTo(String o) {
+		return 0;
+	}
+
+}
+
+/*
+ * 编译错误，因为Comparable接口被实现了两次，而且是使用不同的类型参数，那么由于擦除规则的存在，编译器会生成两个桥方法，一个是
+ * public int compareTo(Object o){return compareTo(String s);}，一个是
+ * public int compareTo(Object o){return compareTo(Date d);}，这就发生了冲突
+ */
+//class B extends A implements Comparable<Date> {
+//
+//}
