@@ -1,4 +1,4 @@
-package com.ling.learn0708.wildcardtypes;
+package com.ling.learn0808.wildcardtypes;
 
 /**
  * 泛型通配符类型
