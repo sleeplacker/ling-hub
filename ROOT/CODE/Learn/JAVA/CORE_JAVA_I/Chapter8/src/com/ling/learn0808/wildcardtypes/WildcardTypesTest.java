@@ -3,11 +3,11 @@ package com.ling.learn0808.wildcardtypes;
 /**
  * 泛型通配符类型
  *
- * Chapter7/com.ling.learn0708.wildcardtypes.WildcardTypesTest.java
+ * Chapter8/com.ling.learn0808.wildcardtypes.WildcardTypesTest.java
  *
  * author lingang
  *
- * createTime 2019-11-17 03:46:34
+ * createTime 2019-11-20 11:46:21 
  *
  */
 public class WildcardTypesTest {

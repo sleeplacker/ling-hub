@@ -5,11 +5,11 @@ import java.util.ArrayList;
 /**
  * 通配符捕获
  *
- * Chapter7/com.ling.learn0708.wildcardtypes.WildcardTypeCatch.java
+ * Chapter8/com.ling.learn0808.wildcardtypes.WildcardTypeCatch.java
  *
  * author lingang
  *
- * createTime 2019-11-20 10:22:57
+ * createTime 2019-11-20 11:46:13 
  *
  */
 public class WildcardTypeCatch {
