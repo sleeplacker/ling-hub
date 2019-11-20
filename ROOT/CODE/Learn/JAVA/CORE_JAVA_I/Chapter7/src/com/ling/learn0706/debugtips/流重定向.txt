@@ -1,6 +1,0 @@
-1. 输出流重定向到文件，在该工程目录的bin目录下执行：
-	java com.ling.learn0706.debugtips.StreamRedirectTest > ./com/ling/learn0706/debugtips/logFileOut.log
-2. 错误流重定向到文件，在该工程目录的bin目录下执行：
-	java com.ling.learn0706.debugtips.StreamRedirectTest 2> ./com/ling/learn0706/debugtips/logFileErr.log
-3. 输出流和错误流重定向到文件，在该工程目录的bin目录下执行：
-	java com.ling.learn0706.debugtips.StreamRedirectTest 1> ./com/ling/learn0706/debugtips/logFileAll.log 2>&1

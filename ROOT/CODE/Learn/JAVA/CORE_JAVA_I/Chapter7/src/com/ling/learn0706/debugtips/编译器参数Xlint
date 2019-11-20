@@ -1,2 +1,0 @@
-在该工程目录的src目录下执行：
-	javac -Xlint com/ling/learn0706/debugtips/XlintTest.java
