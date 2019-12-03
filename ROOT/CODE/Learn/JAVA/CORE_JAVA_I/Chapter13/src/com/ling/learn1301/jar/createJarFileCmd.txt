@@ -1,0 +1,5 @@
+创建jar文件的命令
+
+1.使用jar命令常用参数打包：
+	进入目录：D:\WORKSPACE\WORKSPACE_LEARN\Chapter13\bin
+	执行命令：jar cvf D:/abc.jar com
