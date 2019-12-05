@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+
 public class ResourceTest {
 	public static void main(String[] args) throws IOException {
 		/* 1. 读取二进制文件 */
@@ -26,12 +27,8 @@ public class ResourceTest {
 		}
 		in.close();
 
-		/* 2. 读取图片/音频 /视频文件 */
-		URL img1 = new ResourceTest().getClass().getResource("resource/msg/Msg_zh_CN.properties");//当前class文件目录下开始找，找不到该文件
-		URL img2 = new ResourceTest().getClass().getResource("/Chapter13/resource/msg/Msg_zh_CN.properties");
-		URL img3 = new ResourceTest().getClass().getResource("I:/MyGitLib/repository/ling-hub/ROOT/CODE/Learn/JAVA/CORE_JAVA_I/Chapter13/resourcemsg/img1.jpg");
-		System.out.println(img1);// 打印资源绝对路径，URL有效
-		System.out.println(img2);// 打印资源绝对路径，URL有效
-		System.out.println(img3);// 打印null，找不到资源文件
+		/* 2. 读取文件URL */
+		URL img1 = new ResourceTest().getClass().getResource("img1.jpg");
+		System.out.println(img1);
 	}
 }
