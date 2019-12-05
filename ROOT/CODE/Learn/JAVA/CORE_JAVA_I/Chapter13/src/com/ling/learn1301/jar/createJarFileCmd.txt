@@ -1,5 +1,16 @@
 创建jar文件的命令
 
 1.使用jar命令常用参数打包：
-	进入目录：D:\WORKSPACE\WORKSPACE_LEARN\Chapter13\bin
-	执行命令：jar cvf D:/abc.jar com
+	进入bin文件夹所在目录
+	执行命令：jar cvf normal.jar com
+	或者执行命令：jar cvf D:\normal.jar com(即将jar包打到绝对路径)
+	
+2.jar命令中指定程序入口
+	进入bin文件夹所在目录
+	执行命令：jar cvfe executable.jar com.ling.learn1301.jar.JarTest com(注：执行该命令会在jar包的META-INF/MANIFEST.MF中新增：Main-Class: com.ling.learn1301.jar.JarTest)
+	执行命令：java -jar .\executable.jar来运行该jar的主类的main方法
+	
+3.使用带资源的jar命令
+	进入bin文件夹所在目录
+	执行普通命令：jar cvf resourceTest.jar com
+	
