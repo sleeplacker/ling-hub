@@ -4,7 +4,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-
+/**
+ * 读取资源文件
+ *
+ * Chapter13/com.ling.learn1301.jar.ResourceTest.java
+ *
+ * author lingang
+ *
+ * createTime 2019-12-05 23:02:28 
+ *
+ */
 public class ResourceTest {
 	public static void main(String[] args) throws IOException {
 		/* 1. 读取二进制文件 */
