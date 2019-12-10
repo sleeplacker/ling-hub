@@ -16,7 +16,6 @@ public class CompetitionTest {
 	private static int count = 0;
 	private static boolean[] completeResult = new boolean[50];
 	private static boolean[] done = new boolean[50];
-	// private static Object lock = new Object();
 
 	public static void main(String[] args) {
 		for (int i = 0; i < 50; ++i) { // 让50条线程同时启动
