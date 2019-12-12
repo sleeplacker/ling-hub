@@ -21,7 +21,7 @@ public class ClientLockingTest {
 	public static void main(String[] args) {
 		vs.add(0);
 		final ClientLockingTest obj = new ClientLockingTest();
-		for (int i = 0; i < 49; ++i) { // 让50条线程同时启动
+		for (int i = 0; i < 25; ++i) {
 			final int index = i;
 			new Thread(new Runnable() {
 
@@ -33,21 +33,23 @@ public class ClientLockingTest {
 				}
 			}).start();
 		}
+		for (int i = 0; i < 25; ++i) {
+			final int index = i;
+			new Thread(new Runnable() {
 
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				synchronized (vs) {
-					for (int i = 0; i < 1000; ++i) {
-						Integer temp = vs.get(0);
-						++temp;
-						vs.set(0, temp);
+				@Override
+				public void run() {
+					synchronized (vs) {// 必须使用synchronized(vs)
+						for (int i = 0; i < 1000; ++i) {
+							Integer temp = vs.get(0);
+							++temp;
+							vs.set(0, temp);
+						}
 					}
+					completeResult[25 + index] = true;
 				}
-				completeResult[49] = true;
-			}
-		}).start();
+			}).start();
+		}
 
 		Arrays.fill(done, true);
 		while (!Arrays.equals(completeResult, done)) {
