@@ -1,6 +1,6 @@
 package com.ling.learn1405.synchronize;
 public class TestWithoutVolatile {  
-    private static  boolean bChanged;  
+    private static volatile boolean bChanged;  
   
     public static void main(String[] args) throws InterruptedException {  
         new Thread() {  

@@ -22,28 +22,29 @@ package com.ling.learn1405.synchronize;
  *
  */
 public class VolatileTest {
-	public static void main(String[] args) {
-		// Computer bean = new Computer();
-		// new Thread(new Runnable() {
-		// @Override
-		// public void run() {
-		// try {
-		// bean.working();
-		// } catch (InterruptedException e) {
-		// e.printStackTrace();
-		// }
-		// }
-		// }).start();
-		// new Thread(new Runnable() {
-		// @Override
-		// public void run() {
-		// bean.shutdown();
-		// System.out.println("shutdown time: " + System.currentTimeMillis());
-		// }
-		// }).start();
+	public static void main(String[] args) { 
+		/*volatile关键字保证内存可见性：遗憾：测试不出不用volatile有什么问题*/
+		Computer bean = new Computer();
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					bean.working();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}).start();
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				bean.shutdown();
+				System.out.println("shutdown time: " + System.currentTimeMillis());
+			}
+		}).start();
 
-		/* volatile关键字禁止指令重排序 */
-		for (int i = 0; i < 1000; ++i) {
+		/* volatile关键字禁止指令重排序-遗憾：测试不出不用volatile有什么问题 */
+		for (int i = 0; i < 100; ++i) {
 			new Thread(new Runnable() {
 
 				@Override
@@ -52,7 +53,7 @@ public class VolatileTest {
 				}
 			}).start();
 		}
-		for (int i = 0; i < 1000; ++i) {
+		for (int i = 0; i < 100; ++i) {
 			new Thread(new Runnable() {
 
 				@Override
