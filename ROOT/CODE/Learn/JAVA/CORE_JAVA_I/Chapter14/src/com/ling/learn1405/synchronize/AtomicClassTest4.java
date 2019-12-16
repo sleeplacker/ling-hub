@@ -4,21 +4,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.LongAccumulator;
 
 /**
- * 原子类测试3-原子类测试2的解决方案
+ * 原子类测试4-当有很多线程同时更新原子类的值时，使用LongAccumulator会有更好的性能
+ * 
+ * LongAccumulator类中有多个变量用来存值，要想获取最终值，要计算所有变量执行一个二元操作得到结果，这个二元操作是在LongAccumulator的构造器中指定的，这里是Math的max方法
  *
- * Chapter14/com.ling.learn1405.synchronize.AtomicClassTest3.java
+ * Chapter14/com.ling.learn1405.synchronize.AtomicClassTest4.java
  *
  * author lingang
  *
- * createTime 2019-12-16 11:51:04
+ * createTime 2019-12-16 13:03:43
  *
  */
-public class AtomicClassTest3 {
+public class AtomicClassTest4 {
 	private static List<Integer> data = new ArrayList<Integer>(500000);
-	private static AtomicInteger largest = new AtomicInteger(0);
+	private static LongAccumulator largest = new LongAccumulator(Math::max, 0);
 	private static boolean[] completeResult = new boolean[50];
 	private static boolean[] done = new boolean[50];
 
@@ -35,13 +37,9 @@ public class AtomicClassTest3 {
 				@Override
 				public void run() {
 					for (int i = 0; i < 10000; ++i) {// 每条线程查10000个数
-						/* 下面的查找不是原子的，因为在Math.max方法执行过程中，largest的值可能已经被其他线程改变 */
-						// int temp = Math.max(data.get(index * 1000 + i),
-						// largest.intValue());
-						// largest.set(temp);
 
 						// 改为使用原子方法accumulateAndGet
-						largest.accumulateAndGet(data.get(index * 10000 + i), Math::max);
+						largest.accumulate(data.get(index * 10000 + i));
 					}
 					completeResult[index] = true;// 每条线程执行完成后记录完成标志
 				}

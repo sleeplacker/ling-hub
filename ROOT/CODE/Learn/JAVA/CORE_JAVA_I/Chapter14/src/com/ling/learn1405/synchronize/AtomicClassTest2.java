@@ -41,13 +41,18 @@ public class AtomicClassTest2 {
 						int temp = Math.max(data.get(index * 10000 + i), largest.intValue());
 						largest.set(temp);
 					}
-					completeResult[index] = true;// 每条线程累加完1000次后记录完成标志
+					completeResult[index] = true;// 每条线程执行完成后记录完成标志
 				}
 			}).start();
 		}
 		Arrays.fill(done, true);
 		while (!Arrays.equals(completeResult, done)) {
-			// 如果50条线程的累加任务没执行完，则程序空转
+			// 这里如果使用程序空转会出现卡死，所以使用睡1秒的方法
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		System.out.println(largest);// 499997，不是500000(如果是500000，多运行几次也会得到不是500000的数，如果还是500000，则要加大数字再试)，说明对最大值largest的更新不是原子操作
 	}
