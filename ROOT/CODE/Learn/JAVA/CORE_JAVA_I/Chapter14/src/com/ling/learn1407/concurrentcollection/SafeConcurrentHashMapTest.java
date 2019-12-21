@@ -8,14 +8,14 @@ import java.util.concurrent.ConcurrentHashMap;
  * 
  * 运行多少次都不会出现java.util.ConcurrentModificationException，因为ConcurrentHashMap是线程安全的容器
  *
- * Chapter14/com.ling.learn1407.concurrentcollection.SafeCollectionTest.java
+ * Chapter14/com.ling.learn1407.concurrentcollection.SafeConcurrentHashMapTest.java
  *
  * author lingang
  *
  * createTime 2019-12-18 00:56:45
  *
  */
-public class SafeCollectionTest {
+public class SafeConcurrentHashMapTest {
 	private static Map<Integer, Integer> map = new ConcurrentHashMap<>(5);
 
 	public static void main(String[] args) {

@@ -10,14 +10,14 @@ import java.util.Map;
  * 
  * 原因是：HashMap中的桶里面是链表结构，所以遍历桶中链表的时候会使用到迭代器，前面已经知道，如果迭代器创建之后，链表的结构又被修改了，迭代器就会失效，再使用原来的迭代器就会抛出java.util.ConcurrentModificationException
  *
- * Chapter14/com.ling.learn1407.concurrentcollection.UnSafeCollectionTest.java
+ * Chapter14/com.ling.learn1407.concurrentcollection.UnSafeHahMap.java
  *
  * author lingang
  *
  * createTime 2019-12-18 00:03:06
  *
  */
-public class UnSafeCollectionTest {
+public class UnSafeHahMap {
 	private static Map<Integer, Integer> map = new HashMap<>(5);
 
 	public static void main(String[] args) {
