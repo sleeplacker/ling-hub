@@ -4,6 +4,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+/**
+ * 初识流
+ *
+ * ChapterII01/com.ling.learn0101.hellostream.StreamTest.java
+ *
+ * author lingang
+ *
+ * createTime 2020-01-08 22:33:38 
+ *
+ */
 public class StreamTest {
 	public static void main(String[] args) {
 		List<String> list = Arrays.asList("row the boat down the stream".split(" "));
