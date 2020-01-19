@@ -20,7 +20,6 @@ public class ParallelStreamTest {
 	private static long count = 0;
 
 	public static void main(String[] args) {
-		Random rand = new Random();
 		Stream<Integer> si = Stream.iterate(1, a -> a + 1);// 1,2,3,......
 		si.limit(10000).forEach(i -> {
 			if (i % 2 == 0)
