@@ -34,7 +34,7 @@ public class TextOutputTest {
 		System.out.println(System.getProperty("line.separator") + "|");// System.getProperty("line.separator")方法可以获得当前系统的行结束符
 
 		// 写法三，直接指定文件路径并写入，这个构造器不能设置自动冲刷参数，必须调用flush方法
-		PrintWriter out3 = new PrintWriter("D:/abc.txt");
+		PrintWriter out3 = new PrintWriter("D:/filetest/abc.txt");
 		out3.print("AAA\n");
 		out3.println("BBB CCC");
 		out3.flush();

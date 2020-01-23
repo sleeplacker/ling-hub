@@ -26,18 +26,18 @@ public class CharsetTest {
 		 * 1. 编码：字符 -> 字节序列
 		 */
 		String str = "冠状";
-		PrintWriter print1 = new PrintWriter("D:/text_uft8.txt", "UTF-8");
+		PrintWriter print1 = new PrintWriter("D:/filetest/text_uft8.txt", "UTF-8");
 		print1.print("消灭" + str);
 		print1.flush();
-		PrintWriter print2 = new PrintWriter("D:/text_uft16.txt", "UTF-16");
+		PrintWriter print2 = new PrintWriter("D:/filetest/text_uft16.txt", "UTF-16");
 		print2.print("消灭" + str);
 		print2.flush();
-		PrintWriter print3 = new PrintWriter("D:/text_gbk.txt", "GBK");
+		PrintWriter print3 = new PrintWriter("D:/filetest/text_gbk.txt", "GBK");
 		print3.print("消灭" + str);
 		print3.flush();
 
 		System.out.print("UTF-8编码结果：");
-		InputStream read1 = new FileInputStream("D:/text_uft8.txt");
+		InputStream read1 = new FileInputStream("D:/filetest/text_uft8.txt");
 		int temp;
 		while ((temp = read1.read()) != -1) {
 			System.out.print(Integer.toHexString(temp) + " ");
@@ -47,7 +47,7 @@ public class CharsetTest {
 		}
 
 		System.out.print("\nUTF-16编码结果：");
-		InputStream read2 = new FileInputStream("D:/text_uft16.txt");
+		InputStream read2 = new FileInputStream("D:/filetest/text_uft16.txt");
 		while ((temp = read2.read()) != -1) {
 			System.out.print(Integer.toHexString(temp) + " ");
 			/**
@@ -57,7 +57,7 @@ public class CharsetTest {
 		}
 
 		System.out.print("\nGBK编码结果：");
-		InputStream read3 = new FileInputStream("D:/text_gbk.txt");
+		InputStream read3 = new FileInputStream("D:/filetest/text_gbk.txt");
 		while ((temp = read3.read()) != -1) {
 			System.out.print(Integer.toHexString(temp) + " ");
 			/**
@@ -109,16 +109,16 @@ public class CharsetTest {
 		 * 3. 转换文件编码格式：需要先将文件读入 -> 转换为字符串货字符变量 -> 用上面的方法指定转换编码来转换为不同的字节流并写入文件
 		 */
 		// 1) 将GBK格式文本文件读入字符串变量
-		String content = new String(Files.readAllBytes(Paths.get(URI.create("file:/D:/text_gbk.txt"))), "GBK");
+		String content = new String(Files.readAllBytes(Paths.get(URI.create("file:/D:/filetest/text_gbk.txt"))), "GBK");
 		System.out.println("打印读入的字串变量：" + content);
 		// 2) 将字符串变量按照UTF-8编码方式转换为字节流
 		byte[] bytes_utf8 = content.getBytes("UTF-8");
 		// 3) 将UTF-8字节流写入新文件
-		FileOutputStream fos = new FileOutputStream("D:/text_gbk_to_utf8.txt");
+		FileOutputStream fos = new FileOutputStream("D:/filetest/text_gbk_to_utf8.txt");
 		fos.write(bytes_utf8);
 		fos.flush();
 		fos.close();
-		// 现在查看D:/text_gbk_to_utf8.txt文件的编码就变为UTF-8了
+		// 现在查看D:/filetest/text_gbk_to_utf8.txt文件的编码就变为UTF-8了
 
 	}
 }
