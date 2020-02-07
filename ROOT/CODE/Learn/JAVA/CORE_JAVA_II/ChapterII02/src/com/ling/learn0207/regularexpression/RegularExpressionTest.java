@@ -1,6 +1,7 @@
 package com.ling.learn0207.regularexpression;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -99,5 +100,18 @@ public class RegularExpressionTest {
 			System.out.println("该匹配串结束位置：" + matcher.end());
 		}
 
+		/* 10. 正则替换 */
+		pattern = Pattern.compile("([0-9]+)");
+		matcher = pattern.matcher("you own me 12,345,678.00 yuan.");
+		String result = matcher.replaceAll("#");// 替换所有匹配项
+		System.out.println(result);
+
+		System.out.println(matcher.replaceFirst("#"));// 只替换一个匹配
+		System.out.println(matcher.replaceAll(Matcher.quoteReplacement("#")));
+
+		/* 11. 正则分割 */
+		pattern = Pattern.compile("\\s*\\p{Punct}\\s*");// 被空白字符包围的标点符号
+		String[] strs = pattern.split("aa , bb . cc - dd < ee + gg");// 不同的标点符号都能作为分隔符，且分割结果会去掉空格字符
+		System.out.println(Arrays.toString(strs));
 	}
 }
