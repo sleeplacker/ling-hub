@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 将文档类型定义写在xml中 -->
 <!DOCTYPE root[
 <!ELEMENT root (font)>
 <!ELEMENT font (name,size)>

@@ -17,6 +17,8 @@ import org.xml.sax.SAXException;
 
 /**
  * DOM解析：DOM解析会将XML文档解析成树结构，所以对大文件的解析比较浪费内存，而SAX解析没这个问题，但是得不到文档整体结构
+ * 
+ * ** 关于xml中的字符引用、实体引用、CDATA和处理指令等参考121页
  *
  * ChapterII03/com.ling.learn0302.domparse.DomParseTest.java
  *

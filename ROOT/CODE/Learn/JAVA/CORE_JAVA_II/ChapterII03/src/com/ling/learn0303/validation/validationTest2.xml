@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE root SYSTEM "config.dtd">
+<!-- 引用dtd文件 -->
+<root>
+	<font>
+		<style length="short"></style>
+		<size unit="px">36</size>
+	</font>
+	<name>
+		ling
+	</name>
+	<color>
+		<blue></blue>
+	</color>
+	<number>
+		<int>11</int>
+		3.1415926
+		<bigdecimal>123456789.123456</bigdecimal>
+		<double>12.88</double>
+	</number>
+	<couples>
+		<husband desc="tall and handsome">ling</husband>
+		<wife>txq</wife>
+		<husband>lsc</husband>
+		<wife desc="good mother">pmz</wife>
+	</couples>
+	<lover>
+		<!-- <boy>zhang</boy> <girl>tang</girl> -->
+	</lover>
+	<!-- <etoken token="!!"/> --><!-- !!不属于NMTOKEN -->
+	<etoken token="AA" />
+	<etokens tokens="AA BB cc" />
+
+	<eid id="A0001" />
+	<!-- <eid id="A0001"/> --><!-- id不唯一时会报错 -->
+	<eid id="A0002" />
+	<eid id="A0003" />
+
+	<eidref idref="A0001" />
+	<!-- <eidref idref="A0000" /> --><!-- 如果属性中的ID在文件中没出现过会报错 -->
+	<eidrefs idrefs="A0001 A0002 A0003" />
+
+	<entityref attr="&back.label;" /><!-- 自定义实体引用 -->
+	<entityref attr="&quot;" /><!-- 预定义实体引用，这里是单引号 -->
+</root>
+
+<!-- xml 要求只有一个根元素，如果出现两个跟元素，会出现下面的错误 The markup in the document following 
+	the root element must be well-formed. -->
+<!-- <other> </other> -->
