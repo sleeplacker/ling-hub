@@ -1,0 +1,61 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<!-- 自定义简单类型 -->
+	<xsd:simpleType name="StyleType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PLAIN" />
+			<xsd:enumeration value="BOLD" />
+			<xsd:enumeration value="ITALIC" />
+			<xsd:enumeration value="BOLD_ITALIC" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- 定义元素，需要制定类型 -->
+	<xsd:element name="font" type="FontType" />
+	<xsd:element name="name" type="xsd:string" />
+	<xsd:element name="size" type="xsd:int" />
+
+	<!-- 引用自定义类型 -->
+	<xsd:element name="style" type="StyleType" />
+
+	<!-- 定义复杂类型-引用已定义元素 -->
+	<xsd:complexType name="FontType">
+		<xsd:sequence><!-- sequence相当于DTD中的E1,E2,E3... -->
+			<xsd:element ref="name" />
+			<xsd:element ref="size" />
+			<xsd:element ref="style" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- 定义复杂类型-嵌套定义 -->
+	<xsd:complexType name="FontType1">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string" />
+			<xsd:element name="size" type="xsd:int" />
+			<xsd:element name="style">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="PLAIN" />
+						<xsd:enumeration value="BOLD" />
+						<xsd:enumeration value="ITALIC" />
+						<xsd:enumeration value="BOLD_ITALIC" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="contactinfo">
+		<xsd:choice><!-- choice相当于DTD中的E1|E2|E3 -->
+			<xsd:element name="email" type="xsd:string" />
+			<xsd:element name="phone" type="xsd:string" />
+		</xsd:choice>
+	</xsd:complexType>
+
+	<!-- 定义属性 -->
+	<xsd:element name="length">
+		<xsd:complexType>
+			<xsd:attribute name="unit" type="xsd:string" use="optional"
+				default="cm" /><!-- 相当于DTD中的：<!ATTLIST length unit CDATA #IMPLIED "cm"> -->
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

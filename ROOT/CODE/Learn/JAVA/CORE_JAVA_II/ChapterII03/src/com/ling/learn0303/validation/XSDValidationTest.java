@@ -17,25 +17,31 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 /**
- * DTD验证
+ * 使用XML Schema验证
  * 
- * 1. xml在eclipse中验证成功，可能在dtd验证中失败，因为dtd要求xml中对应的每个标签都对应一个dtd的systemId
- * 
- * 2.
- * DTD验证中，setIgnoringElementContentWhitespace方法无效，结果中还是包含了标签间的空白字符，好像schema验证才支持该方法
+ * 确实使用schema验证方式，setIgnoringElementContentWhitespace参数设置起作用了
  *
- * ChapterII03/com.ling.learn0303.validation.DTDValidationTest.java
+ * ChapterII03/com.ling.learn0303.validation.XSDValidationTest.java
  *
  * author lingang
  *
- * createTime 2020-02-11 02:53:47
+ * createTime 2020-02-12 01:12:04
  *
  */
-public class DTDValidationTest {
+public class XSDValidationTest {
+	public static final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
+	public static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
+
 	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
+
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setValidating(true);// 开启验证特性
 		factory.setIgnoringElementContentWhitespace(true);// 忽略标签间的空白字符
+
+		// 下面两行是xml schema验证要多加的
+		factory.setNamespaceAware(true);// 打开命名空间的支持
+		factory.setAttribute(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);// 设置固定参数
+
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		/*
 		 * 如果使用的是DOM解析器，并且想要支持PUBLIC标识符，
@@ -72,7 +78,7 @@ public class DTDValidationTest {
 				throw exception;// 验证失败时抛错
 			}
 		});
-		File file = new File("src/com/ling/learn0303/validation/validationTest02.xml");
+		File file = new File("src/com/ling/learn0303/validation/validationTest03.xml");
 		Document doc = builder.parse(file);// 创建DOM树
 		Element root = doc.getDocumentElement();// 获取根节点
 		NodeList child = root.getChildNodes();
