@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<font xmlns:xxx="http://www.w3.org/2001/XMLSchema-instance"
+	xxx:noNamespaceSchemaLocation="config.xsd">
+	<name>ling</name>
+	<size>1</size>
+	<style>PLAIN</style>
+</font>

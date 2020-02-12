@@ -1,0 +1,65 @@
+<xxx:schema xmlns:xxx="http://www.w3.org/2001/XMLSchema">
+	<!-- 自定义简单类型 -->
+	<xxx:simpleType name="StyleType">
+		<xxx:restriction base="xxx:string">
+			<xxx:enumeration value="PLAIN" />
+			<xxx:enumeration value="BOLD" />
+			<xxx:enumeration value="ITALIC" />
+			<xxx:enumeration value="BOLD_ITALIC" />
+		</xxx:restriction>
+	</xxx:simpleType>
+
+
+	<!-- 定义元素，需要制定类型 -->
+	<xxx:element name="font" type="FontType" />
+	<xxx:element name="name" type="xxx:string">
+	</xxx:element>
+	<xxx:element name="size" type="xxx:int" />
+
+	<!-- 引用自定义类型 -->
+	<xxx:element name="style" type="StyleType">
+
+	</xxx:element>
+
+	<!-- 定义复杂类型-引用已定义元素 -->
+	<xxx:complexType name="FontType">
+		<xxx:sequence><!-- sequence相当于DTD中的E1,E2,E3... -->
+			<xxx:element ref="name" />
+			<xxx:element ref="size" />
+			<xxx:element ref="style" />
+		</xxx:sequence>
+	</xxx:complexType>
+
+	<!-- 定义复杂类型-嵌套定义 -->
+	<xxx:complexType name="FontType1">
+		<xxx:sequence>
+			<xxx:element name="name" type="xxx:string" />
+			<xxx:element name="size" type="xxx:int" />
+			<xxx:element name="style">
+				<xxx:simpleType>
+					<xxx:restriction base="xxx:string">
+						<xxx:enumeration value="PLAIN" />
+						<xxx:enumeration value="BOLD" />
+						<xxx:enumeration value="ITALIC" />
+						<xxx:enumeration value="BOLD_ITALIC" />
+					</xxx:restriction>
+				</xxx:simpleType>
+			</xxx:element>
+		</xxx:sequence>
+	</xxx:complexType>
+
+	<xxx:complexType name="contactinfo">
+		<xxx:choice><!-- choice相当于DTD中的E1|E2|E3 -->
+			<xxx:element name="email" type="xxx:string" />
+			<xxx:element name="phone" type="xxx:string" />
+		</xxx:choice>
+	</xxx:complexType>
+
+	<!-- 定义属性 -->
+	<xxx:element name="length">
+		<xxx:complexType>
+			<xxx:attribute name="unit" type="xxx:string" use="optional"
+				default="cm" /><!-- 相当于DTD中的：<!ATTLIST length unit CDATA #IMPLIED "cm"> -->
+		</xxx:complexType>
+	</xxx:element>
+</xxx:schema>
