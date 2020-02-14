@@ -66,7 +66,7 @@ public class NamespaceAttributeTest {
 					Node color = root.getChildNodes().item(i);
 					NamedNodeMap attrs = color.getAttributes();
 					for (int k = 0; k < attrs.getLength(); ++k) {
-						System.out.println("\n********/root/font/size/@" + attrs.item(k).getNodeName() + "********");
+						System.out.println("\n********/root/color/@" + attrs.item(k).getNodeName() + "********");
 						System.out.println("带前缀属性名：" + attrs.item(k).getNodeName());
 						System.out.println("命名空间：" + attrs.item(k).getNamespaceURI());
 						System.out.println("不带前缀属性名：" + attrs.item(k).getLocalName());
