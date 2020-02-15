@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE root PUBLIC "pubid" "sysid">
+<root xmlns="http://www.lg.com/ns1">
+  <sub:font xmlns:sub="http://www.lg.com/ns2">
+    <name>Helvetica</name>
+    <sub:size sub:unit="px">33</sub:size>
+  </sub:font>
+  <color>Yellow</color>
+</root>
