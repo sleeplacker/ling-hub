@@ -22,8 +22,8 @@ import java.util.stream.Stream;
 public class MoviesMakeup {
 	public static Pattern PATTERN = Pattern
 			.compile(".*?([A-Z]{3,4}|[0-9]{6})[-]?([S]?[0-9]{3}).*(\\.AVI|\\.MP4|\\.MKV|\\.WMV|\\.RMVB|\\.RM)(.*)");
-	public static String SRC_DIR = "K:\\电影";// 原文件夹
-	public static String DEST_DIR = "K:\\SSSSSSSSSSSSSOO";// 目的文件夹
+	public static String SRC_DIR = "K:\\src_dir";// TODO 源文件夹
+	public static String DEST_DIR = "K:\\dest_dir";// TODO 目标文件夹
 	public static int NEET_SIZE = 200 * 1024 * 1024;// 200M
 
 	public static void main(String[] args) throws IOException {
