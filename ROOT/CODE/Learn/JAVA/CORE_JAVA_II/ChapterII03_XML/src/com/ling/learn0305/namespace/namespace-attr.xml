@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 属性不继承命名空间 -->
+<root xmlns="http://www.xxx.com/namespace1"><!--外层命名空间，默认空间 -->
+	<sub:font xmlns:sub="http://www.xxx.com/namespace2"><!--内层命名空间，带前缀空间 -->
+		<sub:style>PLAIN</sub:style> <!-- 带sub前缀，属于http://www.xxx.com/namespace2 -->
+
+		<!-- 
+			元素size不带sub前缀，属于http://www.xxx.com/namespace1 
+			属性sub:size属于http://www.xxx.com/namespace2 
+			属性value不带前缀，不属于任何命名空间 
+		-->
+		<size value="36" sub:unit="px" />
+	</sub:font>
+	<color type="str">BLUE</color>
+</root>

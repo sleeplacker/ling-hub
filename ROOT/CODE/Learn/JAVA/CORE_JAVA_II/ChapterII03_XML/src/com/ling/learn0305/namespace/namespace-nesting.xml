@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 嵌套的命名空间 -->
+<root xmlns="http://www.xxx.com/namespace1"><!--外层命名空间 -->
+	<font xmlns="http://www.xxx.com/namespace2"><!--内层命名空间 -->
+		<style>BLOB</style>
+		<size>36</size>
+	</font>
+	<color>BLUE</color>
+</root>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 带前缀的命名空间 -->
+<root xmlns="http://www.xxx.com/namespace1"><!--外层命名空间，默认空间 -->
+	<sub:font xmlns:sub="http://www.xxx.com/namespace2"><!--内层命名空间，带前缀空间 -->
+		<sub:style>PLAIN</sub:style> <!-- 带sub前缀，属于http://www.xxx.com/namespace2 -->
+		<size>36</size> <!-- 不带sub前缀，属于http://www.xxx.com/namespace1 -->
+	</sub:font>
+	<color>BLUE</color>
+</root>

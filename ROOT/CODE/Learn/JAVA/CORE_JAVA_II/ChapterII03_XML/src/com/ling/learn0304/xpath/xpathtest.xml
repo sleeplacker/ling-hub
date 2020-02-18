@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<row name="ling">
+		<column type="age">15</column>
+		<column type="sex">M</column>
+	</row>
+	<row name="lzy">
+		<column type="age">2</column>
+		<column type="sex">M</column>
+	</row>
+	<row name="tan">
+		<column type="age">12</column>
+		<column type="sex">F</column>
+	</row>
+</root>

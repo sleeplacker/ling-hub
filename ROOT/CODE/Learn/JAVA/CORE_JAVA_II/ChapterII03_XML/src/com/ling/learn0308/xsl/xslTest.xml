@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<staff>
+	<employee>
+		<name>Carl</name>
+		<salary>75000</salary>
+		<hiredate year="1987" month="12" day="15" />
+	</employee>
+	<employee>
+		<name>Harry Hacker</name>
+		<salary>50000</salary>
+		<hiredate year="1989" month="10" day="1" />
+	</employee>
+	<employee>
+		<name>Tony Tester</name>
+		<salary>40000</salary>
+		<hiredate year="1990" month="3" day="5" />
+	</employee>
+</staff>
