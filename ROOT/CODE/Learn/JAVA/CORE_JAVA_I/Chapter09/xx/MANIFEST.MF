@@ -1,8 +1,0 @@
-Manifest-Version: 1.0
-Created-By: 1.8.0_40 (Oracle Corporation)
-
-Name: com/ling/learn0901/collectionpreview/
-Sealed: true
-
-Name: com/ling/learn0902/collectionimpl/
-Sealed: false

@@ -1,0 +1,29 @@
+创建jar文件的命令
+
+1.使用jar命令常用参数打包：
+	进入bin文件夹所在目录
+	执行命令：jar cvf normal.jar com
+	或者执行命令：jar cvf D:\normal.jar com(即将jar包打到绝对路径)
+	
+2.jar命令中指定程序入口
+	进入bin文件夹所在目录
+	执行命令：jar cvfe executable.jar com.ling.learn1301.jar.JarTest com(注：执行该命令会在jar包的META-INF/MANIFEST.MF中新增：Main-Class: com.ling.learn1301.jar.JarTest)
+	执行命令：java -jar .\executable.jar来运行该jar的主类的main方法
+	
+3.使用jar命令打class文件和资源文件
+	进入工程所在目录
+	执行命令：jar cvf resourceTest.jar -C bin com resource(-C bin表示暂时进入bin目录，后面的com表示要打包这个文件夹； 到resource是已经退出了bin目录)
+	
+4.使用jar命令密封一个包
+	进入Chapter09工程所在目录
+	在该目录创建一个MANIFEST.MF，内容为：
+	Name: com/ling/learn0902/collectionimpl/
+	Sealed: false
+	
+	Name: com/ling/learn0901/collectionpreview/
+	Sealed: true
+	执行命令：jar cvfm archiveTest.jar MANIFEST.MF -C bin com
+	将jar包导入当前工程并引用，然后建立相同包名为com.ling.learn0901.collectionpreview和包名为com.ling.learn0902.collectionimpl的包
+	然后分别在两个包中新建类，并尝试在类中使用jar包中相同包名中的类，会发现com.ling.learn0901.collectionpreview中的类不能访问，
+	而com.ling.learn0902.collectionimpl中的类可以访问
+	
