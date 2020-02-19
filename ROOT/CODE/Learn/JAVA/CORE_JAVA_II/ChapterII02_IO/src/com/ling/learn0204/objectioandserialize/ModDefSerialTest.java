@@ -49,7 +49,7 @@ public class ModDefSerialTest {
 		/* birthday域被transient关键字修饰，所以对象流读写时不会包含这个字段，所以读出来的值为空 */
 		System.out.println(stu1);// Student [name=Ling, birthday=null]
 		System.out.println(stu2);// 使用二进制读取方式读入了额外的信息
-
+		oi.close();
 		/*
 		 * 2. Date类的对象读写：这里记录Date类对象读写的原因是，Date类定义了字节readObject和writeObject方法，
 		 * 这两个方法是private的，但是序列化机制可以调用这两个方法*
@@ -65,7 +65,7 @@ public class ModDefSerialTest {
 		ObjectInput oi2 = new ObjectInputStream(new FileInputStream("D:/filetest/object_content3.txt"));
 		Date date1 = (Date) oi2.readObject();
 		System.out.println(date1);
-
+		oi2.close();
 		/*
 		 * 3.
 		 * 自定义对象序列化机制：注意，自定义序列化机制的类必须实现Externalizable接口，并由无参构造器，因为对象输入流会调用无参构造器，
@@ -82,6 +82,7 @@ public class ModDefSerialTest {
 		ObjectInput oi3 = new ObjectInputStream(new FileInputStream("D:/filetest/object_content4.txt"));
 		Student2 stu3 = (Student2) oi3.readObject();
 		System.out.println(stu3);
+		oi3.close();
 	}
 }
 

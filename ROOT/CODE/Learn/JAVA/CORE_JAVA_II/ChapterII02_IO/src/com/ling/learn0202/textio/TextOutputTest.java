@@ -38,5 +38,6 @@ public class TextOutputTest {
 		out3.print("AAA\n");
 		out3.println("BBB CCC");
 		out3.flush();
+		out3.close();
 	}
 }

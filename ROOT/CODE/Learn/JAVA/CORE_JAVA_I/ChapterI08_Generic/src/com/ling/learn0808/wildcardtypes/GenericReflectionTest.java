@@ -31,6 +31,7 @@ public class GenericReflectionTest {
 		} else {
 			Scanner input = new Scanner(System.in);
 			name = input.next();
+			input.close();
 		}
 
 		Class cl = Class.forName(name);

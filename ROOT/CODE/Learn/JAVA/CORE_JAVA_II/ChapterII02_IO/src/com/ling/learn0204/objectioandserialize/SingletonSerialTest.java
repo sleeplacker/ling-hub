@@ -46,7 +46,7 @@ public class SingletonSerialTest {
 		System.out.println(nationalDayMod);
 		System.out.println(nationalDayMod_save);
 		System.out.println(nationalDayMod == nationalDayMod_save);// true
-
+		oi.close();
 	}
 }
 

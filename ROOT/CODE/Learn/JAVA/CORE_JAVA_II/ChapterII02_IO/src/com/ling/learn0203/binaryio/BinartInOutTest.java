@@ -1,8 +1,6 @@
 package com.ling.learn0203.binaryio;
 
-import java.io.DataInput;
 import java.io.DataInputStream;
-import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,24 +26,27 @@ public class BinartInOutTest {
 		double score = 99.9;
 
 		// 二进制方式写入
-		DataOutput dout = new DataOutputStream(new FileOutputStream("D:/filetest/binarydata.txt"));
+		DataOutputStream dout = new DataOutputStream(new FileOutputStream("D:/filetest/binarydata.txt"));
 		dout.writeChars(name);
 		dout.writeInt(age);
 		dout.writeDouble(score);
+		dout.close();
 		// 文本方式写入
 		PrintWriter tout = new PrintWriter("D:/filetest/textdata.txt");
 		tout.print(name);
 		tout.print(age);
 		tout.print(score);
 		tout.flush();
+		tout.close();
 
 		/* 2. 二进制读入 */
-		DataInput din = new DataInputStream(new FileInputStream("D:/filetest/binarydata.txt"));
+		DataInputStream din = new DataInputStream(new FileInputStream("D:/filetest/binarydata.txt"));
 		// 读入时必输按照写入顺序对应的类型来读取，否则会读到没有意义的信息
 		System.out.println(din.readChar());
 		System.out.println(din.readChar());
 		System.out.println(din.readChar());
 		System.out.println(din.readInt());
 		System.out.println(din.readDouble());
+		din.close();
 	}
 }

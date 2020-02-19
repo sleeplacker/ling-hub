@@ -50,14 +50,16 @@ public class TextInputTest {
 		System.out.println(content);
 
 		// Files.readAllLines方法读取文本文件的所有行
-		List<String> lines = Files.readAllLines(Paths.get(URI.create("file:/D:/filetest/abc.txt")), Charset.defaultCharset());
+		List<String> lines = Files.readAllLines(Paths.get(URI.create("file:/D:/filetest/abc.txt")),
+				Charset.defaultCharset());
 		System.out.println("**读取文本文件的所有行：");
 		System.out.println(lines);
 
 		// 对于大文本文件，把所有行放到List会占用很多内存，Files.lines方法读取文本文件的所有行到stream，这样可以惰性处理
-		Stream<String> lineStream = Files.lines(Paths.get(URI.create("file:/D:/filetest/abc.txt")));
-		System.out.println("**读取文本文件的所有行到流中：");
-		System.out.println(Arrays.toString(lineStream.toArray()));
+		try (Stream<String> lineStream = Files.lines(Paths.get(URI.create("file:/D:/filetest/abc.txt")))) {
+			System.out.println("**读取文本文件的所有行到流中：");
+			System.out.println(Arrays.toString(lineStream.toArray()));
+		}
 
 		/**
 		 * 3. java早期版本处理文本输入的唯一方式是使用BufferedReader类
@@ -73,7 +75,9 @@ public class TextInputTest {
 		// jdk1.8新增在BufferedReader类新增了lines方法来将文本读到流对象，方便惰性处理大文件
 		br = new BufferedReader(new InputStreamReader(new FileInputStream("D:/filetest/abc.txt")));
 		System.out.println("**BufferedReader类新增了lines方法来将文本读到流对象：");
-		lineStream = br.lines();
-		System.out.println(Arrays.toString(lineStream.toArray()));
+		try (Stream<String> lineStream = br.lines()) {
+			System.out.println(Arrays.toString(lineStream.toArray()));
+		}
+		scanner.close();
 	}
 }

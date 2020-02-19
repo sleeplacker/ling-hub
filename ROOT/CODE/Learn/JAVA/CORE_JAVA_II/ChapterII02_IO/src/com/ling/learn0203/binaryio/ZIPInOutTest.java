@@ -44,6 +44,7 @@ public class ZIPInOutTest {
 			System.out.println("*" + ze + "|");
 			zis.closeEntry();
 		}
+		zis.close();
 
 		// 使用ZipFile类解压
 		System.out.println("使用ZipFile类解压：");
@@ -51,5 +52,6 @@ public class ZIPInOutTest {
 		zf.stream().forEach(zipEntry -> {
 			System.out.println(zipEntry);
 		});
+		zf.close();
 	}
 }

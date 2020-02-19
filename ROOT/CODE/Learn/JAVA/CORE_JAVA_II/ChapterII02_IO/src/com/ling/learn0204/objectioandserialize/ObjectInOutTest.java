@@ -43,6 +43,7 @@ public class ObjectInOutTest {
 		System.out.println(e1);
 		System.out.println(m1);
 		System.out.println(m2);
+		oi.close();
 
 	}
 }

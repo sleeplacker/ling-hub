@@ -118,6 +118,12 @@ public class CharsetTest {
 		fos.write(bytes_utf8);
 		fos.flush();
 		fos.close();
+		print1.close();
+		print2.close();
+		print3.close();
+		read1.close();
+		read2.close();
+		read3.close();
 		// 现在查看D:/filetest/text_gbk_to_utf8.txt文件的编码就变为UTF-8了
 
 	}

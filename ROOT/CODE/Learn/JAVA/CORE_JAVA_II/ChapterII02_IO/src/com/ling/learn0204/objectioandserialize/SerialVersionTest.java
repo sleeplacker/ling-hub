@@ -53,6 +53,7 @@ public class SerialVersionTest {
 		System.out.println(oc2);// 读取正常，OldClass2 [name=Linzy,
 								// birthday=20180903,
 								// age=0]，age取默认值0，如果去掉birthday字段，那读取对象会少birthday字段
+		oi2.close();
 	}
 }
 
