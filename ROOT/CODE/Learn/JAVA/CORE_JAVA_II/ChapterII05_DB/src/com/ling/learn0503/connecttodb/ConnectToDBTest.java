@@ -24,13 +24,13 @@ public class ConnectToDBTest {
 	private static String JDBC_PASSWORD = "corejava";
 
 	public static void main(String[] args) throws SQLException {
-		System.setProperty("jdbc.drivers", JDBC_DRIVERS);// 设置驱动类
+
 		try (
 				// 创建连接
-				Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+				Connection conn = createConnection();
 				// 创建语句
 				Statement stat = conn.createStatement()) {
-			stat.execute("DROP TABLE CJ_USER");//建表前先删表
+			// stat.execute("DROP TABLE CJ_USER");//建表前先删表
 			stat.execute("CREATE TABLE CJ_USER (USER_NAME VARCHAR(20))");// 建表
 			stat.execute("INSERT INTO CJ_USER VALUES('linzeyi')");// 插入记录
 			try (ResultSet result = stat.executeQuery("SELECT * FROM CJ_USER")) {// 查询
@@ -38,7 +38,12 @@ public class ConnectToDBTest {
 					System.out.println(result.getString(1));
 				}
 			}
-			stat.execute("DROP TABLE CJ_USER");//删表
+			stat.execute("DROP TABLE CJ_USER");// 删表
 		}
+	}
+
+	public static Connection createConnection() throws SQLException {
+		System.setProperty("jdbc.drivers", JDBC_DRIVERS);// 设置驱动类
+		return DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
 	}
 }
