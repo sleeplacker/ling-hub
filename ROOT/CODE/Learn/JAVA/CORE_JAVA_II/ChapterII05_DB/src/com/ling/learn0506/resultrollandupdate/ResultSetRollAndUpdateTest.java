@@ -58,26 +58,40 @@ public class ResultSetRollAndUpdateTest {
 				System.out.println(rs.isAfterLast());
 			}
 
-			/* 2. 更新结果集：不是所有数据库都支持结果集更新，貌似DB2就不支持 */
+			/*
+			 * 2. 更新结果集：不是所有数据库都支持结果集更新，DB2是支持的，但是前提条件是结果集滚动属性不能选择ResultSet.
+			 * TYPE_SCROLL_INSENSITIVE
+			 */
 			System.out.println("\n更新结果集：");
-			Statement stat2 = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);// 可滚动，也不可更新(可滚动不是可更新的必要条件)
+			Statement stat2 = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);// 可滚动，也不可更新(可滚动不是可更新的必要条件)
 			ResultSet rs2 = stat2.executeQuery("SELECT * FROM CJ_USER");
 
 			// 首先遍历所有记录，看看数据
-			// while (rs2.next()) {
-			// System.out.println(rs2.getInt(1) + ", " + rs2.getString(2));
-			// }
-			// if (ResultSet.CONCUR_UPDATABLE == rs2.getConcurrency()) {//
-			// 首先检查结果集是否支持更新
-			// rs2.previous();// 因为遍历过，游标在最后一个位置后面，所以先往前移
-			rs2.next();
-			System.out.println(rs2.getInt(1) + ", " + rs2.getString(2));// 查看原数据
-			 rs2.updateString("UNAME", "linzeyi");// 开始更新结果集
-			 rs2.updateRow();
-			 System.out.println(rs2.getInt(1) + ", " + rs2.getString(2));//
-			// 查看更新后的数据
-			// }
+			System.out.println("更新前所有记录");
+			while (rs2.next()) {
+				System.out.println(rs2.getInt(1) + ", " + rs2.getString(2));
+			}
+			if (ResultSet.CONCUR_UPDATABLE == rs2.getConcurrency()) {//
+				// 首先检查结果集是否支持更新
+				rs2.absolute(1);// 因为遍历过，游标在最后一个位置后面，所以先移动到第1行
+				System.out.println("更新前数据：" + rs2.getInt(1) + ", " + rs2.getString(2));// 查看原数据
+				rs2.updateString("UNAME", "nnnn");// 开始更新结果集
+				rs2.updateRow();
+				System.out.println("更新前数据：" + rs2.getInt(1) + ", " + rs2.getString(2));// 查看更新后数据
 
+				// 通过结果集插入记录，同理还有删除操作，这里不测试了
+				rs2.moveToInsertRow();
+				rs2.updateInt(1, 888);
+				rs2.updateString(2, "XXX");
+				rs2.insertRow();
+				System.out.println(rs2.getRow());
+				rs2.moveToCurrentRow();// 移动到插入操作前的行
+				System.out.println(rs2.getRow());
+			}
+			System.out.println("更新后所有记录");
+			while (rs2.next()) {
+				System.out.println(rs2.getInt(1) + ", " + rs2.getString(2));
+			}
 		}
 	}
 }
