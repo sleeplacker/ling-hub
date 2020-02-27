@@ -99,7 +99,7 @@ public class SortWithLocaleTest {
 		String strB = "A\u030abc";
 		System.out.println(strA.length());
 		System.out.println(strB.length());
-		coll.setDecomposition(Collator.CANONICAL_DECOMPOSITION);
+		coll.setDecomposition(Collator.NO_DECOMPOSITION);
 		CollationKey aKey = coll.getCollationKey(strA);// 将分解结果进行保存，避免每次比较都新建分解结果，造成开销过大
 		if (aKey.compareTo(coll.getCollationKey(strB)) == 0) {
 			System.out.println(true);
