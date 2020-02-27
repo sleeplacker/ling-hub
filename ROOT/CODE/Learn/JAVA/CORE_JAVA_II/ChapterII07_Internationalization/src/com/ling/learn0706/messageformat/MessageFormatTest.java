@@ -38,5 +38,25 @@ public class MessageFormatTest {
 		// 注意下面format中的参数必须是一个Object[]，如果用了多个参数，可能会用到format的其他重载方法版本
 		formatedMsg = mf.format(new Object[] { "飓风", 99, new GregorianCalendar(1999, 0, 1).getTime(), 10.0e8 });
 		System.out.println(formatedMsg);
+
+		// 关于choice类型，灵活处理特殊情况：比如当数量是1时，house不带s，且1改成one
+		// 不使用choice的情况
+		msg = "On {2,date,long}, a {0} destroyed {1} houses and caused {3,number,currency} of damage";
+		mf = new MessageFormat(msg, Locale.US);
+		formatedMsg = mf.format(new Object[] { "hurricane", 99, new GregorianCalendar(1999, 0, 1).getTime(), 10.0e8 });
+		System.out.println(formatedMsg);
+
+		formatedMsg = mf.format(new Object[] { "hurricane", 1, new GregorianCalendar(1999, 0, 1).getTime(), 10.0e8 });
+		System.out.println(formatedMsg);// 1 houses不符合语法，最好是用：one houses
+
+		// 使用choice的情况，使用choice类型时，后面的模式格式为：|分隔的序列对，序列对是#分隔的，#左边是下限，右边是格式字符串
+		// {1,choice,0#no houses|1#one house|2#{1}
+		// houses}表示：对于第二个参数，如果值≤0，那么格式化结果为no houses，如果0<值≤1，格式化结果为one
+		// house，如果1<值≤2，格式化结果为：值 house
+		msg = "On {2,date,long}, a {0} destroyed {1,choice,0#no houses|1#one house|2#{1} houses} and caused {3,number,currency} of damage";
+		mf = new MessageFormat(msg, Locale.US);
+		formatedMsg = mf.format(new Object[] { "hurricane", 1, new GregorianCalendar(1999, 0, 1).getTime(), 10.0e8 });
+		System.out.println(formatedMsg);
+
 	}
 }
