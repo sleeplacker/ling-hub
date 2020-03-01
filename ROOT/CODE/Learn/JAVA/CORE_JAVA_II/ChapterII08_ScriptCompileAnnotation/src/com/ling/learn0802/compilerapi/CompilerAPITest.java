@@ -9,7 +9,7 @@ import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 
 /**
- * 编译器API
+ * 编译器API-简单便捷版
  *
  * ChapterII08_ScriptCompileAnnotation/com.ling.learn0802.compilerapi.CompilerAPITest.java
  *
