@@ -35,4 +35,7 @@ public class AnnotationUseGrammar {
 		this.name = name;
 	}
 
+	/* 注解类型用法，可以出现在哪些地方参考第383页 */
+
+	/* 注解this，参考第384页 */
 }
