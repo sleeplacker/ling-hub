@@ -38,8 +38,10 @@ public class ToStringAnnotationProcessor extends AbstractProcessor {
 				out.println("package com.ling.learn0806.processor;");
 				out.println("public class ToStrings {");
 
-				for (Element e : currentRound.getElementsAnnotatedWith(ToString.class)) {
-					if (e instanceof TypeElement) {
+				for (Element e : currentRound.getElementsAnnotatedWith(ToString.class)) {//遍历使用了ToString注解的所有地方
+					System.out.println("find "+ e.getSimpleName().toString());
+					if (e instanceof TypeElement) {//TypeElement表示被注解的是类或接口等，其他地方的注解就不会处理了
+						System.out.println("\thandle "+ e.getSimpleName().toString());
 						TypeElement te = (TypeElement) e;
 						writeToStringMethod(out, te);
 					}
@@ -58,22 +60,22 @@ public class ToStringAnnotationProcessor extends AbstractProcessor {
 	private void writeToStringMethod(PrintWriter out, TypeElement te) {
 		String className = te.getQualifiedName().toString();
 		out.println("    public static String toString(" + className + " obj) {");
-		ToString ann = te.getAnnotation(ToString.class);
+		ToString ann = te.getAnnotation(ToString.class);//获取注解属性
 		out.println("        StringBuilder result = new StringBuilder();");
 		if (ann.includeName())
 			out.println("        result.append(\"" + className + "\");");
 		out.println("        result.append(\"[\");");
 		boolean first = true;
-		for (Element c : te.getEnclosedElements()) {
+		for (Element c : te.getEnclosedElements()) {//获取被注解的类的所有域和方法构成的列表
 			String methodName = c.getSimpleName().toString();
-			ann = c.getAnnotation(ToString.class);
-			if (ann != null) {
+			ann = c.getAnnotation(ToString.class);//获取每个域或者方法的ToString注解
+			if (ann != null) {//如果有ToString注解的项才进行处理
 				if (first)
 					first = false;
 				else
 					out.println("        result.append(\",\");");
-				if (ann.includeName()) {
-					String fieldName = Introspector.decapitalize(methodName.replaceAll("^(get|is)", ""));
+				if (ann.includeName()) {//同样检查注解属性
+					String fieldName = Introspector.decapitalize(methodName.replaceAll("^(get|is)", ""));//根据方法名称推算出字段名
 					// Turn getWidth into width, isDone into done, getURL into
 					// URL
 					out.println("        result.append(\"" + fieldName + "=" + "\");");
