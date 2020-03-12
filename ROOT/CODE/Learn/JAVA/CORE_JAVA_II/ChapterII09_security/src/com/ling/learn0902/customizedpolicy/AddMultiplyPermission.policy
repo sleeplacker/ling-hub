@@ -1,0 +1,4 @@
+grant {
+	permission com.ling.learn0902.customizedpolicy.AddMultiplyPermission "50", "add";
+	permission com.ling.learn0902.customizedpolicy.AddMultiplyPermission "10", "add,mul";
+};
