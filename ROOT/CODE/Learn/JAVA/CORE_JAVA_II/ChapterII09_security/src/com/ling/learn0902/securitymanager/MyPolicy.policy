@@ -1,0 +1,3 @@
+grant codeBase "file:///D:/MyGitHubLib/ling-hub/ROOT/CODE/Learn/JAVA/CORE_JAVA_II/ChapterII09_security/bin" {
+	permission java.io.FilePermission "src/com/ling/learn0902/securitymanager/*", "read,write";
+};

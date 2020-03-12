@@ -37,6 +37,9 @@ public class URLClassLoaderTest {
 		// 加载成功，因为指定了classloader为可加载磁盘上class的URLClassLoader
 		Class<?> destClass = (Class<?>) loadTool.invoke(null, urlLoader);
 		destClass.getDeclaredMethod("call").invoke(null);
+		System.out.println("当前线程类加载器：" + Thread.currentThread().getContextClassLoader());
+		// 已经被其他类加载器加载的类，再用系统类加载器来加载也是加载不到的
+		Thread.currentThread().getContextClassLoader().loadClass("com.ling.learn0901.outer.ToBeCall");// java.lang.ClassNotFoundException
 		urlLoader.close();
 	}
 }
