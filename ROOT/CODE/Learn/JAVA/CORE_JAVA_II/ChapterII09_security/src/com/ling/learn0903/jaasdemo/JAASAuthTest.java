@@ -15,6 +15,8 @@ import javax.security.auth.login.LoginContext;
  *
  * 测试时如果将JAASAuthTest.policy中的用户名改为和当前登录用户名不一致，则会出现：java.security.AccessControlException: access denied ("java.util.PropertyPermission" "user.home" "read")
  *
+ * 作者有个JAAS例子在第437-443页
+ *
  * ChapterII09_security/com.ling.learn0903.jaasdemo.JAASAuthTest.java
  *
  * author lingang
