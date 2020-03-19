@@ -1,0 +1,30 @@
+创建秘钥库
+keytool -genkeypair -keystore ling.certs -alias liner 
+keytool -genkeypair -keystore tan.certs -alias qiong
+keytool -genkeypair -keystore lzy.certs -alias yiyi
+
+从秘钥库导出证书
+keytool -exportcert -keystore ling.certs -alias liner -file gangge.cer
+
+打印证书内容
+keytool -printcert -file gangge.cer
+
+打印秘钥库内容(先进入D:\Java\jdk1.8.0_40\jre\lib\security目录，秘钥库密码是changeit)
+keytool -list -v -keystore cacerts
+
+将信任的证书导入秘钥库
+keytool -importcert -keystore tan.certs -alias liner -file gangge.cer
+
+使用jarsigner命令对jar文件进行签名和验签
+首先将要签名内容打包到jar文件：
+jar cvf doc.jar document.txt
+对jar包进行签名，被签名后的jar包中的META-INF目录下会多出两个文件LINER.DSA和LINER.SF
+LINER就是签名使用的秘钥库的别名；并且MANIFEST.MF中也会新增几行内容
+jarsigner -keystore ling.certs doc.jar liner
+另一个人对jar包进行验证，因为tan.certs中含有ling的证书并且信任了该证书，所以验证成功
+如果篡改一下jar包中的document.txt文件的内容再进行验证就会抛出异常：java.lang.SecurityException: SHA-256 digest error for document.txt
+jarsigner -verify -keystore tan.certs doc.jar
+如果使用没有证书的秘钥库来验证该jar包，会出现警告：
+	此 jar 包含证书链未验证的条目。
+	此 jar 包含未由此密钥库中的别名签名的已签名条目。
+jarsigner -verify -keystore lzy.certs doc.jar
