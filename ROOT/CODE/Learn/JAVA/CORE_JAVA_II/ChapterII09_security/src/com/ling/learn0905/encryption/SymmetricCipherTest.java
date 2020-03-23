@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
+import javax.crypto.spec.SecretKeySpec;
 
 /**
  * 对称密码的加密和解密
@@ -26,8 +27,10 @@ public class SymmetricCipherTest {
 		byte[] plainBytes = plain.getBytes();
 
 		// 产生秘钥
-		Key key = createKey();
-		System.out.println("秘钥信息：" + key.getAlgorithm() + "/" + key.getFormat());
+		Key key = createKey();// 实际返回为SecretKey
+		System.out.println("秘钥信息：" + key.getAlgorithm() + "/" + key.getFormat() + "/" + key.getEncoded().length);
+		key = new SecretKeySpec("0123456789abcdef".getBytes(), "AES");// 也可以使用秘钥描述规格说明类来创建秘钥
+		System.out.println("秘钥信息：" + key.getAlgorithm() + "/" + key.getFormat() + "/" + key.getEncoded().length);
 
 		// 加密
 		System.out.println("\n加密：");
