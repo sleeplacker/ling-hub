@@ -1,28 +1,43 @@
----- 空值处理 有关true，false和unknown的逻辑运算参见第45页 ----
+---- 集合运算 ----
 
---暂时将一条记录某个属性置null值
-update course set credits = null where course_id='BIO-101';
-select * from course where course_id='BIO-101';
+--3条记录
+select course_id from section where semester = 'Fall' and year = 2009;
+--7条记录，有重复项
+select course_id from section where semester = 'Spring' and year = 2010;
 
---null值的加减乘除运算结果都是null
-select credits+1 from course;
+--并运算，查到8条记录，且没有重复项
+(select course_id from section where semester = 'Fall' and year = 2009)
+union
+(select course_id from section where semester = 'Spring' and year = 2010);
 
---distinct会保留一份null的拷贝
-select distinct(credits) from course;
+--使用nion all保留重复项
+(select course_id from section where semester = 'Fall' and year = 2009)
+union all
+(select course_id from section where semester = 'Spring' and year = 2010);
 
---null=null的结果不是true，而是unknown，
---所以下面的查询不会有任何返回结果
-select * from course where null=null;
+--交运算，也会自动去重复项
+(select course_id from section where semester = 'Fall' and year = 2009)
+in`tersect
+(select course_id from section where semester = 'Spring' and year = 2010);
 
---unknown和false的区别
---false
-select * from course where 1<>1;
---!false=true
-select * from course where 1=1;
---unknown
-select * from course where null=null;
---!unknown=unknown
-select * from course where null<>null;
+--使用intersect all保留重复项，ORACLE不支持intersect all，DB2支持，
+--保留重复项的数量等于两个表中重复项数量较少的一个
+(select course_id from section where semester = 'Fall' and year = 2009)
+intersect all
+(select course_id from section where semester = 'Spring' and year = 2010);
 
---恢复置null的记录
-update course set credits = 4 where course_id='BIO-101';
+--差运算，返回except之前关系中出现，之后关系中不出现的元组
+--ORACLE不支持，DB2支持
+(select course_id from section where semester = 'Fall' and year = 2009)
+except
+(select course_id from section where semester = 'Spring' and year = 2010);
+
+--差运算有方向，调换except前后的关系，结果不同
+(select course_id from section where semester = 'Spring' and year = 2010)
+except
+(select course_id from section where semester = 'Fall' and year = 2009);
+
+--差运算会自动去重，使用except all可以保留重复项
+(select course_id from section where semester = 'Spring' and year = 2010)
+except all
+(select course_id from section where semester = 'Fall' and year = 2009);
