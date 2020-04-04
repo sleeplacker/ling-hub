@@ -52,3 +52,26 @@ create table teaches (
 	foreign key (course_id, sec_id, semester, year) references section, --外键1
 	foreign key (ID) references instructor --外键2
 );
+
+--6.学生表
+create table student (
+	ID varchar(5) not null,
+	name varchar(20) not null,
+	dept_name varchar(20),
+	tot_cred numeric(3,0),
+	primary key(ID),
+	foreign key(dept_name) references department
+);
+
+--7.学生上课表
+create table takes ( 
+	ID varchar(5) not null,
+	course_id varchar(8) not null,
+	sec_id varchar(8) not null,
+	semester varchar(6) not null,
+	year numeric(4,0) not null,
+	grade varchar(2),
+	primary key(ID, course_id, sec_id, semester, year),
+	foreign key(course_id, sec_id, semester, year) references section,
+	foreign key(ID) references student
+);
