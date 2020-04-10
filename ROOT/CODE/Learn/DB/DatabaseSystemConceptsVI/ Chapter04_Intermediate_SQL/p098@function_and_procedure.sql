@@ -2,23 +2,79 @@
 
 --函数声明和定义，不同数据库语法差异比较大
 --定义dept_count方法统计每个部门的老师数量
---ORACLE定义方式，编译失败
-create or replace function dept_count(dname varchar(20))
-	return integer
-	as
-	d_count integer;
-	begin
-		select count(*) into d_count from instructor where dept_name=dname;
-		return d_count;
-	end dept_count;
---DB2定义方式
-CREATE OR REPLACE FUNCTION dept_count(dname VARCHAR(20))
+--ORACLE定义方式，因为ORACLE函数定义语法中间会有分号，
+--所以直接在DBVisualizer中执行会被解析成多条SQL语句，
+--需要将定义语句放在下面的位置：
+--@DELIMITER %%%;
+--定义语句
+--%%%
+--@DELIMITER;
+--%%%
+@DELIMITER %%%;
+CREATE OR REPLACE FUNCTION DEPT_COUNT(DNAME IN VARCHAR)
+	RETURN INTEGER
+	AS
+	D_COUNT INTEGER;
+	BEGIN
+	SELECT COUNT(*) INTO D_COUNT FROM INSTRUCTOR WHERE DEPT_NAME=DNAME;
+	RETURN D_COUNT;
+	END DEPT_COUNT;
+%%%
+@DELIMITER;
+%%%
+--DB2定义方式，使用的是外部语言过程定义语法，
+--有关外部语言过程定义参考第101页
+CREATE OR REPLACE FUNCTION DEPT_COUNT(DNAME VARCHAR(20))
      RETURNS INT
      LANGUAGE SQL
      READS SQL DATA
      NO EXTERNAL ACTION
-     RETURN SELECT COUNT(*)  FROM INSTRUCTOR WHERE DEPT_NAME=dname;
+     RETURN SELECT COUNT(*)  FROM INSTRUCTOR WHERE DEPT_NAME=DNAME;
 --函数调用-查询教师数量大于2个的部门以及预算
-select dept_name, budget
-from department
-where dept_count(dept_name) > 2;    
+SELECT DEPT_NAME, BUDGET
+FROM DEPARTMENT
+WHERE DEPT_COUNT(DEPT_NAME) > 2;    
+
+--存储过程，不能在SQL中直接调用，因为它没有返回，而是将返回放到参数中
+--ORACLE定义存储过程
+@DELIMITER %%%;
+CREATE OR REPLACE PROCEDURE DEPT_COUNT_PROC(DNAME IN VARCHAR, D_COUNT OUT INTEGER)
+	AS
+	BEGIN
+	SELECT COUNT(*) INTO D_COUNT FROM INSTRUCTOR WHERE DEPT_NAME=DNAME;
+	END DEPT_COUNT;
+%%%
+@DELIMITER;
+%%%
+--ORACLE在函数中调用存储过程
+@DELIMITER %%%;
+CREATE OR REPLACE FUNCTION DEPT_COUNT2(DNAME IN VARCHAR)
+	RETURN INTEGER
+	AS
+	D_COUNT INTEGER;
+	BEGIN
+	DEPT_COUNT_PROC(DNAME, D_COUNT);
+	RETURN D_COUNT;
+	END DEPT_COUNT2;
+%%%
+@DELIMITER;
+%%%
+--DB2定义存储过程，因为定义过程中有分行，所以要将定义写在--/.../中
+--/
+CREATE OR REPLACE PROCEDURE DEPT_COUNT_PROC(IN DNAME VARCHAR(20), OUT D_COUNT INTEGER)
+ LANGUAGE SQL
+BEGIN
+SELECT COUNT(*) INTO D_COUNT FROM INSTRUCTOR WHERE DEPT_NAME=DNAME;
+END
+/
+--DB2在函数中调用存储过程，这里的定义能成功，但是调用该函授时会报SQLCODE=-727, SQLSTATE=56098
+--/
+CREATE OR REPLACE FUNCTION DEPT_COUNT2(DNAME VARCHAR(20))
+     RETURNS INT
+     MODIFIES SQL DATA
+ 	BEGIN
+     DECLARE D_COUNT INT;
+     CALL DEPT_COUNT_PROC(DNAME, D_COUNT);
+     RETURN D_COUNT;
+    END
+/
