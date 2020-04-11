@@ -1,6 +1,8 @@
----- 函数和过程 ----
+---- 函数、存储过程和触发器 ----
 
---函数声明和定义，不同数据库语法差异比较大
+--函数、存储过程和触发器各个数据库的语法差异很大
+
+--1. 函数
 --定义dept_count方法统计每个部门的老师数量
 --ORACLE定义方式，因为ORACLE函数定义语法中间会有分号，
 --所以直接在DBVisualizer中执行会被解析成多条SQL语句，
@@ -35,7 +37,7 @@ SELECT DEPT_NAME, BUDGET
 FROM DEPARTMENT
 WHERE DEPT_COUNT(DEPT_NAME) > 2;    
 
---存储过程，不能在SQL中直接调用，因为它没有返回，而是将返回放到参数中
+--2. 存储过程，不能在SQL中直接调用，因为它没有返回，而是将返回放到参数中
 --ORACLE定义存储过程
 @DELIMITER %%%;
 CREATE OR REPLACE PROCEDURE DEPT_COUNT_PROC(DNAME IN VARCHAR, D_COUNT OUT INTEGER)
@@ -78,3 +80,7 @@ CREATE OR REPLACE FUNCTION DEPT_COUNT2(DNAME VARCHAR(20))
      RETURN D_COUNT;
     END
 /
+
+--3. 触发器，详细内容参见第102页
+--在对表进行增删改查时，可以触发一个动作，这个动作可以操作数据库表，
+--也可以回滚当前事务，使用触发器应该很小心或者尽量不使用

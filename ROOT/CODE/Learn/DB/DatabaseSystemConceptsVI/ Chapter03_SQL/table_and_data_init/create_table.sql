@@ -75,3 +75,12 @@ create table takes (
 	foreign key(course_id, sec_id, semester, year) references section,
 	foreign key(ID) references student
 );
+
+--8. 课程先修表
+create table prereq (
+	course_id varchar(8) not null,
+	prereq_id varchar(8) not null,
+	primary key (course_id, prereq_id),
+	foreign key(course_id) references course on delete cascade,
+	foreign key(prereq_id) references course
+);
