@@ -84,3 +84,12 @@ create table prereq (
 	foreign key(course_id) references course on delete cascade,
 	foreign key(prereq_id) references course
 );
+
+--**. 商品表
+create table sales (
+	item_name varchar(10) not null,
+	color varchar(10) not null,
+	clothes_size varchar(10) not null,
+	quantity numeric(2,0),
+	primary key(item_name, color, clothes_size)
+);
