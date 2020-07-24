@@ -66,11 +66,12 @@ public class HeapUtil {
 	 * 从最后一个非根节点开始，维护该节点的堆性质，直到处理完根节点
 	 * 
 	 * @param data
+	 * @param maxHeapFlag-大顶堆标识
 	 */
-	public static void buildHeap(Double[] data) {
+	public static void buildHeap(Double[] data, boolean maxHeapFlag) {
 		if (data.length <= 1)// 只包含1个节点的树已经是堆，直接返回
 			return;
-		HeapObject heap = new HeapObject(data, data.length);
+		HeapObject heap = new HeapObject(data, data.length, maxHeapFlag);
 		for (int i = data.length / 2 - 1; i >= 0; --i)// 从最后一个非叶节点到根节点做对性质维护操作
 			heapify(heap, i);
 	}
@@ -88,17 +89,19 @@ public class HeapUtil {
 	public static void heapify(HeapObject heap, int index) {
 		Double[] data = heap.getData();
 		int heapSize = heap.getHeapSize();
+		boolean maxHeapFlag = heap.isMaxHeapFlag();
 		if (index >= heapSize / 2)// 如果处理的已经是叶节点，叶节点都是满足堆性质的，直接返回
 			return;
 		int leftIndex = HeapUtil.leftChild(heap, index + 1);// 计算左孩子位置
 		int rightIndex = HeapUtil.rightChild(heap, index + 1);// 计算右孩子位置，因为一个节点可能只有左孩子，所以可能返回-1
-		// 比较得出当前节点、左孩子右孩子中最大的一个
+		// 比较得出当前节点、左孩子右孩子中最大/最小的一个
 		int largestIndex = index;
-		if (leftIndex <= heapSize - 1 && data[leftIndex] > data[index])
+		if (leftIndex <= heapSize - 1 && (maxHeapFlag ? data[leftIndex] > data[index] : data[leftIndex] < data[index]))
 			largestIndex = leftIndex;
-		if (rightIndex != -1 && rightIndex <= heapSize - 1 && data[rightIndex] > data[largestIndex])
+		if (rightIndex != -1 && rightIndex <= heapSize - 1
+				&& (maxHeapFlag ? data[rightIndex] > data[largestIndex] : data[rightIndex] < data[largestIndex]))
 			largestIndex = rightIndex;
-		if (largestIndex != index) {// 如果最大的不是当前节点，则将当前节点和最大节点交互位置
+		if (largestIndex != index) {// 如果最大的不是当前节点，则将当前节点和最大节点交换位置
 			Double temp = data[largestIndex];
 			data[largestIndex] = data[index];
 			data[index] = temp;

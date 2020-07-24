@@ -20,8 +20,11 @@ public class PriorityQueueTest {
 	public static void main(String[] args) {
 		Double[] data = new Double[10];// 设置队列容量为10
 
-		// 构造对对象
-		HeapObject heap = new HeapObject(data, 0);
+		// 构造堆对象
+		// 最大值优先出队
+		// HeapObject heap = new HeapObject(data, 0, true);
+		// 最小值优先出队
+		HeapObject heap = new HeapObject(data, 0, false);
 
 		// 入队测试
 		// { 16d, 4d, 10d, 14d, 7d, 9d, 3d, 2d, 8d, 1d };
@@ -81,9 +84,10 @@ public class PriorityQueueTest {
 	public static void enQueue(HeapObject heap, Double value) {
 		Double[] data = heap.getData();
 		int heapSize = heap.getHeapSize();
+		boolean maxHeapFlag = heap.isMaxHeapFlag();
 		if (heapSize >= data.length)// 队满后不能入队
 			throw new RuntimeException("Queue is full!");
-		data[heapSize] = Double.MIN_VALUE;// 在队尾新增一个元素，值初始化为最小值
+		data[heapSize] = maxHeapFlag ? Double.MIN_VALUE : Double.MAX_VALUE;// 在队尾新增一个元素，值初始化为最小值(小顶堆初始化为最大值)
 		int index = heapSize;// 记录新元素位置
 		++heapSize;// 对大小+1
 		heap.setHeapSize(heapSize);
@@ -121,17 +125,18 @@ public class PriorityQueueTest {
 			throw new RuntimeException("Wrong input!");
 		Double[] data = heap.getData();
 		Double oldValue = data[index];
+		boolean maxHeapFlag = heap.isMaxHeapFlag();
 		data[index] = newValue;// 更新指定位置的值
 		if (newValue == oldValue)// 新旧值相同，无需更新
 			return;
-		if (newValue < oldValue) {
-			// 新值减小，直接对该节点维护堆性质
+		if (maxHeapFlag ? newValue < oldValue : newValue > oldValue) {
+			// 新值减小，小顶堆时增大，直接对该节点维护堆性质
 			HeapUtil.heapify(heap, index);
 		} else {
-			// 新值增大，递归第将该节点与其父节点交换，直到父节点值>=新值，或该节点已经成为新的根节点
+			// 新值增大，小顶堆时减小，递归第将该节点与其父节点交换，直到父节点值>=新值，或该节点已经成为新的根节点
 			int tempIndex = index;
 			int parentIndex = HeapUtil.parent(tempIndex + 1);
-			while (tempIndex > 0 && data[parentIndex] < newValue) {
+			while (tempIndex > 0 && (maxHeapFlag ? data[parentIndex] < newValue : data[parentIndex] > newValue)) {
 				Double temp = data[parentIndex];
 				data[parentIndex] = data[tempIndex];
 				data[tempIndex] = temp;
