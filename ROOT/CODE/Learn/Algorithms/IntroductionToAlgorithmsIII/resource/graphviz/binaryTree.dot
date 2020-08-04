@@ -1,0 +1,42 @@
+graph bin_tree {
+    node [shape=circle];
+	15--6;
+	15--e0[weight=10 style="invis"];//中间结点用来占位
+	15--18;
+	
+	6--3;
+	6--e1[weight=10 style="invis"];
+	6--7;
+	
+	18--17;
+	18--e2[weight=10 style="invis"];
+	18--20;
+	
+	//留出位置
+	17--e8[weight=10 style="invis"];
+	17--e9[weight=10 style="invis"];
+	17--e10[weight=10 style="invis"];
+	
+	3--2;
+	3--e3[weight=10 style="invis"];
+	3--4;
+	
+	7--e4[weight=10 style="invis"];
+	7--e5[weight=10 style="invis"];
+	7--13;
+	
+	13--9;
+	13--e6[weight=10 style="invis"];
+	13--e7[weight=10 style="invis"];
+    
+    // 隐藏中间节点的连线
+    //5 -- m2 [weight=10 style="invis"];
+
+
+ 
+	// 隐藏中间节点
+    e0,e1,e2,e3,e4,e5,e6,e7,e8,e9,e10 [label="" style="invis"]
+	// 
+	//n5 [label="5"]
+}
+//dot hello.g -T png -o tree.png
