@@ -1,0 +1,66 @@
+// 二叉树的指针实现
+digraph G {
+    node [shape=Mrecord];//Mrecord为圆角
+	
+	/**
+	|：横向分割
+	{}：竖向分割
+	*/
+	node1 [label="{<P>/|<D>A|{<L>|<R>}}"];//<>中为隐藏域
+	node2 [label="{<P>|<D>B|{<L>/|<R>}}"];
+	node3 [label="{<P>|<D>C|{<L>|<R>}}"];
+	node4 [label="{<P>|<D>D|{<L>|<R>}}"];
+	node5 [label="{<P>|<D>E|{<L>/|<R>/}}"];
+	node6 [label="{<P>|<D>F|{<L>/|<R>/}}"];
+	node7 [label="{<P>|<D>G|{<L>/|<R>}}"];
+	node8 [label="{<P>|<D>H|{<L>|<R>/}}"];
+	node9 [label="{<P>|<D>I|{<L>|<R>/}}"];
+	nodeA [label="{<P>|<D>J|{<L>/|<R>/}}"];
+	nodeB [label="{<P>|<D>K|{<L>/|<R>/}}"];
+	                   
+	// : 后面跟一个结点的指定区域
+	node1:L -> node2;
+	node1 -> e1 [weight=10 style="invis"];
+	node1:R -> node3;
+	node2:P -> node1;
+	node3:P -> node1;
+	
+	node2 -> e2 [weight=10 style="invis"];
+	node2 -> e3 [weight=10 style="invis"];
+	node2:R -> node4;
+	node4:P -> node2;
+	
+	node4:L -> node5;
+	node4 -> e4 [weight=10 style="invis"];
+	node4:R -> node6;
+	node5:P -> node4;
+	node6:P -> node4;
+	
+	node3:L -> node7;
+	node3 -> e5 [weight=10 style="invis"];
+	node3:R -> node8;
+	node7:P -> node3;
+	node8:P -> node3;
+	
+	node7 -> e6 [weight=10 style="invis"];
+	node7 -> e7 [weight=10 style="invis"];
+	node7:R -> node9;
+	node9:P -> node7;
+	
+	node8:L -> nodeA;
+	node8 -> e8 [weight=10 style="invis"];
+	node8 -> e9 [weight=10 style="invis"];
+	nodeA:P -> node8;
+	
+	node9:L -> nodeB;
+	node9 -> e10 [weight=10 style="invis"];
+	node9 -> e11 [weight=10 style="invis"];
+	nodeB:P -> node9;
+    // 隐藏中间节点的连线
+    //5 -- m2 [weight=10 style="invis"];
+	// 隐藏中间节点
+    e1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11 [label="" style="invis"]
+	// 
+	//n5 [label="5"]
+}
+//dot pointTree.dot -T png -o pointTree.png

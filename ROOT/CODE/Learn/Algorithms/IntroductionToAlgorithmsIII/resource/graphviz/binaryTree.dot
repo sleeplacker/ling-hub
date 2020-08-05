@@ -39,4 +39,4 @@ graph bin_tree {
 	// 
 	//n5 [label="5"]
 }
-//dot hello.g -T png -o tree.png
+//dot binaryTree.dot -T png -o binaryTree.png

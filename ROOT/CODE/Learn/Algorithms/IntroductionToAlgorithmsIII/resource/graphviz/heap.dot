@@ -1,0 +1,34 @@
+// 二叉堆
+graph bin_tree {
+    node [shape=circle];
+	16--14;
+	16--e0[weight=10 style="invis"];//中间结点用来占位
+	16--10;
+	
+	14--8;
+	14--e1[weight=10 style="invis"];
+	14--7;
+	
+	10--9;
+	10--e2[weight=10 style="invis"];
+	10--3;
+	
+	8--2;
+	8--e3[weight=10 style="invis"];
+	8--4;
+	
+	7--1;
+	7--e4[weight=10 style="invis"];
+	7--e5[weight=10 style="invis"];
+    
+    // 隐藏中间节点的连线
+    //5 -- m2 [weight=10 style="invis"];
+
+
+ 
+	// 隐藏中间节点
+    e0,e1,e2,e3,e4,e5 [label="" style="invis"]
+	// 
+	//n5 [label="5"]
+}
+//dot heap.dot -T png -o heap.png
