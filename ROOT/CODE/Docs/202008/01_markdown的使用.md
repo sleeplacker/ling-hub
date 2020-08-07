@@ -1,3 +1,4 @@
+### 目录
 [TOC]
 
 
@@ -81,7 +82,6 @@
 
 1. 文字链接：\[\]中是j要显示的文字，\(\)中是实际包含的文字
 示例：
-> [汉堡](臭豆腐，俘虏加柠檬)
 > [GitHub](https://github.com)
 
 2. 引用链接：第一个\[\]中是要显示的文字，第二个\[\]中是引用的变量
@@ -89,12 +89,15 @@
 
 3. 网址链接：包含在\<\>中的内容被视为超链接
 > <https://www.baidu.com>
+> 
+> 注意：typora预览时要按住ctrl点击才会跳转URL
 
 ## 1.6 代码
 
 1. 行内代码：将代码放在``之间
 示例：
 > java代码 `System.out.println("Hello md!")` 会打印信息到控制台
+
 
 2. 多行代码：将代码放在两个```之间(GFM扩展语法)，且可以选择语言，这里选择的java
 示例：
@@ -113,6 +116,7 @@
 
 语法：>+空格+引用内容，可以多层引用
 示例：
+
 > 第一层引用
 >
 > > 第二层引用
@@ -139,7 +143,9 @@
 ## 2.2 表格
 使用竖线分割表格
 示例：
+
 > **默认向左对齐(:-)**
+>
 > |姓名|手机号|身份证号|
 > |-|-|-|
 > |爱丽丝|13923472222|440801199110262222|
@@ -159,17 +165,76 @@
 > |鲍勃|13923473333|440801199110263333|
 >
 
+## 2.3 任务列表
+语法：-+空格+[ ]表示未勾选，将括号中的空格改为x表示已勾选
+示例
+
+> 今日计划
+> 
+> - [x] 市场买菜
+> - [ ] 买自行车
+> - [ ] 上岛
+
+## 2.4 锚点
+语法：\[显示字符\]\(\#要跳转位置标题\)
+示例：
+
+> 要了解代码围栏示例请看 [代码围栏示例](#1.6 代码)
+> 注意：typora预览时要按ctrl+点击才能跳转到指定位置
+
+## 2.5 表情符号
+语法：:单词:
+示例：
+
+> :smile:
+> :cry:
+> :baby:
+
+# 3 typora的使用以及扩展语法
+## 3.1 导入和导出
+不安装插件只能导出pdf和html，安装Pandoc后可以导入和导出更多格式
+
+## 3.2 扩展语法
+
+1. 下划线
+> <u>我有下划线</u>
 
 
+2. 内联数学公式：\$公式\$
+>	- 分数：$\frac{x^2}{y^2}$
+>	- 开根号：$\sqrt[n]{{x^2}{y^3}}$
+>	- 省略号：1, 2, 3, $\cdots$ , n
 
 
+3. 上标和下标
 
+> 上标：n^2^, n^c^
+> 下标：a~0~, a~n~
+
+
+4. 高亮
+
+> 我没高亮
+> ==我高亮了==
+
+
+5. 注释
+
+> <!-- 我是注释 -->
+
+6. 目录
+> typora可以自动生成目录，且会随着文档的编写自动更新，请看[目录](#目录)
+
+
+7. 脚注
+> 我有个脚注[^1]
 
 ***
 到底了
 ***
 
-[Google]:https://www.google.com
+[^1]:我是被引用的脚注内容
+[Google]:https://www.google.com	"gg"
 [imgBase64Str]:data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAABPpJREFUeJzt3UuIHFUUxvF/9wzKaBaGMDOgiGIWoiKYB74QzMLHRl3owoUKAz4WBrNS3LhTF4roRmYnmclOjLpSdKEJuBExJgGThZIgOBEzJL6gGY2YcnG7tajpnunqOlWnqu73gwuZyfS9p29/dN3qejSIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiEhTdUb8fgfwOHAPcDWwtbKKxNIacBo4DOwHjmz2gFngXSBRa2X7AJhjhBuAH2pQpFq5bQW4kb7BJmAW+Aq4FonBGWAXcLbb/8Xb6MWPyVXAIoR3gB2ExcGoBaG0164p4AXgTu9KxMWFLmFXT+K0pwP8gvbzY9XrEHYNJFLdzf9E2kwBiJwCEDkFIHIKQOSmvQtwkN3r2eznqRJrcWfxDtAp2JYNahhlech43UybyrTpTCuq6PyUrujhxaIuA04Y1JFtJ/p9F+U9P2UfHnZ/ghCOT/cMn1SP1DHvgrznJ4oAACwYPqkFw7q85yeaAAAsGdSzZFyT9/xEFYCi6wGr7X6a9/xEFQCYfD1gud1P856f6AIAk60HFkqqxXt+ogwA5FsPLJVYh/f8RBuAcdcDZWz307znJ9oAwObrgbK2+2ne8xN1AGDj9cBCBeN7z0/0AYDh64Glisb2nh8FgPXrgbK3+2ne86MA9A3WA1Vs99O856fUADTpfICTwN7Uv8WAxWnhbb+kzHt+Sn2X1SlhkVMAIqcARE4BiJwCEDkFIHIKQOTqEIAnS+z7qRL6fIxqz+vPM9YTkwzg/VHnGuGOVdZ2A38a9JN9vr8B1xj0a+064A8aeCwgIdyfcJtBXwPb+P+eh0UNe85fUK9LxqaBL2nowaBBP59gs0nqAp9iX1+2vWTQt5VXKfD61SUACfCyQX+vUF596fY3cKtB/0XdDfxDSwJwEXigQF8P9vuoIgAJ8D2wxWCMSW0FfhxSV2MDkAC/Atsn6Gd7/7Fl15dt7xiMMamDG9TV2AAkwDFgJkcfM8DxCuvLtkcMxsnr6TFra2QAEuBAjj4OONSXbucJ99+tyvXYXU1d2wAkwLNjPH6vY33p9hnVnBxzCfBNjroaHYC/gNs2eOzt/b+pQwAS4HmD8TbzZs6aGh2AhLDKnR3yuDnClx9415cN7C0GY45yP+v3clofgITw9pr+5G0K+LxG9aXbSfItYMc1B/w8QT2tCEACvJZ6zOs1rC/dFg3GzfpowlpaE4AEeLjf6lpfuhX5QCtrX4E6WhWA38l/xKvK+tJtFZg3GP9mwlFNBaCB9X1ccOwZ4NuCNSgAzvU9V2DsRYPxFQDn+taAmyYY9yGDsRWAmtR3HLg0x5hXAueMxlYAalLfW2OO1yV87lHFi68AVFjfReDeMcZ70XBMBaBm9f3Exuc+7gYuGI+pAFDslvHW9Xw4Yh62AN9VMB/mAVDL355hvf1OtbhPRoytRzipY+BRr1r0xZF+jgB3EHb5jgFXeBShAPh6g3BSy11eBSgAkavDxaHiSAGIXJdwsELi1OsCp72rEDenusBh7yrEzaEO4eYMX3tXIi52dgkfSIz6fFra6yBwdHAp0zwhCFVe3yZ+Vgjv/KuD3cCzwH3AGbeSpCorhNd6ddh/zgPv43+wRK2c9h7hCqP/jLqadSfh+3j2EO4+dfmIv5N66wGngEPAMnDUtxwREREREREREREREREREREREREREREREbH0L2CGRcREr3u5AAAAAElFTkSuQmCC
 
 
