@@ -201,7 +201,443 @@ style属性控制节点和边的各种图形功能。 此属性是具有可选�
 
 ### 2.5 绘图方向、大小和间距
 
-在决定dot画大小方面起重要作用的两个属性是nodesep和ranksep。 第一个参数指定相同等级上的两个相邻节点之间的最小距离(以英寸为单位)。 第二种是等级分离，它是一个等级中节点的底部和下一个等级中的节点顶部之间的最小垂直空间。 Ranksep属性以英寸为单位设置等级分隔。 或者，可以将ranksep=相等。 这保证了从相邻排列上的节点中心测量，所有排列是相等间隔的。 在这种情况下，两个等级之间的等级分离至少是默认的等级分离。 由于ranksep的两个用法是独立的，因此可以同时设置这两个用法。 例如，ranksep=“1.0相等”会导致等距排列，最小排列间隔为1英寸。
+在决定dot图形大小方面起重要作用的两个属性是nodesep和ranksep。 第一个参数指定相同等级上的两个相邻节点之间的最小距离(以英寸为单位)。 第二个参数处理等级分离，它是一个等级中节点的底部和下一个等级中的节点顶部之间的最小垂直空间。 ranksep属性以英寸为单位设置等级分隔。 或者，可以将ranksep=equally.。 这保证了从相邻排列上的节点中心测量，所有排列是相等间隔的。 在这种情况下，两个等级之间的等级分离至少是默认的等级分离。 由于ranksep的两个用法是独立的，因此可以同时设置这两个用法。 例如，ranksep=“1.0 equally.”会导致等距排列，最小排列间隔为1英寸。
+
+通常，对于目标打印机或文档中允许的图形空间而言，使用默认节点大小和分隔创建的图形太大。 有几种方法可以尝试处理这个问题。 首先，我们将回顾点是如何计算最终布局大小的。
+
+布局最初在内部使用默认设置(除非设置了ratio=compress，如下所述)的“自然”大小。 绘图的大小或纵横比没有限制，因此如果图形很大，布局也会很大。 如果不指定大小或比例，则打印自然大小布局。
+
+控制图形输出大小的最简单方法是在dot代码中(或在命令行上使用-G)设置size=“x，y”。 这决定了最终布局的大小。 例如，无论初始布局有多大，size=“7.5，10”都适合8.5x11页面(假设默认页面方向)。
+
+ratio参数也会影响布局大小。 根据size和ratio参数的设置，有多种情况。
+
+1. 情况1.未设置比率。 如果图形已经适合给定的大小，则不会执行任何操作。 否则，工程图将进行足够均匀的缩小，以使关键尺寸符合要求。
+
+2. 如果设置了ratio参数，则有四个子情况。
+
+   - 情况2a。 如果Ratio=x(其中x是浮点数)，则在一个维度上放大绘图，以获得所需的比例，表示为图形的高度/宽度。 例如，Ratio=2.0使图形的高度是宽度的两倍。 然后，如情况1所示，使用size参数缩放布局。
+
+   - 情况2b。 如果设置了ratio=fill和size=x,y，则会在一个维度上放大绘图，以达到y/x的比例。然后按情况1执行缩放。效果是填充所有由size参数指定的边框。
+
+   - 情况2c。 如果设置了ratio=compress和size=x,y，则会压缩初始布局以尝试使其适合给定的边框。 这在布局质量、平衡和对称性之间进行了权衡，以使布局更加紧凑。 然后像在情况1中一样执行缩放。
+
+   - 案例2d。 如果ratio=auto并且设置了*page*属性，并且不能在单个页面上绘制图形，则忽略*size*参数，由 *dot* 计算“理想”大小。
+      具体地说，给定维度中的大小将是该维度中页面大小的最小整数倍，其至少是当前大小的一半。 然后，这两个尺寸将独立缩放到新大小。
+
+如果设置了 *route=90*，或 *orientation=landscape*，则图形将旋转90进入横向模式。 布局的X轴将沿着每页的Y轴。 这不会影响 *dot* 对 *size*、*raito* 或 *page* 的解释。
+此时，如果未设置 *page* 属性，则最终布局将作为一个页面生成。
+如果设置了page=x, y，则将布局打印为可平铺或组合成马赛克的页面序列。 常见设置为 page=“8.5，11”或page=“11，17”。 这些值指的是物理设备的完整大小；实际使用的区域将按边距设置减小。 (对于打印机输出，默认值为0.5英寸；对于位图输出，X和Y边距分别为10和2磅。)。 对于平铺布局，设置较小的边距可能会有所帮助。 这可以通过使用 margin 属性来完成。 这可以采用单个数字(用于设置两个边距)，也可以采用用逗号分隔的两个数字来分别设置x和y边距。 像往常一样，单位是英寸。 虽然可以将边距设置为0，但不幸的是，许多位图打印机具有无法覆盖的内部硬件边距。
+
+打印页面的顺序可以由pagedir属性控制。
+输出总是使用基于行或基于列的顺序来完成，并且 pageedir 被设置为指定主要方向和次要方向的两个字母的代码。 例如，默认值为BL，指定自下而上(B)主顺序和左(L)次顺序。 因此，最先发出页面的底部行，从左到右，然后向上第二行，从左到右，最后以顶行结束，从左到右。 从上到下的顺序由T表示，从右到左的顺序由R表示。
+
+如果center=true，并且图形可以在一页上输出(如果未设置page，则使用默认页面大小8.5x11英寸)，则图形将重新定位为在该页居中。
+ 一个常见的问题是，以小尺寸绘制的大图会产生不可读的节点标签。 要制作更大的标签，必须付出一些代价。 一页可以容纳的可读文本的数量是有限制的。 通常，您可以通过在运行dot之前从原始图形中提取一段有趣的内容来绘制较小的图形。
+
+我们有一些工具可以帮助你做到这一点。
+
+- sccmap 将图形分解为强连接组件
+
+- tred 计算传递约简(移除传递性隐含的边)
+
+- gvpr 图形处理器选择节点或边，并收缩或移除图形的其余部分
+
+- unflatlen 通过错开树叶边的长度来改善树的纵横比，这里有一些事情可以在给定的图形上尝试：
+
+  1. 增加节点 fontsize 属性。
+  2. 使用较小的 ranksep 和 nodesep。
+  3. 使用 ratio=auto。
+  4. 使 ratio=compress 并给出合理的 size 属性。
+  5. 缩小后的无衬线字体(如Helvetica字体)可能比Times字体更具可读性。
+
+### 2.6 节点和边的放置
+
+dot 中的属性提供了许多方法来调整节点和边的大规模布局，以及微调绘图以满足用户的需要和口味。 本节讨论这些属性[^6] 。
+有时，使边从左到右而不是从上到下是很自然的。 如果顶层图形中的rankdir=LR，则图形将以这种方式旋转。 TB(从上到下)是默认值。 模式rankdir=BT对于绘制向上有向图很有用。 为了完整性，还可以使用rankdir=RL。
+
+在带有时间线的图形中，或者在强调源节点和汇节点的绘图中，您可能需要约束等级分配。 子图的 rank 属性可以设置为 same, min, source, max 或 sink。 取值 same 会导致子图中的所有节点出现在相同的等级上。 如果设置为min，则保证子图中的所有节点的等级至少与布局[^7] 中的任何其他节点一样小。 可以通过设置 rank=source 来严格执行此操作，这会强制子图中的节点的等级严格小于任何其他节点的等级( 被 min 或 source 指定的子图的节点除外)。 取值 max 或 sink 对于最大等级起着类似的作用。 请注意，这些约束导致节点的处在相同的等级上。 如果一个子图强制节点A和B在相同的等级上，而另一个子图强制节点C和B共享一个等级，则两个子图中的所有节点必须在相同的等级上绘制。 代码6和图6说明了使用子图来控制等级分配(这里的图片不是很清晰，但是能清晰的看到各个等级)。
+
+==代码6==
+
+```c
+digraph asde91 {
+	ranksep=.75; size = "7.5,7.5";
+	{
+	node [shape=plaintext, fontsize=16];
+	/* the time-line graph */
+	past -> 1978 -> 1980 -> 1982 -> 1983 -> 1985 -> 1986 ->
+	1987 -> 1988 -> 1989 -> 1990 -> "future";
+	/* ancestor programs */
+	"Bourne sh"; "make"; "SCCS"; "yacc"; "cron"; "Reiser cpp";
+	"Cshell"; "emacs"; "build"; "vi"; "<curses>"; "RCS"; "C*";
+	}
+	{ rank = same;
+	"Software IS"; "Configuration Mgt"; "Architecture & Libraries";
+	"Process";
+	};
+	node [shape=box];
+	{ rank = same; "past"; "SCCS"; "make"; "Bourne sh"; "yacc"; "cron"; }
+	{ rank = same; 1978; "Reiser cpp"; "Cshell"; }
+	{ rank = same; 1980; "build"; "emacs"; "vi"; }
+	{ rank = same; 1982; "RCS"; "<curses>"; "IMX"; "SYNED"; }
+	{ rank = same; 1983; "ksh"; "IFS"; "TTU"; }
+	{ rank = same; 1985; "nmake"; "Peggy"; }
+	{ rank = same; 1986; "C*"; "ncpp"; "ksh-i"; "<curses-i>"; "PG2"; }
+	{ rank = same; 1987; "Ansi cpp"; "nmake 2.0"; "3D File System"; "fdelta";
+	"DAG"; "CSAS";}
+	{ rank = same; 1988; "CIA"; "SBCS"; "ksh-88"; "PEGASUS/PML"; "PAX";
+	"backtalk"; }
+	{ rank = same; 1989; "CIA++"; "APP"; "SHIP"; "DataShare"; "ryacc";
+	"Mosaic"; }
+	{ rank = same; 1990; "libft"; "CoShell"; "DIA"; "IFS-i"; "kyacc"; "sfio";
+	"yeast"; "ML-X"; "DOT"; }
+	{ rank = same; "future"; "Adv. Software Technology"; }
+	"PEGASUS/PML" -> "ML-X";
+	"SCCS" -> "nmake";
+	"SCCS" -> "3D File System";
+	"SCCS" -> "RCS";
+	"make" -> "nmake";
+	"make" -> "build";
+	
+	//省略后面的代码
+}
+```
+
+
+
+![GraphvizOutput006](../static/image/GraphvizOutput006.png)
+图6
+
+ 在某些图中，节点从左到右的顺序很重要。 如果子图设置了ordering=out，则子图中具有相同尾节点的外边将按照其创建顺序从左向右扇出。 (另请注意，涉及头部节点的平面边可能会干扰其排序)。 
+
+有许多方法可以微调节点和边的布局。 例如，如果一条边的节点都具有相同的 group 属性，则dot会尝试保持边是直的，并避免其他边与其交叉。 边的  weight 属性提供了另一种保持边为直线的方法。 边的 weight 属性表示边的重要性的某种度量；因此，权重越重，其节点之间的距离就越近。 ==dot使权重较大的边绘制得更短、更直。==
+
+当节点被约束到相同的等级时，边权重也起作用。这些节点之间具有非零权重的边尽可能以相同方向(在旋转图形中为从左到右或从上到下)指向整个等级。 可以通过将不可见边(style=“Invis”)放置在需要的位置，来调整节点排序。
+
+可以使用 samhead 和 sametail 属性约束与同一节点相邻的边的端点。 具体地说，具有相同头部和相同 samehead 属性值的所有边都被约束在同一节点处并与头部节点相交。 类似的性质也适用于尾节点和sametail属性。
+
+在等级分配期间，边的头部节点被约束为比尾节点处于更高的等级。 但是，如果设置了边的属性 constraint=false，则不会强制执行此要求。
+
+在某些情况下，用户可能希望边的终点永远不要离起点太近。 这可以通过设置边的 minlen 属性来实现。这个属性这定义了头部和尾部之间的最少相差多少个等级。 例如，如果minlen=2，则在头部和尾部之间始终至少有一个中间等级。 请注意，这与两个节点之间的几何距离无关。
+
+微调应谨慎对待。 当dot在放置单独的节点和边时，可以在没有太多“帮助”或干扰的情况下进行布局时，它工作得最好。 通过增加某些边的权重，或者使用 style=invis 创建不可见的边或节点，有时甚至可以重新排列文件中的节点和边的顺序，这些方法都可以在一定程度上调整布局。 但这可能会适得其反，因为布局对于输入图中的更改不一定是稳定的。 最后一次调整可能会使之前的所有更改无效，从而生成非常糟糕的图形。 我们考虑的一个未来项目是将 dot 的数学布局技术与允许用户定义提示和约束的交互式前端相结合。
+
+## 3 高级特征
+
+### 3.1 节点端口
+
+节点端口是边可以附着到节点的一个位置。 (当边未附加到端口时，它指向节点的中心，边在节点的边界处被截断)。 
+
+有两种类型的端口。 可以为任何节点指定基于8个罗盘方位(“n”、“ne”、“e”、“se”、“s”、“sw”、“w”或“nw”)的端口。 然后，边的末端将指向节点上的该位置。 因此，如果指定了se端口，边将连接到节点的东南角。
+
+此外，shape属性值为 record 的节点可以使用记录结构来定义端口，而具有表的类HTML标签可以使用\<td\>元素的PORT属性使任何单元格成为端口。如果记录框或表格单元格定义了端口名称，则边可以使用该端口名称来指示它应该指向框的中心。 (默认情况下，边从节点框的边缘被截断)。 
+
+还有两种指定端口的方式。 一种方法是使用边的 headport 和 tailport 属性，例如
+
+`a -> b [tailport=se]`
+
+或者，使用语法node_name:port_name，端口名称可以用来修改节点名称，将其作为边声明的一部分。 因此，处理上面给出的示例的另一种方法是
+
+`a -> b:se`
+
+因为记录框有自己的角，所以可以在记录名称端口上增加一个罗盘方位端口。 因此，下面的代码表示，该边将连接到端口名为f0的记录节点b中的框的东南角。
+
+`a -> b:f0:se`
+
+代码7说明了记录节点中端口名称的声明和使用，结果图如图7所示。
+
+==代码7==
+
+```c
+digraph g {
+	node [shape = record,height=.1];
+	node0[label = "<f0> |<f1> G|<f2> "];
+	node1[label = "<f0> |<f1> E|<f2> "];
+	node2[label = "<f0> |<f1> B|<f2> "];
+	node3[label = "<f0> |<f1> F|<f2> "];
+	node4[label = "<f0> |<f1> R|<f2> "];
+	node5[label = "<f0> |<f1> H|<f2> "];
+	node6[label = "<f0> |<f1> Y|<f2> "];
+	node7[label = "<f0> |<f1> A|<f2> "];
+	node8[label = "<f0> |<f1> C|<f2> "];
+	"node0":f2 -> "node4":f1;
+	"node0":f0 -> "node1":f1;
+	"node1":f0 -> "node2":f1;
+	"node1":f2 -> "node3":f1;
+	"node2":f2 -> "node8":f1;
+	"node2":f0 -> "node7":f1;
+	"node4":f2 -> "node6":f1;
+	"node4":f0 -> "node5":f1;
+}
+```
+
+
+
+![GraphvizOutput007](../static/image/GraphvizOutput007.png)
+图7
+
+代码8和图8给出了使用记录节点和端口的另一个示例。 这重复了代码4和图4的示例，但现在使用端口作为边的连接器。 请注意，如果将记录的输入高度设置为较小的值，则记录常常看起来会更好，这样文本标签会控制实际大小，如代码7所示。 否则，假定节点大小为默认尺寸(.75x.5)，如图8所示。代码9和图9的示例在哈希表的布局中使用从左到右的绘图。
+
+==代码8==
+
+```c
+digraph structs {
+	node [shape=record];
+	struct1 [shape=record,label="<f0> left|<f1> middle|<f2> right"];
+	struct2 [shape=record,label="<f0> one|<f1> two"];
+	struct3 [shape=record,label="hello\nworld |{ b |{c|<here> d|e}| f}| g | h"];
+	struct1:f1 -> struct2:f0;
+	struct1:f2 -> struct3:here;
+}
+```
+
+
+
+![GraphvizOutput008](../static/image/GraphvizOutput008.png)
+图8
+
+
+
+==代码9==
+
+```c
+digraph G {
+	nodesep=.05;
+	rankdir=LR;
+	node [shape=record,width=.1,height=.1];
+
+	node0 [label = "<f0> |<f1> |<f2> |<f3> |<f4> |<f5> |<f6> | ",height=2.5];
+	node [width = 1.5];
+	node1 [label = "{<n> n14 | 719 |<p> }"];
+	node2 [label = "{<n> a1 | 805 |<p> }"];
+	node3 [label = "{<n> i9 | 718 |<p> }"];
+	node4 [label = "{<n> e5 | 989 |<p> }"];
+	node5 [label = "{<n> t20 | 959 |<p> }"] ;
+	node6 [label = "{<n> o15 | 794 |<p> }"] ;
+	node7 [label = "{<n> s19 | 659 |<p> }"] ;
+
+	node0:f0 -> node1:n;
+	node0:f1 -> node2:n;
+	node0:f2 -> node3:n;
+	node0:f5 -> node4:n;
+	node0:f6 -> node5:n;
+	node2:p -> node6:n;
+	node4:p -> node7:n;
+}
+```
+
+
+
+![GraphvizOutput009](../static/image/GraphvizOutput009.png)
+图9
+
+
+
+### 3.2 聚簇
+
+簇是放置在布局的不同矩形中的子图。 如果子图的名称具有前缀cluster，则将其识别为簇。 (如果顶级图形的 clusterrank=none，则关闭此特殊处理)。 标签、字体特征和labelloc属性可以像设置顶级图形一样进行设置，尽管默认情况下簇标签显示在图的上方。对于簇，默认情况下标签是左对齐的；如果labeljust=“r”，则标签是右对齐的。 color属性指定封闭矩形的颜色。此外，簇可以设置 style="filled"，在这种情况下，在绘制簇之前，矩形将填充由 fillcolor 属性指定的颜色。 (如果未指定 fillcolor属性，则使用簇的 color 属性。)。
+
+簇是通过递归技术绘制的，该技术计算簇内节点的等级分配和内部排序。 代码10,11，图10,11展示一些簇布局的代码以及生产图片。
+
+==代码10==
+
+```c
+digraph G {
+	subgraph cluster0 {
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		a0 -> a1 -> a2 -> a3;
+		label = "process #1";
+	}
+	subgraph cluster1 {
+		node [style=filled];
+		b0 -> b1 -> b2 -> b3;
+		label = "process #2";
+		color=blue;
+	}
+	start -> a0;
+	start -> b0;
+	a1 -> b3;
+	b2 -> a3;
+	a3 -> a0;
+	a3 -> end;
+	b3 -> end;
+	start [shape=Mdiamond];
+	end [shape=Msquare];
+}
+```
+
+
+
+![GraphvizOutput010](../static/image/GraphvizOutput010.png)
+图10
+
+
+
+==代码11==
+
+```c
+
+digraph G {
+	size="8,6"; ratio=fill; node[fontsize=24];
+	
+	ciafan->computefan; fan->increment; computefan->fan; stringdup->fatal;
+	main->exit; main->interp_err; main->ciafan; main->fatal; main->malloc;
+	main->strcpy; main->getopt; main->init_index; main->strlen; fan->fatal;
+	fan->ref; fan->interp_err; ciafan->def; fan->free; computefan->stdprintf;
+	computefan->get_sym_fields; fan->exit; fan->malloc; increment->strcmp;
+	computefan->malloc; fan->stdsprintf; fan->strlen; computefan->strcmp;
+	computefan->realloc; computefan->strlen; debug->sfprintf; debug->strcat;
+	stringdup->malloc; fatal->sfprintf; stringdup->strcpy; stringdup->strlen;
+	fatal->exit;
+	
+	subgraph "cluster_error.h" { label="error.h"; interp_err; }
+	
+	subgraph "cluster_sfio.h" { label="sfio.h"; sfprintf; }
+	
+	subgraph "cluster_ciafan.c" { label="ciafan.c"; ciafan; computefan;
+	increment; }
+	
+	subgraph "cluster_util.c" { label="util.c"; stringdup; fatal; debug; }
+	
+	subgraph "cluster_query.h" { label="query.h"; ref; def; }
+	
+	subgraph "cluster_field.h" { get_sym_fields; }
+	
+	subgraph "cluster_stdio.h" { label="stdio.h"; stdprintf; stdsprintf; }
+	
+	subgraph "cluster_<libc.a>" { getopt; }
+	
+	subgraph "cluster_stdlib.h" { label="stdlib.h"; exit; malloc; free; realloc; }
+	
+	subgraph "cluster_main.c" { main; }
+	
+	subgraph "cluster_index.h" { init_index; }
+	
+	subgraph "cluster_string.h" { label="string.h"; strcpy; strlen; strcmp; strcat; }
+}
+```
+
+
+
+![GraphvizOutput011](../static/image/GraphvizOutput011.png)
+图11
+
+如果顶级图的 compound 属性设置为true，则 dot 将允许边连接节点和簇。 这是通过定义lhead或ltail属性的边来实现的。 这些属性的值必须分别是包含头节点或尾节点的簇的名称。 在这种情况下，边在簇边界处被截断。 所有其他边属性(如arrowhead或dir)都将应用于截断的边。 例如，代码12是一个使用了 compound 属性示例，图12是结果图。
+
+==代码12==
+
+```c
+digraph G {
+	compound=true;
+	subgraph cluster0 {
+		a -> b;
+		a -> c;
+		b -> d;
+		c -> d;
+	}
+	subgraph cluster1 {
+		e -> g;
+		e -> f;
+	}
+	b -> f [lhead=cluster1];
+	d -> e;
+	c -> g [ltail=cluster0,
+	lhead=cluster1];
+	c -> e [ltail=cluster0];
+	d -> h;
+}
+```
+
+
+
+![GraphvizOutput012](../static/image/GraphvizOutput012.png)
+图12
+
+### 3.3 集中器
+
+在顶层图上设置 concentrate=true 可启用边合并技术，以减少密集布局中的混乱。 当边平行、具有公共端点且长度大于1时，将合并这些边。固定大小布局中的一个有益副作用是，删除这些边通常允许使用更大、更具可读性的标签。 虽然dot中的集中器看起来有点像Newberg的[New89]，但它们是通过搜索布局中的边来找到的，而不是通过检测底层图中的完整二分图来找到的。 因此，dot方法的运行速度要快得多，但不会像Newberg的算法那样折叠那么多的边。
+
+## 4 命令行选项
+
+默认情况下，dot在筛选器模式下操作，从stdin读取图形，并以附加了布局属性的DOT格式将图形写入stdout。 dot支持各种命令行选项：-T加格式设置输出的格式。 格式的允许值为：
+
+- bmp Windows位图格式。
+
+- canon 预打印输入；不进行布局。
+
+- dot 由DOT决定。 打印带有作为属性附加的布局信息的输入，参见附录F
+
+- fig FIG输出。
+
+- gd GD格式。 这是GD图形库使用的内部格式。 另一种格式是GD2。
+
+- gif GIF输出。
+
+- imap 为服务器端图像地图生成地图文件。 这可以与输出的图形形式相结合，例如在网页中使用-Tgif或-Tjpg来将链接附加到节点和边。
+
+- cmapx 为客户端图像地图生成HTML地图文件。
+
+- pdf 通过Cairo library 的Adobe PDF。 我们在嵌入到其他文档时发现了问题。 相反，可以使用-Tps2，如下所述。
+
+- plain  简单明了的、基于行的ASCII格式。 附录E介绍了此输出。 另一种格式是plain-ext，它在边的头部和尾部节点上提供端口名称。
+
+- png PNG(便携网络图形)输出。
+
+- ps PostScript(EPSF)输出。
+
+- ps2 带PDF批注的PostScript(EPSF)输出。 在包含到文档中之前，应该将此输出提取到PDF中，例如用于pdflatex。(使用ps2pdf；epstopdf不处理%%BoundingBox: (atend))
+
+- svg SVG输出。 另一种形式svgz生成压缩的SVG。
+
+- vrml VRML输出。
+
+- wbmp 无线位图(WBMP)格式。
+
+  
+
+- *-G*name=value 设置图形属性默认值。 通常，在命令行而不是在图形文件中设置大小、分页和相关值更方便。 类似的标志-N或-E设置默认节点或边属性。 请注意，文件内容覆盖命令行参数。
+
+- *-l*libfile 指定设备相关的图形库文件。 可以提供多个库。 这些名称在输出开始时传递给代码生成器。
+
+- *-o*outfile 将输出写入文件outfile。
+- -v 请求详细输出。 在处理大型布局时，冗长的消息可能会估计dot的进度。
+- -V 打印版本号并退出。
+
+## 5 其他
+
+在顶级图标题中，图可以被声明为 strict digraph 或 strict graph。 这禁止创建多条边，即在有向情况下，最多只能有一条具有给定尾节点和头节点的边。 对于无向图，至多有一条边连接到相同的两个节点。使用相同两个节点的后续边语句将使用先前定义的边标识边，并应用边语句中给出的任何属性。
+
+节点、边和图可以具有URL属性。 在某些输出格式(ps2、imap、cmapx或svg)中，此信息将集成在输出中，以便节点、边和簇在使用适当的工具显示时成为活动链接。 通常，附加到顶级图形的URL充当基本URL，支持组件上的相对URL。 当输出格式为imap或cmapx时，将对headURL和traURL属性进行类似的处理。
+
+对于某些格式(ps、fig或svg)，comment 属性可用于在输出中嵌入人类可读的符号。
+
+## 6 结论
+
+dot 可生成赏心悦目的分层图形，并可应用许多设置。
+
+由于dot的基本算法运行良好，为进一步研究大型图形的绘制方法和在线(动画)图形的绘制等问题奠定了良好的基础。
+
+
+
+## 参考文献
+
+[Car80]: M. Carpano. Automatic display of hierarchized graphs for computer aided decision analysis. IEEE Transactions on Software Engineering,SE-12(4):538–546, April 1980.
+
+[GKNV93]: Emden R. Gansner, Eleftherios Koutsofios, Stephen C. North, and Kiem-Phong Vo. A Technique for Drawing Directed Graphs. IEEE Trans. Sofware Eng., 19(3):214–230, May 1993.
+
+[New89]: Frances J. Newbery. Edge Concentration: A Method for Clustering Directed Graphs. In 2nd International Workshop on Software Configuration Management, pages 76–85, October 1989. Published as ACM SIGSOFT Software Engineering Notes, vol. 17, no. 7, November 1989.
+
+[Nor92]: Stephen C. North. Neato User’s Guide. Technical Report 59113-921014-14TM, AT&T Bell Laboratories, Murray Hill, NJ, 1992.[STT81]: K. Sugiyama, S. Tagawa, and M. Toda. Methods for Visual Understanding of Hierarchical System Structures. IEEE Transactions on Systems, Man, and Cybernetics, SMC-11(2):109–125, February 1981.
+
+[War77]: JohnWarfield. Crossing Theory and Hierarchy Mapping. IEEE Transactions on Systems, Man, and Cybernetics, SMC-7(7):505–523, July 1977.
+
+
+
+## 附录
+
+参见 [英文原版文档](Graphviz_dot_guide.pdf) 附录部分
 
 
 
@@ -211,4 +647,5 @@ style属性控制节点和边的各种图形功能。 此属性是具有可选�
 [^3]:对于基于Unix的系统，这是用冒号分隔的路径名串接列表。对于基于Windows的系统，路径名用分号分隔。
 [^4]:还支持第四种形式，即RGBA，它具有与RGB相同的格式，并附加了指定Alpha通道或透明度信息的第四个十六进制数。
 [^5]: 如果输出格式为MIF或点状，则默认值为黑色。
-
+[^6]: 为了完整性，我们注意到 dot 还提供对在布局算法中起技术作用的各种参数的访问。 其中包括mclimate it、nslimit、nslimit1、regercross和searchsize。
+[^7]: 回想一下，最低等级位于绘图的顶部

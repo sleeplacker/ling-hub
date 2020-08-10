@@ -66,10 +66,10 @@
 1. 引用方式：\!\[找不到图片时的描述](图片地址)，图片路径可以是相对路径，绝对路径，以及URL
 示例：
 > 相对路径引用图片
-> ![图片挂了](./markdown.png)
+> ![图片挂了](../static/image/markdown.png)
 > 
 > 绝对路径引用图片
-> ![图片挂了](I:\MyGitLib\repository\ling-hub\ROOT\CODE\Docs\202008\markdown.png)
+> ![图片挂了](I:\MyGitLib\repository\ling-hub\ROOT\CODE\Docs\static\image\markdown.png)
 > 
 > URL方式引用图片
 > ![图片挂了](https://www.runoob.com/wp-content/uploads/2019/03/iconfinder_markdown_298823.png)
