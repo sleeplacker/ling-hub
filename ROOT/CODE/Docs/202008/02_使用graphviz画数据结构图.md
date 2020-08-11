@@ -848,10 +848,114 @@ name 是唯一标识符。 如果它包含空格或标点符号，则使用引�
 
 
 
+### F DOT参数格式
+
+这是默认输出格式。 它会重新生成输入，以及图形的布局信息。 坐标值向上和向右增加。 位置由两个用逗号分隔的整数表示，表示以点(1/72英寸)指定位置的X和Y坐标。 位置指的是与其关联的对象的中心。 长度以英寸为单位。
+
+bb属性附加到图形，指定图形的边框。 如果图形有标签，则其位置由lp属性指定。
+
+每个节点都有 pos 、width 和 height 属性。 如果节点是记录，则在rects属性中给出记录矩形框。 如果节点是多边形，并且在输入图形中定义了 vertices 属性，则该属性包含节点的顶点。 为圆和椭圆生成的点数由samplepoints属性控制。
+
+每条边都被赋予了一个 pos 属性，该属性由3n+1个位置的列表组成。 这些是 B-spline 控制点：点p0，p1，p2，p3是第一条Bezier样条，p3，p4，p5，p6是第二条Bezier样条，依此类推。当前，无论边的方向如何，边点都是从上到下(或从左到右)列出的。 这种情况可能会改变。
+
+在 pos 属性中，控制点列表可以在起始点 ps 和/或 终点 pe 之前。 它们分别具有带有“s”或“e”前缀的普通位置表示。 如果 p0处有箭头，则表示起点。在本例中，箭头是从 p0 到 ps，其中ps实际上位于节点边界上。箭头的长度和方向由矢量(ps - p0)给出。 如果没有箭头，则p0在节点边界上。 同样，点pe在边的另一端指定一个箭头，连接到最后一个样条点。
+
+如果边有标签，则标签位置以 lp 为单位给出。层层
 
 
 
-[^1]:1有一种方法可以实现自定义节点形状，使用shape=epsf和shapefile属性，并依赖于PostScript输出。详细信息超出了本用户指南的范围。有关更多信息，请联系作者。
+
+
+### G 图层
+
+dot 具有在一系列重叠的“层”上绘制单个图的各部分的功能。 通常，这些层是架空透明的。 要激活此功能，必须将顶级图形的 layers 属性设置为标识符列表。 然后，可以使用节点或边的 layer 属性将其指定给层列表。 层列表被指定为逗号分隔的范围列表，范围要么是单个层，要么具有id:id‘的形式，后者表示从id到id’的所有层。all 是所有图层的保留名称(可以在范围的两端使用，如 design:all 或 all:code)。 例如下面的代码片段：
+
+```c
+layers = "spec:design:code:debug:ship";
+node90 [layer = "code"];
+node91 [layer = "design:debug"];
+node92 [layer = "all:code"];
+node93 [layer = "spec:code,ship"];
+node90 -> node91 [layer = "all"];
+```
+
+在该图中，node91 处于design，code和debug三个层次，而 node92 处于spec，design和code三个层次。 node93 处于spec，design，code 和 ship 四个层次。
+
+在分层图中，如果节点或边没有指定层，但是关联边或节点指定了，那么它的层规范就是从关联边或节点中推断出来的。 要更改默认设置，使没有图层的节点和边显示在所有图层上，请在图形文件开头附近插入：
+
+```c
+node [layer=all];
+edge [layer=all];
+```
+
+选择PostScript输出时，将在数组 layercolorseq 中设置图层的颜色序列。 该数组从1开始索引，每个元素都必须是一个可以解释为颜色坐标的3元素数组。 冒险家可以从 dot 的PostScript输出中学到更多东西。
+
+
+
+### H 节点形状
+
+下面是所有的节点形状以及对应代码。 有关节点形状的更完整描述，请访问网站
+
+<www.graphviz.org/doc/info/shapes.html>
+
+| 代码 | 图形 | 代码 | 图形 |      代码       |                             图形                             |
+| :--: | :--: | :--: | :--: | :--: | :--: |
+|box|![box.gif](../static/image/GraphizShapes/box.gif)|polygon|![polygon.gif](../static/image/GraphizShapes/polygon.gif)|ellipse|![ellipse.gif](../static/image/GraphizShapes/ellipse.gif)|
+|oval|![oval.gif](../static/image/GraphizShapes/oval.gif)|circle|![circle.gif](../static/image/GraphizShapes/circle.gif)|point|![point.gif](../static/image/GraphizShapes/point.gif)|
+|egg|![egg.gif](../static/image/GraphizShapes/egg.gif)|triangle|![triangle.gif](../static/image/GraphizShapes/triangle.gif)|plaintext|![plaintext.gif](../static/image/GraphizShapes/plaintext.gif)|
+|plain|![plain.gif](../static/image/GraphizShapes/plain.gif)|diamond|![diamond.gif](../static/image/GraphizShapes/diamond.gif)|trapezium|![trapezium.gif](../static/image/GraphizShapes/trapezium.gif)|
+|parallelogram|![parallelogram.gif](../static/image/GraphizShapes/parallelogram.gif)|house|![house.gif](../static/image/GraphizShapes/house.gif)|pentagon|![pentagon.gif](../static/image/GraphizShapes/pentagon.gif)|
+|hexagon|![hexagon.gif](../static/image/GraphizShapes/hexagon.gif)|septagon|![septagon.gif](../static/image/GraphizShapes/septagon.gif)|octagon|![octagon.gif](../static/image/GraphizShapes/octagon.gif)|
+|doublecircle|![doublecircle.gif](../static/image/GraphizShapes/doublecircle.gif)|doubleoctagon|![doubleoctagon.gif](../static/image/GraphizShapes/doubleoctagon.gif)|tripleoctagon|![tripleoctagon.gif](../static/image/GraphizShapes/tripleoctagon.gif)|
+|invtriangle|![invtriangle.gif](../static/image/GraphizShapes/invtriangle.gif)|invtrapezium|![invtrapezium.gif](../static/image/GraphizShapes/invtrapezium.gif)|invhouse|![invhouse.gif](../static/image/GraphizShapes/invhouse.gif)|
+|Mdiamond|![Mdiamond.gif](../static/image/GraphizShapes/Mdiamond.gif)|Msquare|![Msquare.gif](../static/image/GraphizShapes/Msquare.gif)|Mcircle|![Mcircle.gif](../static/image/GraphizShapes/Mcircle.gif)|
+|rect|![rect.gif](../static/image/GraphizShapes/rect.gif)|rectangle|![rectangle.gif](../static/image/GraphizShapes/rectangle.gif)|square|![square.gif](../static/image/GraphizShapes/square.gif)|
+|star|![star.gif](../static/image/GraphizShapes/star.gif)|none|![none.gif](../static/image/GraphizShapes/none.gif)|underline|![underline.gif](../static/image/GraphizShapes/underline.gif)|
+|cylinder|![cylinder.gif](../static/image/GraphizShapes/cylinder.gif)|note|![note.gif](../static/image/GraphizShapes/note.gif)|tab|![tab.gif](../static/image/GraphizShapes/tab.gif)|
+|folder|![folder.gif](../static/image/GraphizShapes/folder.gif)|box3d|![box3d.gif](../static/image/GraphizShapes/box3d.gif)|component|![component.gif](../static/image/GraphizShapes/component.gif)|
+|promoter|![promoter.gif](../static/image/GraphizShapes/promoter.gif)|cds|![cds.gif](../static/image/GraphizShapes/cds.gif)|terminator|![terminator.gif](../static/image/GraphizShapes/terminator.gif)|
+|utr|![utr.gif](../static/image/GraphizShapes/utr.gif)|primersite|![primersite.gif](../static/image/GraphizShapes/primersite.gif)|restrictionsite|![restrictionsite.gif](../static/image/GraphizShapes/restrictionsite.gif)|
+|fivepoverhang|![fivepoverhang.gif](../static/image/GraphizShapes/fivepoverhang.gif)|threepoverhang|![threepoverhang.gif](../static/image/GraphizShapes/threepoverhang.gif)|noverhang|![noverhang.gif](../static/image/GraphizShapes/noverhang.gif)|
+|assembly|![assembly.gif](../static/image/GraphizShapes/assembly.gif)|signature|![signature.gif](../static/image/GraphizShapes/signature.gif)|insulator|![insulator.gif](../static/image/GraphizShapes/insulator.gif)|
+|ribosite|![ribosite.gif](../static/image/GraphizShapes/ribosite.gif)|rnastab|![rnastab.gif](../static/image/GraphizShapes/rnastab.gif)|proteasesite|![proteasesite.gif](../static/image/GraphizShapes/proteasesite.gif)|
+|proteinstab|![proteinstab.gif](../static/image/GraphizShapes/proteinstab.gif)|rpromoter|![rpromoter.gif](../static/image/GraphizShapes/rpromoter.gif)|rarrow|![rarrow.gif](../static/image/GraphizShapes/rarrow.gif)|
+|larrow|![larrow.gif](../static/image/GraphizShapes/larrow.gif)|lpromoter|![lpromoter.gif](../static/image/GraphizShapes/lpromoter.gif)|record|![record.gif](../static/image/GraphizShapes/record.gif)|
+|Mrecord|![Mrecord.gif](../static/image/GraphizShapes/Mrecord.gif)|
+
+
+
+### I 箭头类型
+
+这些是一些主要的箭头类型。 有关这些形状的更完整描述，请访问网站
+
+<www.graphviz.org/doc/info/arrows.html>
+
+![arrows1](../static/image/GraphizShapes/arrows1.png)
+
+箭头描述支持简单的语法以允许更复杂的派生形状，如下例所示。
+
+![arrows2](../static/image/GraphizShapes/arrows2.png)
+
+
+
+上面引用的网页详细描述了该语法。
+
+
+
+### J 颜色名称
+
+这里有一些基本的颜色名称。 有关颜色的更多信息，请访问
+
+<www.graphviz.org/doc/info/colors.html>和<www.graphviz.org/doc/info/attrs.html#k:color>
+
+![colors](../static/image/GraphizShapes/colors.png)
+
+
+
+
+
+
+[^1]:有一种方法可以实现自定义节点形状，使用shape=epsf和shapefile属性，并依赖于PostScript输出。详细信息超出了本用户指南的范围。有关更多信息，请联系作者。
 [^2]:转义序列\\N是节点名称的内部符号。
 [^3]:对于基于Unix的系统，这是用冒号分隔的路径名串接列表。对于基于Windows的系统，路径名用分号分隔。
 [^4]:还支持第四种形式，即RGBA，它具有与RGB相同的格式，并附加了指定Alpha通道或透明度信息的第四个十六进制数。
