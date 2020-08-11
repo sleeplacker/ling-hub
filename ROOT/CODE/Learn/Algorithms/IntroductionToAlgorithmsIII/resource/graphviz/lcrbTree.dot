@@ -1,0 +1,76 @@
+// 二叉树的指针实现
+digraph G {
+    node [shape=Mrecord];//Mrecord为圆角
+	
+	/**
+	|：横向分割
+	{}：竖向分割
+	*/
+	nodeA [width=1.0 label="{<P>/|<D>A|{<L>|<R>/}}"];//<>中为隐藏域
+	nodeB [width=1.0 label="{<P>|<D>B|{<L>|<R>}}"];
+	nodeC [width=1.0 label="{<P>|<D>C|{<L>|<R>}}"];
+	nodeD [width=1.0 label="{<P>|<D>D|{<L>|<R>/}}"];
+	nodeE [width=1.0 label="{<P>|<D>E|{<L>/|<R>}}"];
+	nodeF [width=1.0 label="{<P>|<D>F|{<L>|<R>/}}"];
+	nodeG [width=1.0 label="{<P>|<D>G|{<L>/|<R>}}"];
+	nodeH [width=1.0 label="{<P>|<D>H|{<L>/|<R>}}"];
+	nodeI [width=1.0 label="{<P>|<D>I|{<L>|<R>}}"];
+	nodeJ [width=1.0 label="{<P>|<D>J|{<L>/|<R>/}}"];
+	nodeK [width=1.0 label="{<P>|<D>K|{<L>/|<R>/}}"];
+	nodeL [width=1.0 label="{<P>|<D>L|{<L>/|<R>/}}"];
+	nodeM [width=1.0 label="{<P>|<D>M|{<L>/|<R>}}"];
+	nodeN [width=1.0 label="{<P>|<D>N|{<L>/|<R>/}}"];
+	                   
+	// : 后面跟一个结点的指定区域
+//	node1:L:s -> node2;
+//	node1 -> e1 [weight=10 style="invis"];
+//	node1:se -> node3;
+	
+	// nodesep=0.75控制节点间的距离
+//	splines=line 控制所有边为直线
+	graph [nodesep=0.5 splines=line];
+	
+	nodeA:L:s -> nodeB:nw [samehead=nodeB headport=nw];
+	nodeA:s -> nodeB:n [dir=back];
+	nodeA:s -> nodeC:n [dir=back];
+	nodeA:s -> nodeD:n [dir=back];
+	
+	nodeB:se  -> nodeC:sw;
+	nodeC:se -> nodeD:sw;
+
+	nodeB:L:s -> nodeE:nw;
+	nodeB:s -> nodeE:n [dir=back];
+	nodeB:s -> nodeF:n [dir=back];
+	nodeE:se -> nodeF:sw;
+	nodeF:L:s -> nodeL:nw;
+	nodeF:s -> nodeL:n [dir=back];
+	
+	nodeC:L:s -> nodeG:nw;
+	nodeC:s -> nodeG:n [dir=back];
+	nodeC:s -> nodeH:n [dir=back];
+	nodeC:s -> nodeI:n [dir=back];
+	nodeC:s -> nodeJ:n [dir=back];
+	nodeG:se -> nodeH:sw;
+	nodeH:se -> nodeI:sw;
+	nodeI:se -> nodeJ:sw;
+	
+	nodeD:L:s -> nodeK:nw;
+	nodeD:s -> nodeK:n [dir=back];
+	
+	nodeI:L:s -> nodeM:nw;
+	nodeI:s -> nodeM:n [dir=back];
+	nodeI:s -> nodeN [dir=back];
+	nodeM:se -> nodeN:sw;
+	
+	{ rank = same; nodeB; nodeC; nodeD; }
+	{ rank = same; nodeE; nodeF; nodeG; nodeH; nodeI; nodeJ; nodeK; }
+	{ rank = same; nodeL; nodeM; nodeN; }
+	
+	// 隐藏中间节点的连线
+    //5 -- m2 [weight=10 style="invis"];
+	// 隐藏中间节点
+//    e1,e2,e3 [label="" style="invis"]
+	// 
+	//n5 [label="5"]
+}
+//dot leftChildRightBrotherTree.dot -T png -o leftChildRightBrotherTree.png
