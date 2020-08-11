@@ -557,7 +557,7 @@ digraph G {
 
 ### 3.3 集中器
 
-在顶层图上设置 concentrate=true 可启用边合并技术，以减少密集布局中的混乱。 当边平行、具有公共端点且长度大于1时，将合并这些边。固定大小布局中的一个有益副作用是，删除这些边通常允许使用更大、更具可读性的标签。 虽然dot中的集中器看起来有点像Newberg的[New89]，但它们是通过搜索布局中的边来找到的，而不是通过检测底层图中的完整二分图来找到的。 因此，dot方法的运行速度要快得多，但不会像Newberg的算法那样折叠那么多的边。
+在顶层图上设置 concentrate=true 可启用边合并技术，以减少密集布局中的混乱。 当边平行、具有公共端点且长度大于1时，将合并这些边。固定大小布局中的一个有益副作用是，删除这些边通常允许使用更大、更具可读性的标签。 虽然dot中的集中器看起来有点像Newberg的 [New89]，但它们是通过搜索布局中的边来找到的，而不是通过检测底层图中的完整二分图来找到的。 因此，dot方法的运行速度要快得多，但不会像Newberg的算法那样折叠那么多的边。
 
 ## 4 命令行选项
 
@@ -627,7 +627,7 @@ dot 可生成赏心悦目的分层图形，并可应用许多设置。
 
 [GKNV93]: Emden R. Gansner, Eleftherios Koutsofios, Stephen C. North, and Kiem-Phong Vo. A Technique for Drawing Directed Graphs. IEEE Trans. Sofware Eng., 19(3):214–230, May 1993.
 
-[New89]: Frances J. Newbery. Edge Concentration: A Method for Clustering Directed Graphs. In 2nd International Workshop on Software Configuration Management, pages 76–85, October 1989. Published as ACM SIGSOFT Software Engineering Notes, vol. 17, no. 7, November 1989.
+[New89]:Frances J. Newbery. Edge Concentration: A Method for Clustering Directed Graphs. In 2nd International Workshop on Software Configuration Management, pages 76–85, October 1989. Published as ACM SIGSOFT Software Engineering Notes, vol. 17, no. 7, November 1989.
 
 [Nor92]: Stephen C. North. Neato User’s Guide. Technical Report 59113-921014-14TM, AT&T Bell Laboratories, Murray Hill, NJ, 1992.[STT81]: K. Sugiyama, S. Tagawa, and M. Toda. Methods for Visual Understanding of Hierarchical System Structures. IEEE Transactions on Systems, Man, and Cybernetics, SMC-11(2):109–125, February 1981.
 
@@ -641,6 +641,215 @@ dot 可生成赏心悦目的分层图形，并可应用许多设置。
 
 
 
+### A 主要的节点属性
+
+| Name         | Default         | Values                                                       |
+| ------------ | --------------- | ------------------------------------------------------------ |
+| color        | black           | node shape color                                             |
+| colorscheme  | X11             | scheme for interpreting color names                          |
+| comment      |                 | any string (format-dependent)                                |
+| distortion   | 0.0             | node distortion for shape=polygon                            |
+| fillcolor    | lightgrey/black | node fill color                                              |
+| fixedsize    | false           | label text has no affect on node size                        |
+| fontcolor    | black           | type face color                                              |
+| fontname     | Times-Roman     | font family                                                  |
+| fontsize     | 14              | point size of label                                          |
+| group        |                 | name of node’s horizontal alignment group                    |
+| height       | .5              | minimum height in inches                                     |
+| id           |                 | any string (user-defined output object tags)                 |
+| image        |                 | image file name                                              |
+| imagescale   | false           | true, width, height, both                                    |
+| label        | node name       | any string                                                   |
+| labelloc     | c               | node label vertical alignment                                |
+| layer        | overlay range   | all, id or id:id, or a comma-separated list of the former    |
+| margin       | 0.11,0.55       | space around label                                           |
+| nojustify    | false           | if true, justify to label, not node                          |
+| orientation  | 0.0             | node rotation angle                                          |
+| penwidth     | 1.0             | width of pen for drawing boundaries, in points               |
+| peripheries  | shape-dependent | number of node boundaries                                    |
+| regular      | false           | force polygon to be regular                                  |
+| samplepoints | 8 or 20         | number vertices to convert circle or ellipse                 |
+| shape        | ellipse         | node shape; see Section 2.1 and Appendix H                   |
+| sides        | 4               | number of sides for shape=polygon                            |
+| skew         | 0.0             | skewing of node for shape=polygon                            |
+| style        |                 | graphics options, e.g. bold, dotted, filled; cf. Section 2.4 |
+| target       |                 | if URL is set, determines browser window for URL             |
+| tooltip      | label           | tooltip annotation                                           |
+| URL          |                 | URL associated with node (format-dependent)                  |
+| width        | .75             | minimum width in inches                                      |
+
+
+
+### B 主要的边属性
+
+| Name           | Default       | Values                                                       |
+| -------------- | ------------- | ------------------------------------------------------------ |
+| arrowhead      | normal        | style of arrowhead at head end                               |
+| arrowsize      | 1.0           | scaling factor for arrowheads                                |
+| arrowtail      | normal        | style of arrowhead at tail end                               |
+| color          | black         | edge stroke color                                            |
+| colorscheme    | X11           | scheme for interpreting color names                          |
+| comment        |               | any string (format-dependent)                                |
+| constraint     | true          | use edge to affect node ranking                              |
+| decorate       |               | if set, draws a line connecting labels with their edges      |
+| dir            | forward       | forward, back, both, or none                                 |
+| edgeURL        |               | URL attached to non-label part of edge                       |
+| edgehref       |               | synonym for edgeURL                                          |
+| edgetarget     |               | if URL is set, determines browser window for URL             |
+| edgetooltip    | label         | tooltip annotation for non-label part of edge                |
+| fontcolor      | black         | type face color                                              |
+| fontname       | Times-Roman   | font family                                                  |
+| fontsize       | 14            | point size of label                                          |
+| headclip       | true          | if false, edge is not clipped to head node boundary          |
+| headhref       |               | synonym for headURL                                          |
+| headlabel      |               | label placed near head of edge                               |
+| headport       |               | n,ne,e,se,s,sw,w,nw                                          |
+| headtarget     |               | if headURL is set, determines browser window for URL         |
+| headtooltip    | label         | tooltip annotation near head of edge                         |
+| headURL        |               | URL attached to head label                                   |
+| href           |               | alias for URL                                                |
+| id             |               | any string (user-defined output object tags)                 |
+| label          |               | edge label                                                   |
+| labelangle     | -25.0         | angle in degrees which head or tail label is rotated off edge |
+| labeldistance  | 1.0           | scaling factor for distance of head or tail label from node  |
+| labelfloat     | false         | lessen constraints on edge label placement                   |
+| labelfontcolor | black         | type face color for head and tail labels                     |
+| labelfontname  | Times-Roman   | font family for head and tail labels                         |
+| labelfontsize  | 14            | point size for head and tail labels                          |
+| labelhref      |               | synonym for labelURL                                         |
+| labelURL       |               | URL for label, overrides edge URL                            |
+| labeltarget    |               | if URL or labelURL is set, determines browser window for URL |
+| labeltooltip   | label         | tooltip annotation near label                                |
+| layer          | overlay range | all, id or id:id, or a comma-separated list of the former    |
+| lhead          |               | name of cluster to use as head of edge                       |
+| ltail          |               | name of cluster to use as tail of edge                       |
+| minlen         | 1             | minimum rank distance between head and tail                  |
+| penwidth       | 1.0           | width of pen for drawing edge stroke, in points              |
+| samehead       |               | tag for head node; edge heads with the same tag are merged  onto the same port |
+| sametail       |               | tag for tail node; edge tails with the same tag are merged  onto the same port |
+| style          |               | graphics options, e.g. bold, dotted, filled; cf. Section 2.4 |
+| tailclip       | true          | if false, edge is not clipped to tail node boundary          |
+| tailhref       |               | synonym for tailURL                                          |
+| taillabel      |               | label placed near tail of edge                               |
+| tailport       |               | n,ne,e,se,s,sw,w,nw                                          |
+| tailtarget     |               | if tailURL is set, determines browser window for URL         |
+| tailtooltip    | label         | tooltip annotation near tail of edge                         |
+| tailURL        |               | URL attached to tail label                                   |
+| target         |               | if URL is set, determines browser window for URL             |
+| tooltip        | label         | tooltip annotation                                           |
+| weight         | 1             | integer cost of stretching an edge                           |
+
+
+
+### C 主要的图形属性
+
+| Name         | Default      | Values                                                       |
+| ------------ | ------------ | ------------------------------------------------------------ |
+| aspect       |              | controls aspect ratio adjustment                             |
+| bgcolor      |              | background color for drawing, plus initial fill color        |
+| center       | false        | center drawing on page                                       |
+| clusterrank  | local        | may be global or none                                        |
+| color        | black        | for clusters, outline color, and fill color if fillcolor not  defined |
+| colorscheme  | X11          | scheme for interpreting color names                          |
+| comment      |              | any string (format-dependent)                                |
+| compound     | false        | allow edges between clusters                                 |
+| concentrate  | false        | enables edge concentrators                                   |
+| dpi          | 96           | dots per inch for image output                               |
+| fillcolor    | black        | cluster fill color                                           |
+| fontcolor    | black        | type face color                                              |
+| fontname     | Times-Roman  | font family                                                  |
+| fontnames    |              | svg, ps, gd (SVG only)                                       |
+| fontpath     |              | list of directories to search for fonts                      |
+| fontsize     | 14           | point size of label                                          |
+| id           |              | any string (user-defined output object tags)                 |
+| label        |              | any string                                                   |
+| labeljust    | centered     | ”l” and ”r” for left- and right-justified cluster labels,  respectively |
+| labelloc     | top          | ”t” and ”b” for top- and bottom-justified cluster labels,  respectively |
+| landscape    |              | if true, means orientation=landscape                         |
+| layers       |              | id​ : id : id . . .                                           |
+| layersep     | :            | specifies separator character to split layers                |
+| margin       | .5           | margin included in page, inches                              |
+| mindist      | 1.0          | minimum separation between all nodes (not dot)               |
+| nodesep      | .25          | separation between nodes, in inches.                         |
+| nojustify    | false        | if true, justify to label, not graph                         |
+| ordering     |              | if out out edge order is preserved                           |
+| orientation  | portrait     | if rotate is not used and the value is landscape, use  landscape orientation |
+| outputorder  | breadthfirst | or nodesfirst, edgesfirst                                    |
+| page         |              | unit of pagination, e.g. "8.5,11"                            |
+| pagedir      | BL           | traversal order of pages                                     |
+| pencolor     | black        | color for drawing cluster boundaries                         |
+| penwidth     | 1.0          | width of pen for drawing boundaries, in points               |
+| peripheries  | 1            | number of cluster boundaries                                 |
+| rank         |              | same, min, max, source or sink                               |
+| rankdir      | TB           | LR (left to right) or TB (top to bottom)                     |
+| ranksep      | .75          | separation between ranks, in inches.                         |
+| ratio        |              | approximate aspect ratio desired, fill or auto minimization  |
+| rotate       |              | If 90, set orientation to landscape                          |
+| samplepoints | 8            | number of points used to represent ellipses and circles on  output (cf. Appendix F |
+| searchsize   | 30           | maximum edges with negative cut values to check when looking  for a |
+| minimum      |              | one during network simplex                                   |
+| size         |              | maximum drawing size, in inches                              |
+| splines      |              | draw edges as splines, polylines, lines                      |
+| style        |              | graphics options, e.g. filled for clusters                   |
+| stylesheet   |              | pathname or URL to XML style sheet for SVG                   |
+| target       |              | if URL is set, determines browser window for URL             |
+| tooltip      | label        | tooltip annotation for cluster                               |
+| truecolor    |              | if set, force 24 bit or indexed color in image output        |
+| viewport     |              | clipping window on output                                    |
+| URL          |              | URL associated with graph (format-dependent)                 |
+
+
+
+### D DOT语法
+
+下图是DOT语言的抽象语法。 端子以粗体显示，非端子以斜体显示。 文字字符用单引号引起来。 圆括号 ( 和 ) 表示需要时分组。 方括号 [ 和 ] 包含可选项。 竖线 | 分开多个选项。
+
+![dot_grammars.png](../static/image/dot_grammars.png)
+
+
+
+id是不以数字开头但可能包括下划线的任何字母数字字符串；或数字；或任何可能包含转义引号的带引号的字符串。
+
+边在有向图中是 ->，在无向图中是 --。
+
+该语言支持C++风格的注释：/**/和//。
+
+分号有助于提高可读性，但不是必需的，除非在极少数情况下，没有正文的指名子图紧接在匿名子图之前，因为在优先规则下，该序列被解析为具有标题和正文的子图。
+
+复杂属性值可能包含用于解析DOT语言的字符，如逗号和空格。 为了避免出现解析错误，需要用双引号将这些值引起来。
+
+
+
+### E 明文输出文件格式 (-Tplain)
+
+dot 的“明文”输出格式以简单的、面向线条的样式列出节点和边信息，前端组件很容易对其进行解析。 所有坐标和长度均未缩放，以英寸为单位。
+
+第一行是：
+
+> *graph* scalefactor width height
+
+width 和 height 值提供绘图的宽度和高度；绘图的左下角位于原点。 比例因子指示在最终图形中缩放所有坐标的比例。
+
+ 下一组代码以以下格式列出节点：
+
+> *node* name x y xsize ysize label style shape color fillcolor
+
+name 是唯一标识符。 如果它包含空格或标点符号，则使用引号。 X和y值给出了节点中心的坐标；xsize 和 ysize 给出了宽度和高度。 其余参数分别提供节点的 label, style, shape, color 和 fillcolor 等属性。
+ 如果节点没有 style 属性，则使用 “solid” 。
+
+下一组代码出边：
+
+> *edge* tail head n x~1~ y~1~ x~2~ y~2~ . . . x~n~ y~n~ [ label lx ly ] style color
+
+*n*是跟随为B-spline控制点的坐标对的数量。 如果为边添加了标签，则标签文本和坐标将列在下一个列表中。 边的描述信息由边的 style 和 color 完成。 与节点一样，如果未定义 style ，则使用 “solid” 。
+ 最后一行总是：
+
+> *stop*
+
+
+
+
+
 
 [^1]:1有一种方法可以实现自定义节点形状，使用shape=epsf和shapefile属性，并依赖于PostScript输出。详细信息超出了本用户指南的范围。有关更多信息，请联系作者。
 [^2]:转义序列\\N是节点名称的内部符号。
@@ -649,3 +858,4 @@ dot 可生成赏心悦目的分层图形，并可应用许多设置。
 [^5]: 如果输出格式为MIF或点状，则默认值为黑色。
 [^6]: 为了完整性，我们注意到 dot 还提供对在布局算法中起技术作用的各种参数的访问。 其中包括mclimate it、nslimit、nslimit1、regercross和searchsize。
 [^7]: 回想一下，最低等级位于绘图的顶部
+
