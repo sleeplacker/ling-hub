@@ -1,5 +1,17 @@
 # 使用dot语言画图
 
+## 0 Graphviz的下载安装
+
+下载地址：<https://www.graphviz.org/download/>
+
+Windows最好选择下载 Stable Windows install packages
+
+/Packages/stable/windows/10/cmake/Release/x64/下面的安装包(当前最新版本为 [graphviz-install-2.44.1-win64.exe](https://www2.graphviz.org/Packages/stable/windows/10/cmake/Release/x64/graphviz-install-2.44.1-win64.exe) )安装后没有图形界面，而且功能较少，比如没有gvpr。
+
+另外，<https://www.graphviz.org/documentation/> 有很详细的Graphviz和dot语言的使用说明。
+
+
+
 
 
 ## 1 基本图形绘制
