@@ -49,7 +49,7 @@ windows中运行命令为：
 
 将生成图1的图形。命令行选项-tps指明按PostScript格式(EPSF)输出。 可以打印、由PostScript查看器显示或嵌入到另一个文档中。
 
-![GraphvizOutput001](../static/image/GraphvizOutput001.png)
+![GraphvizOutput001](../static/image/Graphviz/GraphvizOutput001.png)
 图1
 
 调整布局中节点和边的表示或位置通常很有用。 这是通过在输入文件中设置节点、边或子图的属性来实现的。 属性是字符串格式的名称-值对。 代码2和图2说明了一些布局属性。 代码2清单中，第2行将图形的大小设置为4，4(英寸)。 此属性控制绘图的大小；如果绘制的图太大，则会根据需要统一缩放。
@@ -75,7 +75,7 @@ digraph G {
 	execute -> compare;
 }
 ```
-![GraphvizOutput002](../static/image/GraphvizOutput002.png)
+![GraphvizOutput002](../static/image/Graphviz/GraphvizOutput002.png)
 图2
 
 ## 2 图形属性
@@ -106,7 +106,7 @@ digraph G {
 
 
 
-![GraphvizOutput003](../static/image/GraphvizOutput003.png)
+![GraphvizOutput003](../static/image/Graphviz/GraphvizOutput003.png)
 图3
 
 基于记录的节点形成另一类节点形状。 其中包括record和Mrecord.两种形状参数。 除了后者有圆角之外，两者是相同的。 这些节点表示域的递归列表，这些域被绘制为交替的水平和垂直方框行。 递归结构由节点的标签确定，该标签具有以下架构：
@@ -132,7 +132,7 @@ digraph structs {
 }
 ```
 
-![GraphvizOutput004](../static/image/GraphvizOutput004.png)
+![GraphvizOutput004](../static/image/Graphviz/GraphvizOutput004.png)
 图4
 
 
@@ -187,7 +187,7 @@ digraph html {
 }
 ```
 
-![GraphvizOutput005](../static/image/GraphvizOutput005.png)
+![GraphvizOutput005](../static/image/Graphviz/GraphvizOutput005.png)
 图5
 
 ### 2.4 图形样式
@@ -319,7 +319,7 @@ digraph asde91 {
 
 
 
-![GraphvizOutput006](../static/image/GraphvizOutput006.png)
+![GraphvizOutput006](../static/image/Graphviz/GraphvizOutput006.png)
 图6
 
  在某些图中，节点从左到右的顺序很重要。 如果子图设置了ordering=out，则子图中具有相同尾节点的外边将按照其创建顺序从左向右扇出。 (另请注意，涉及头部节点的平面边可能会干扰其排序)。 
@@ -387,7 +387,7 @@ digraph g {
 
 
 
-![GraphvizOutput007](../static/image/GraphvizOutput007.png)
+![GraphvizOutput007](../static/image/Graphviz/GraphvizOutput007.png)
 图7
 
 代码8和图8给出了使用记录节点和端口的另一个示例。 这重复了代码4和图4的示例，但现在使用端口作为边的连接器。 请注意，如果将记录的输入高度设置为较小的值，则记录常常看起来会更好，这样文本标签会控制实际大小，如代码7所示。 否则，假定节点大小为默认尺寸(.75x.5)，如图8所示。代码9和图9的示例在哈希表的布局中使用从左到右的绘图。
@@ -407,7 +407,7 @@ digraph structs {
 
 
 
-![GraphvizOutput008](../static/image/GraphvizOutput008.png)
+![GraphvizOutput008](../static/image/Graphviz/GraphvizOutput008.png)
 图8
 
 
@@ -442,7 +442,7 @@ digraph G {
 
 
 
-![GraphvizOutput009](../static/image/GraphvizOutput009.png)
+![GraphvizOutput009](../static/image/Graphviz/GraphvizOutput009.png)
 图9
 
 
@@ -484,7 +484,7 @@ digraph G {
 
 
 
-![GraphvizOutput010](../static/image/GraphvizOutput010.png)
+![GraphvizOutput010](../static/image/Graphviz/GraphvizOutput010.png)
 图10
 
 
@@ -535,7 +535,7 @@ digraph G {
 
 
 
-![GraphvizOutput011](../static/image/GraphvizOutput011.png)
+![GraphvizOutput011](../static/image/Graphviz/GraphvizOutput011.png)
 图11
 
 如果顶级图的 compound 属性设置为true，则 dot 将允许边连接节点和簇。 这是通过定义lhead或ltail属性的边来实现的。 这些属性的值必须分别是包含头节点或尾节点的簇的名称。 在这种情况下，边在簇边界处被截断。 所有其他边属性(如arrowhead或dir)都将应用于截断的边。 例如，代码12是一个使用了 compound 属性示例，图12是结果图。
@@ -566,7 +566,7 @@ digraph G {
 
 
 
-![GraphvizOutput012](../static/image/GraphvizOutput012.png)
+![GraphvizOutput012](../static/image/Graphviz/GraphvizOutput012.png)
 图12
 
 ### 3.3 集中器
@@ -818,7 +818,7 @@ dot 可生成赏心悦目的分层图形，并可应用许多设置。
 
 下图是DOT语言的抽象语法。 端子以粗体显示，非端子以斜体显示。 文字字符用单引号引起来。 圆括号 ( 和 ) 表示需要时分组。 方括号 [ 和 ] 包含可选项。 竖线 | 分开多个选项。
 
-![dot_grammars.png](../static/image/dot_grammars.png)
+![dot_grammars.png](../static/image/Graphviz/dot_grammars.png)
 
 
 
@@ -914,27 +914,27 @@ edge [layer=all];
 
 | 代码 | 图形 | 代码 | 图形 |      代码       |                             图形                             |
 | :--: | :--: | :--: | :--: | :--: | :--: |
-|box|![box.gif](../static/image/GraphizShapes/box.gif)|polygon|![polygon.gif](../static/image/GraphizShapes/polygon.gif)|ellipse|![ellipse.gif](../static/image/GraphizShapes/ellipse.gif)|
-|oval|![oval.gif](../static/image/GraphizShapes/oval.gif)|circle|![circle.gif](../static/image/GraphizShapes/circle.gif)|point|![point.gif](../static/image/GraphizShapes/point.gif)|
-|egg|![egg.gif](../static/image/GraphizShapes/egg.gif)|triangle|![triangle.gif](../static/image/GraphizShapes/triangle.gif)|plaintext|![plaintext.gif](../static/image/GraphizShapes/plaintext.gif)|
-|plain|![plain.gif](../static/image/GraphizShapes/plain.gif)|diamond|![diamond.gif](../static/image/GraphizShapes/diamond.gif)|trapezium|![trapezium.gif](../static/image/GraphizShapes/trapezium.gif)|
-|parallelogram|![parallelogram.gif](../static/image/GraphizShapes/parallelogram.gif)|house|![house.gif](../static/image/GraphizShapes/house.gif)|pentagon|![pentagon.gif](../static/image/GraphizShapes/pentagon.gif)|
-|hexagon|![hexagon.gif](../static/image/GraphizShapes/hexagon.gif)|septagon|![septagon.gif](../static/image/GraphizShapes/septagon.gif)|octagon|![octagon.gif](../static/image/GraphizShapes/octagon.gif)|
-|doublecircle|![doublecircle.gif](../static/image/GraphizShapes/doublecircle.gif)|doubleoctagon|![doubleoctagon.gif](../static/image/GraphizShapes/doubleoctagon.gif)|tripleoctagon|![tripleoctagon.gif](../static/image/GraphizShapes/tripleoctagon.gif)|
-|invtriangle|![invtriangle.gif](../static/image/GraphizShapes/invtriangle.gif)|invtrapezium|![invtrapezium.gif](../static/image/GraphizShapes/invtrapezium.gif)|invhouse|![invhouse.gif](../static/image/GraphizShapes/invhouse.gif)|
-|Mdiamond|![Mdiamond.gif](../static/image/GraphizShapes/Mdiamond.gif)|Msquare|![Msquare.gif](../static/image/GraphizShapes/Msquare.gif)|Mcircle|![Mcircle.gif](../static/image/GraphizShapes/Mcircle.gif)|
-|rect|![rect.gif](../static/image/GraphizShapes/rect.gif)|rectangle|![rectangle.gif](../static/image/GraphizShapes/rectangle.gif)|square|![square.gif](../static/image/GraphizShapes/square.gif)|
-|star|![star.gif](../static/image/GraphizShapes/star.gif)|none|![none.gif](../static/image/GraphizShapes/none.gif)|underline|![underline.gif](../static/image/GraphizShapes/underline.gif)|
-|cylinder|![cylinder.gif](../static/image/GraphizShapes/cylinder.gif)|note|![note.gif](../static/image/GraphizShapes/note.gif)|tab|![tab.gif](../static/image/GraphizShapes/tab.gif)|
-|folder|![folder.gif](../static/image/GraphizShapes/folder.gif)|box3d|![box3d.gif](../static/image/GraphizShapes/box3d.gif)|component|![component.gif](../static/image/GraphizShapes/component.gif)|
-|promoter|![promoter.gif](../static/image/GraphizShapes/promoter.gif)|cds|![cds.gif](../static/image/GraphizShapes/cds.gif)|terminator|![terminator.gif](../static/image/GraphizShapes/terminator.gif)|
-|utr|![utr.gif](../static/image/GraphizShapes/utr.gif)|primersite|![primersite.gif](../static/image/GraphizShapes/primersite.gif)|restrictionsite|![restrictionsite.gif](../static/image/GraphizShapes/restrictionsite.gif)|
-|fivepoverhang|![fivepoverhang.gif](../static/image/GraphizShapes/fivepoverhang.gif)|threepoverhang|![threepoverhang.gif](../static/image/GraphizShapes/threepoverhang.gif)|noverhang|![noverhang.gif](../static/image/GraphizShapes/noverhang.gif)|
-|assembly|![assembly.gif](../static/image/GraphizShapes/assembly.gif)|signature|![signature.gif](../static/image/GraphizShapes/signature.gif)|insulator|![insulator.gif](../static/image/GraphizShapes/insulator.gif)|
-|ribosite|![ribosite.gif](../static/image/GraphizShapes/ribosite.gif)|rnastab|![rnastab.gif](../static/image/GraphizShapes/rnastab.gif)|proteasesite|![proteasesite.gif](../static/image/GraphizShapes/proteasesite.gif)|
-|proteinstab|![proteinstab.gif](../static/image/GraphizShapes/proteinstab.gif)|rpromoter|![rpromoter.gif](../static/image/GraphizShapes/rpromoter.gif)|rarrow|![rarrow.gif](../static/image/GraphizShapes/rarrow.gif)|
-|larrow|![larrow.gif](../static/image/GraphizShapes/larrow.gif)|lpromoter|![lpromoter.gif](../static/image/GraphizShapes/lpromoter.gif)|record|![record.gif](../static/image/GraphizShapes/record.gif)|
-|Mrecord|![Mrecord.gif](../static/image/GraphizShapes/Mrecord.gif)|
+|box|![box.gif](../static/image/Graphviz/Shapes/box.gif)|polygon|![polygon.gif](../static/image/Graphviz/Shapes/polygon.gif)|ellipse|![ellipse.gif](../static/image/Graphviz/Shapes/ellipse.gif)|
+|oval|![oval.gif](../static/image/Graphviz/Shapes/oval.gif)|circle|![circle.gif](../static/image/Graphviz/Shapes/circle.gif)|point|![point.gif](../static/image/Graphviz/Shapes/point.gif)|
+|egg|![egg.gif](../static/image/Graphviz/Shapes/egg.gif)|triangle|![triangle.gif](../static/image/Graphviz/Shapes/triangle.gif)|plaintext|![plaintext.gif](../static/image/Graphviz/Shapes/plaintext.gif)|
+|plain|![plain.gif](../static/image/Graphviz/Shapes/plain.gif)|diamond|![diamond.gif](../static/image/Graphviz/Shapes/diamond.gif)|trapezium|![trapezium.gif](../static/image/Graphviz/Shapes/trapezium.gif)|
+|parallelogram|![parallelogram.gif](../static/image/Graphviz/Shapes/parallelogram.gif)|house|![house.gif](../static/image/Graphviz/Shapes/house.gif)|pentagon|![pentagon.gif](../static/image/Graphviz/Shapes/pentagon.gif)|
+|hexagon|![hexagon.gif](../static/image/Graphviz/Shapes/hexagon.gif)|septagon|![septagon.gif](../static/image/Graphviz/Shapes/septagon.gif)|octagon|![octagon.gif](../static/image/Graphviz/Shapes/octagon.gif)|
+|doublecircle|![doublecircle.gif](../static/image/Graphviz/Shapes/doublecircle.gif)|doubleoctagon|![doubleoctagon.gif](../static/image/Graphviz/Shapes/doubleoctagon.gif)|tripleoctagon|![tripleoctagon.gif](../static/image/Graphviz/Shapes/tripleoctagon.gif)|
+|invtriangle|![invtriangle.gif](../static/image/Graphviz/Shapes/invtriangle.gif)|invtrapezium|![invtrapezium.gif](../static/image/Graphviz/Shapes/invtrapezium.gif)|invhouse|![invhouse.gif](../static/image/Graphviz/Shapes/invhouse.gif)|
+|Mdiamond|![Mdiamond.gif](../static/image/Graphviz/Shapes/Mdiamond.gif)|Msquare|![Msquare.gif](../static/image/Graphviz/Shapes/Msquare.gif)|Mcircle|![Mcircle.gif](../static/image/Graphviz/Shapes/Mcircle.gif)|
+|rect|![rect.gif](../static/image/Graphviz/Shapes/rect.gif)|rectangle|![rectangle.gif](../static/image/Graphviz/Shapes/rectangle.gif)|square|![square.gif](../static/image/Graphviz/Shapes/square.gif)|
+|star|![star.gif](../static/image/Graphviz/Shapes/star.gif)|none|![none.gif](../static/image/Graphviz/Shapes/none.gif)|underline|![underline.gif](../static/image/Graphviz/Shapes/underline.gif)|
+|cylinder|![cylinder.gif](../static/image/Graphviz/Shapes/cylinder.gif)|note|![note.gif](../static/image/Graphviz/Shapes/note.gif)|tab|![tab.gif](../static/image/Graphviz/Shapes/tab.gif)|
+|folder|![folder.gif](../static/image/Graphviz/Shapes/folder.gif)|box3d|![box3d.gif](../static/image/Graphviz/Shapes/box3d.gif)|component|![component.gif](../static/image/Graphviz/Shapes/component.gif)|
+|promoter|![promoter.gif](../static/image/Graphviz/Shapes/promoter.gif)|cds|![cds.gif](../static/image/Graphviz/Shapes/cds.gif)|terminator|![terminator.gif](../static/image/Graphviz/Shapes/terminator.gif)|
+|utr|![utr.gif](../static/image/Graphviz/Shapes/utr.gif)|primersite|![primersite.gif](../static/image/Graphviz/Shapes/primersite.gif)|restrictionsite|![restrictionsite.gif](../static/image/Graphviz/Shapes/restrictionsite.gif)|
+|fivepoverhang|![fivepoverhang.gif](../static/image/Graphviz/Shapes/fivepoverhang.gif)|threepoverhang|![threepoverhang.gif](../static/image/Graphviz/Shapes/threepoverhang.gif)|noverhang|![noverhang.gif](../static/image/Graphviz/Shapes/noverhang.gif)|
+|assembly|![assembly.gif](../static/image/Graphviz/Shapes/assembly.gif)|signature|![signature.gif](../static/image/Graphviz/Shapes/signature.gif)|insulator|![insulator.gif](../static/image/Graphviz/Shapes/insulator.gif)|
+|ribosite|![ribosite.gif](../static/image/Graphviz/Shapes/ribosite.gif)|rnastab|![rnastab.gif](../static/image/Graphviz/Shapes/rnastab.gif)|proteasesite|![proteasesite.gif](../static/image/Graphviz/Shapes/proteasesite.gif)|
+|proteinstab|![proteinstab.gif](../static/image/Graphviz/Shapes/proteinstab.gif)|rpromoter|![rpromoter.gif](../static/image/Graphviz/Shapes/rpromoter.gif)|rarrow|![rarrow.gif](../static/image/Graphviz/Shapes/rarrow.gif)|
+|larrow|![larrow.gif](../static/image/Graphviz/Shapes/larrow.gif)|lpromoter|![lpromoter.gif](../static/image/Graphviz/Shapes/lpromoter.gif)|record|![record.gif](../static/image/Graphviz/Shapes/record.gif)|
+|Mrecord|![Mrecord.gif](../static/image/Graphviz/Shapes/Mrecord.gif)|
 
 
 
@@ -944,11 +944,11 @@ edge [layer=all];
 
 <www.graphviz.org/doc/info/arrows.html>
 
-![arrows1](../static/image/GraphizShapes/arrows1.png)
+![arrows1](../static/image/Graphviz/arrows1.png)
 
 箭头描述支持简单的语法以允许更复杂的派生形状，如下例所示。
 
-![arrows2](../static/image/GraphizShapes/arrows2.png)
+![arrows2](../static/image/Graphviz/arrows2.png)
 
 
 
@@ -962,7 +962,7 @@ edge [layer=all];
 
 <www.graphviz.org/doc/info/colors.html>和<www.graphviz.org/doc/info/attrs.html#k:color>
 
-![colors](../static/image/GraphizShapes/colors.png)
+![colors](../static/image/Graphviz/Shapes/colors.png)
 
 
 
