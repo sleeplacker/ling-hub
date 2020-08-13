@@ -1,1 +1,0 @@
-将create_db.sql和run.bat拷贝到一个目录，然后打开“DB2命令窗口-管理器”并进入该目录，然后执行db2 -tvf create_db.sql -z create_db.log
