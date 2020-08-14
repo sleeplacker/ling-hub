@@ -239,3 +239,14 @@
 
 
 
+# 4 附录
+
+## A 符号代码
+
+![Symbols1](../static/image/Symbols1.png)
+
+![Symbols2](../static/image/Symbols2.png)
+
+![Symbols3](../static/image/Symbols3.png)
+
+![Symbols4](../static/image/Symbols4.png)
