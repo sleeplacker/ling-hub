@@ -79,8 +79,8 @@ public class CertificateUtil {
 	/**
 	 * 使用私钥对数据签名
 	 * 
-	 * @param data
-	 * @param privateKey
+	 * @param data-要发送的数据
+	 * @param privateKey-用于签名的私钥
 	 * @return
 	 * @throws Exception
 	 */
@@ -94,9 +94,9 @@ public class CertificateUtil {
 	/**
 	 * 使用证书验证签名
 	 * 
-	 * @param data
-	 * @param sign
-	 * @param cert
+	 * @param data-接收到的数据
+	 * @param sign-接收到的签名
+	 * @param cert-证书
 	 * @return
 	 * @throws Exception
 	 */
