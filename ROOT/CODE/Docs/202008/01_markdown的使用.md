@@ -261,7 +261,41 @@
 
 
 
-# 4 附录
+# 4 Latex公式
+
+## 4.1 累加符号
+
+> 1. 默认格式：
+>
+> \sum_{i=1}^{n}a_n 表示下面的式子
+>
+> $\sum_{i=1}^{n}a_n$
+>
+> 默认格式和使用\nolimits是一样的，\sum\nolimits_{i=1}^{n}a_n 表示下面的式子
+>
+> $\sum\nolimits_{i=1}^{n}a_n$
+
+> 2. 上下格式：
+>
+> 上下格式要加上\limits， \sum\limits_{i=1}^{n}a_n表示下面的式子
+>
+> $\sum\limits_{i=1}^{n}a_n$
+
+> 3. 上下格式也能用于函数
+>
+> 默认格式的 \max_{a\in n}(x,y) 表示下面的式子
+>
+> $\max_{a\in n}(x,y)$
+>
+> 加上 \limits后 可以表示下面的式子
+>
+> $\max\limits_{a\in n}(x,y)$
+
+
+
+
+
+# 5 附录
 
 ## A 符号代码
 
