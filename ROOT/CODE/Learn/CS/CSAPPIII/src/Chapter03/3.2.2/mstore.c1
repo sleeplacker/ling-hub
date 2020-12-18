@@ -1,0 +1,11 @@
+// 反汇编示例
+// 产生汇编代码：gcc -Og -S mstore.c
+// 产生二进制目标文件：gcc -Og -c mstore.c
+// 使用反汇编器对二进制目标文件生成汇编代码：objdump -d mstore.o
+
+long mult2(long, long);
+void multstore(long x, long y, long *dest) {
+	long t = mult2(x, y);
+
+	*dest = t;
+}

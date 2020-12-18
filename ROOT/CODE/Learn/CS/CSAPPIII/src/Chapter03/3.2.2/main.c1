@@ -1,0 +1,19 @@
+// main函数
+//将两个源文件进行链接生成可执行文件：gcc -Og -o prog main.c mstore.c
+//对可执行文件进行反编译：objdump -d prog.exe
+
+#include <stdio.h>
+
+void multstore(long, long, long *);
+
+int main() {
+	long d;
+	multstore(2, 3, &d);
+	printf("2 * 3 --> %ld\n", d);
+	return 0;
+}
+
+long mult2(long a, long b) {
+	long s = a * b;
+	return s;
+}
