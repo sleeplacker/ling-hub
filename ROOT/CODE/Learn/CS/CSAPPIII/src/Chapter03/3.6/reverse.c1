@@ -1,0 +1,22 @@
+// 产生汇编代码：gcc -Og -S reverse.c
+// 产生二进制目标文件：gcc -Og -c reverse.c
+// 使用反汇编器对二进制目标文件生成汇编代码：objdump -d reverse.o
+
+#include <stdio.h>
+#include <stdint.h>
+
+long long fun_b(unsigned long long x) {
+	long long val = 0;
+	long long i;
+	for (i = 64; i != 0; i--) {
+		/**
+		 * 汇编代码中 x & 0x1 被编译成：andl	$1, %r8d
+		 虽然是 long long 类型，但是使用 andl，而不是 andq，
+		 原因是 x86-64 采用的惯例，即任何为寄存器生成 32 位值
+		 的指令都会把该寄存器的高位部分置0
+		 */
+		val = (val << 1) | (x & 0x1);
+		x >>= 1;
+	}
+	return val;
+}
