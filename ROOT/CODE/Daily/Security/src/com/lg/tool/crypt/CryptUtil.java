@@ -214,6 +214,13 @@ public class CryptUtil {
 		return cipher.doFinal(data);
 	}
 
+	/**
+	 * RSA私钥加密
+	 * @param data
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
 	public static byte[] encryptByPrivateKey(byte[] data, byte[] key) throws Exception {
 		PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(key);
 		KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
