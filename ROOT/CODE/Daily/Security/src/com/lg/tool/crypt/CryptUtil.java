@@ -1,13 +1,18 @@
-package com.lg.tool.certificate;
+package com.lg.tool.crypt;
 
 import java.io.FileInputStream;
+import java.security.KeyFactory;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
+
+import javax.crypto.Cipher;
 
 /**
  * 证书工具类
@@ -34,10 +39,13 @@ import java.util.Base64;
  * createTime 2020-08-21 01:06:03
  *
  */
-public class CertificateUtil {
+public class CryptUtil {
+	public static final String KEY_ALGORITHM = "RSA";
+
 	public static void main(String[] args) throws Exception {
+		/* 签名/验签 < */
 		// 客户端-获取秘钥库
-		KeyStore ks = getKeyStore("D:/openssl_CA/certs/client.p12", "123456");
+		KeyStore ks = getKeyStore("D:/openssl/certs/client.p12", "123456");
 		// 客户端-获取私钥
 		PrivateKey privateKey = getPrivateKey(ks, "1", "123456");// PKCS12秘钥库中别名1为私钥
 		// 客户端-对数据签名
@@ -48,16 +56,27 @@ public class CertificateUtil {
 		System.out.println("客户端签名：" + signStr);
 
 		// 服务器-加载客户端证书
-		X509Certificate cert = getCertificate("D:/openssl_CA/certs/client.cer");
+		X509Certificate cert = getCertificate("D:/openssl/certs/cert.crt");
 		System.out.println("签名算法：" + cert.getSigAlgName());
 		System.out.println("服务器接收明文：" + plain);
 		System.out.println("服务器验签结果：" + verify(plain.getBytes(), Base64.getDecoder().decode(signStr), cert));
 		plain = "Hello , CA!";// 如果明文被篡改，则验签会失败
 		System.out.println("服务器接收明文：" + plain);
 		System.out.println("服务器验签结果：" + verify(plain.getBytes(), Base64.getDecoder().decode(signStr), cert));
+		/* 签名/验签 > */
 
+		/* 加密/解密 < */
 		// 可以从证书中获取公钥
 		System.out.println("证书中的公钥：" + getPublicKey(cert));
+		// 客户端-获取私钥
+		plain = "Hello , RSA";// 加密明文
+		PublicKey pubk = getPublicKey(getCertificate("D:/openssl/certs/cert.crt"));
+		byte[] pubkb = pubk.getEncoded();
+		byte[] enc = encryptByPublicKey(plain.getBytes(), pubkb);
+		// 解密结果
+		System.out.println(
+				"私钥解密结果：" + new String(decryptByPrivateKey(enc, getPrivateKey(ks, "1", "123456").getEncoded())));
+		/* 加密/解密 > */
 	}
 
 	/**
@@ -68,7 +87,7 @@ public class CertificateUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	private static KeyStore getKeyStore(String keyStorePath, String password) throws Exception {
+	public static KeyStore getKeyStore(String keyStorePath, String password) throws Exception {
 		KeyStore ks = KeyStore.getInstance("PKCS12");// 使用PKCS12类型的秘钥库
 		try (FileInputStream fis = new FileInputStream(keyStorePath)) {
 			ks.load(fis, password.toCharArray());
@@ -114,7 +133,7 @@ public class CertificateUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	private static X509Certificate getCertificate(String certPath) throws Exception {
+	public static X509Certificate getCertificate(String certPath) throws Exception {
 		CertificateFactory cf = CertificateFactory.getInstance("X.509");
 		try (FileInputStream fis = new FileInputStream(certPath)) {
 			return (X509Certificate) cf.generateCertificate(fis);
@@ -127,7 +146,7 @@ public class CertificateUtil {
 	 * @param cert
 	 * @return
 	 */
-	private static PublicKey getPublicKey(X509Certificate cert) {
+	public static PublicKey getPublicKey(X509Certificate cert) {
 		return cert.getPublicKey();
 	}
 
@@ -140,8 +159,67 @@ public class CertificateUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	private static PrivateKey getPrivateKey(KeyStore ks, String alias, String password) throws Exception {
+	public static PrivateKey getPrivateKey(KeyStore ks, String alias, String password) throws Exception {
 		return (PrivateKey) ks.getKey(alias, password.toCharArray());
 	}
 
+	/**
+	 * RSA私钥解密
+	 * 
+	 * @param data
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public static byte[] decryptByPrivateKey(byte[] data, byte[] key) throws Exception {
+		PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(key);
+		KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
+		PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
+		Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+		cipher.init(Cipher.DECRYPT_MODE, privateKey);
+		return cipher.doFinal(data);
+	}
+
+	/**
+	 * RSA公钥解密
+	 * 
+	 * @param data
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public static byte[] decryptByPublicKey(byte[] data, byte[] key) throws Exception {
+		X509EncodedKeySpec keySpec = new X509EncodedKeySpec(key);
+		KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
+		PublicKey publicKey = keyFactory.generatePublic(keySpec);
+		Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+		cipher.init(Cipher.DECRYPT_MODE, publicKey);
+		return cipher.doFinal(data);
+	}
+
+	/**
+	 * RSA公钥加密
+	 * 
+	 * @param data
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public static byte[] encryptByPublicKey(byte[] data, byte[] key) throws Exception {
+		X509EncodedKeySpec keySpec = new X509EncodedKeySpec(key);
+		KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
+		PublicKey publicKey = keyFactory.generatePublic(keySpec);
+		Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+		cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+		return cipher.doFinal(data);
+	}
+
+	public static byte[] encryptByPrivateKey(byte[] data, byte[] key) throws Exception {
+		PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(key);
+		KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
+		PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
+		Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+		cipher.init(Cipher.ENCRYPT_MODE, privateKey);
+		return cipher.doFinal(data);
+	}
 }
