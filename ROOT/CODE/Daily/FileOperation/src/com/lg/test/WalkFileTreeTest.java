@@ -26,7 +26,7 @@ public class WalkFileTreeTest {
 	public static void main(String[] args) throws IOException {
 
 //		if (true) {
-//			String fileName = "添加TCP取样器.png";
+//			String fileName = "添加TCP取样器操作.png";
 //			System.out.println("![" + fileName.replace(".png", "") + "](../static/image/Jmeter/" + fileName + ")");
 //			return;
 //		}
@@ -47,7 +47,6 @@ public class WalkFileTreeTest {
 
 			@Override
 			public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
-				// TODO Auto-generated method stub
 				return FileVisitResult.SKIP_SUBTREE;
 			}
 
@@ -61,7 +60,6 @@ public class WalkFileTreeTest {
 		for (String time : map.keySet()) {
 			String fileName = map.get(time);
 			System.out.println("![" + fileName.replace(".png", "") + "](../static/image/Jmeter/" + fileName + ")");
-			System.out.println();
 			System.out.println();
 			System.out.println();
 		}
