@@ -122,7 +122,29 @@ https://blog.csdn.net/weixin_43968923/article/details/86349914
 
 
 
+### 3.3 安装搜狗输入法
+
+`yay -S fcitx-sogoupinyin`
+
+如果出现如下报错
+
+```
+错误： Cannot find the strip binary required for object file stripping.
+```
+
+则执行下面的命令，再执行安装命令
+
+`sudo pacman -S base-devel`
+
+### 3.4 安装 Typora
+
+`yay -S typora
+ `
 
 
 
+### 3.5 配置git凭证
 
+`git config --global credential.helper store`
+
+执行完上面的命令会创建文件 ~/.gitconfig，然后在 push 时输入一次用户密码就会创建 ~/.git-credentials 文件，里面保存了用户密码，下次push时就不用在输用户密码。
