@@ -160,4 +160,4 @@ https://blog.csdn.net/weixin_43968923/article/details/86349914
 git config --global credential.helper store
 ```
 
-执行完上面的命令会创建文件 ~/.gitconfig，然后在 push 时输入一次用户密码就会创建 ~/.git-credentials 文件，里面保存了用户密码，下次push时就不用在输用户密码。
+执行完上面的命令会创建文件 ~/.gitconfig，然后在 push 时输入一次用户密码就会创建 ~/.git-credentials 文件，里面保存了用户密码，下次 push 时就不用在输用户密码。
