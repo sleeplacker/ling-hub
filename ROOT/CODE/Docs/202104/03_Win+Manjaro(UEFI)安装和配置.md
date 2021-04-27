@@ -143,8 +143,21 @@ https://blog.csdn.net/weixin_43968923/article/details/86349914
 
 
 
-### 3.5 配置git凭证
+### 3.5 git配置
 
-`git config --global credential.helper store`
+- 初始化身份
+
+```
+ git config --global user.email "1544650023@qq.com"
+ git config --global user.name "lingang-desk"
+```
+
+
+
+- 配置git凭证
+
+```
+git config --global credential.helper store
+```
 
 执行完上面的命令会创建文件 ~/.gitconfig，然后在 push 时输入一次用户密码就会创建 ~/.git-credentials 文件，里面保存了用户密码，下次push时就不用在输用户密码。
