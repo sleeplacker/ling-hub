@@ -281,6 +281,6 @@ source ~/.bashrc
 
 #### 4.3.3 安装运行器，以在vscode中运行 C 程序
 
-在插件搜索框中输入 Runner，选择下图这条进行 安装
+在插件搜索框中输入 Runner，选择下图这条进行安装
 
 ![VSCodeInstallRunner](../static/image/VSCodeInstallRunner.png)
