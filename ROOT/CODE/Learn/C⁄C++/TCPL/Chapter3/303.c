@@ -1,7 +1,7 @@
 
 #include <stdio.h>
 
-void expand(char s1[], char s2[]);
+int expand(char s1[], char s2[]);
 
 /* 
 编写函数expand(s1,s2)，将字符串s1中类似于a-z一类的
@@ -11,24 +11,50 @@ void expand(char s1[], char s2[]);
 */
 int main()
 {
-    char s1[] = "a b \t  c \n defg";
-    char s2[20];
-    escape(s2, s1);
-    printf("s1 = %s\n", s1);
-    printf("s2 = %s\n", s2);
+    char s1[] = "-a-zC-K0-4-";
+    // char s1[] = "-a-zC-K0-4-]";//格式错误
+    char s2[200];
+    if (expand(s1, s2) == 0)
+        printf("%s\n", s2);
+    else
+        printf("格式错误\n");
     return 0;
 }
 
-void expand(char s1[], char s2[])
+int expand(char s1[], char s2[])
 {
-    int i, c, inFlag, start, end;
-    start = end = -1;
-    for (i = 0, inFlag = 0; (c = s1[i]) != '\0'; ++i)
+    int i, j, c, inFlag, start;
+    start = -1;
+    //首先检查是否存在不合法字符
+    for (i = 0; (c = s1[i]) != '\0'; ++i)
+        if (!(c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z' || c >= '0' && c <= '9' || c == '-'))
+            return -1;
+
+    for (i = 0, j = 0, inFlag = 0; (c = s1[i]) != '\0'; ++i)
     {
 
-        if (c == '-')
-            if (inFlag)
-
-                else
+        if (c == '-') //处理-
+        {
+            if (start == -1 || s1[i + 1] == '\0') //前置/尾随的-
+                s2[j++] = c;
+        }
+        else //处理字母和数字
+        {
+            if (start == -1 || inFlag == 0)
+            {
+                start = c;
+                s2[j++] = c;
+                inFlag = 1; //设置进入标志
+            }
+            else
+            {
+                for (start += 1; start <= c; ++start)
+                    s2[j++] = start;
+                if (s1[i + 1] != '\0' && s1[i + 1] != '-') //如果下一个字符又是一个开始，则设置退出标志
+                    inFlag = 0;
+            }
+        }
     }
+    s2[j] = '\0';
+    return 0;
 }

@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 void escape(char s[], char t[]);
+void unescape(char s[], char t[]);
 
 /* 
 编写一个函数excape(s,t),将字符串t复制到字符串s中，并在
@@ -13,9 +14,14 @@ int main()
 {
     char s1[] = "a b \t  c \n defg";
     char s2[20];
+    char s3[] = "a b \\t  c \\n defg";
+    char s4[20];
     escape(s2, s1);
     printf("s1 = %s\n", s1);
     printf("s2 = %s\n", s2);
+    unescape(s4, s3);
+    printf("s3 = %s\n", s3);
+    printf("s4 = %s\n", s4);
     return 0;
 }
 
@@ -39,6 +45,34 @@ void escape(char s[], char t[])
             s[j++] = c;
             break;
         }
+    }
+    s[j] = '\0';
+}
+void unescape(char s[], char t[])
+{
+    int i, j, c;
+    for (i = j = 0; (c = t[i]) != '\0'; ++i)
+    {
+        if (c == '\\' && t[i + 1] != '\0')
+        {
+            c = t[++i];
+            switch (c)
+            {
+            case 'n':
+                s[j++] = '\n';
+                break;
+            case 't':
+                s[j++] = '\t';
+                break;
+
+            default:
+                s[j++] = '\\';
+                s[j++] = c;
+                break;
+            }
+        }
+        else
+            s[j++] = c;
     }
     s[j] = '\0';
 }
