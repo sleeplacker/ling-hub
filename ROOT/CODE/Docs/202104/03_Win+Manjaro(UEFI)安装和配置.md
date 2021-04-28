@@ -224,6 +224,17 @@ git config --global credential.helper store
 
 执行完上面的命令会创建文件 ~/.gitconfig，然后在 push 时输入一次用户密码就会创建 ~/.git-credentials 文件，里面保存了用户密码，下次 push 时就不用在输用户密码。
 
+#### 3.4.4 解决github访问慢的问题
+
+修改 /etc/hosts 文件，添加以下两行，如果有这两个域名，就修改前面的ip。
+
+```host
+140.82.112.3    github.com
+199.232.69.194  github.global.ssl.fastly.net
+```
+
+上面的ip通过在 https://www.ipaddress.com/ 上输入域名查询。
+
 ### 3.6 安装微信
 
 ```shell
@@ -250,3 +261,26 @@ yay -S deepin-wine-wechat
 source ~/.bashrc 
 ```
 
+
+
+### 4.3 vscode 设置
+
+#### 4.3.1 安装 C/C++ 插件
+
+选择插件，在搜索框输入 C/C++，然后选择下图这一条进行安装
+
+![VSCodeInstallCCPP](../static/image/VSCodeInstallCCPP.png)
+
+
+
+#### 4.3.2 安装中文语言包
+
+在插件搜索框输入 language，选择中文(简体)那一条进行安装，如下图
+
+![VSCodeInstallChinesePkg](../static/image/VSCodeInstallChinesePkg.png)
+
+#### 4.3.3 安装运行器，以在vscode中运行 C 程序
+
+在插件搜索框中输入 Runner，选择下图这条进行 安装
+
+![VSCodeInstallRunner](../static/image/VSCodeInstallRunner.png)
