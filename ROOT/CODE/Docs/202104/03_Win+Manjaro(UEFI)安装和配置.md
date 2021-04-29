@@ -178,6 +178,8 @@ sudo pacman -S 包名
 
 ### 3.3 安装搜狗输入法
 
+#### 3.3.1 安装
+
 `yay -S fcitx-sogoupinyin`
 
 如果出现如下报错
@@ -188,7 +190,19 @@ sudo pacman -S 包名
 
 则执行下面的命令，再执行安装命令
 
-`sudo pacman -S base-devel`
+```shell
+sudo pacman -S base-devel
+```
+
+#### 3.3.2 修改简繁切换快捷键
+
+先进入 fctix 设置
+
+![FcitxSettting](../static/image/FcitxSettting.png)
+
+选择附加组件，在下面搜索框输入繁体，然后就能看到简繁转换那一项，然后选择进行快捷键更改
+
+![SearchJianFan](../static/image/SearchJianFan.png)
 
 ### 3.4 安装 Typora
 
@@ -284,3 +298,31 @@ source ~/.bashrc
 在插件搜索框中输入 Runner，选择下图这条进行安装
 
 ![VSCodeInstallRunner](../static/image/VSCodeInstallRunner.png)
+
+#### 4.3.4 修改快捷键
+
+依次选择 文件-首选项-键盘快捷键 进行设置，如下图
+
+![VScodeSetKeys](../static/image/VScodeSetKeys.png)
+
+然后在搜索框搜索要修改快捷键的功能进行设置，如下图
+
+![VSCodeSetKeysSearch](../static/image/VSCodeSetKeysSearch.png)
+
+
+
+### 4.4 为flameshot设置快捷键
+
+进入系统设置-快捷键-自定义快捷键
+
+![SetCommonKey](../static/image/SetCommonKey.png)
+
+新建快捷键，并在触发器出设置快捷键
+
+![SetCommonKey1](../static/image/SetCommonKey1.png)
+
+在动作处输入要执行的命令
+
+![SetCommonKey1](../static/image/SetCommonKey2.png)
+
+最后点击应用即可
