@@ -324,7 +324,7 @@ git config --global credential.helper store
 199.232.69.194  github.global.ssl.fastly.net
 ```
 
-上面的ip通过在 https://www.ipaddress.com/ 上输入域名查询。
+上面的ip通过在 https://www.ipaddress.com/ 或 http://tool.chinaz.com/dns 上输入域名查询。
 
 ### 3.6 安装微信
 
