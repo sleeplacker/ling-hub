@@ -400,6 +400,6 @@ source ~/.bashrc
 
 在动作处输入要执行的命令
 
-![SetCommonKey1](../static/image/SetCommonKey2.png)
+![SetCommonKey2](../static/image/SetCommonKey2.png)
 
 最后点击应用即可
