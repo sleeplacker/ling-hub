@@ -138,8 +138,83 @@ https://blog.csdn.net/weixin_43968923/article/details/86349914
 
 #### 3.2.1 安装yay
 
+- 使用pacman命令安装yay
+
 ```shell
 sudo pacman -S yay
+```
+
+- 修改AURURL
+
+```shell
+yay --aururl "https://aur.tuna.tsinghua.edu.cn" --save
+```
+
+- yay 安装软件时遇到的问题
+
+```shell
+parse "“https://aur.tuna.tsinghua.edu.cn”/rpc.php?arg%5B%5D=deepin-wine-wechat&type=info&v=5": first path segment in URL cannot contain colon
+```
+
+原因是 “https://aur.tuna.tsinghua.edu.cn” 多了一层双引号，可以通过下面的命令看到
+
+```shell
+yay -P -g
+```
+
+或者直接查看下面的文件
+
+```shell
+~/.config/yay/config.json
+```
+
+可以看到yay配置如下，其中第一行的url多了一层双引号，修改config.json，去掉多的双引号就能解决问题
+
+```json
+{
+        "aururl": "“https://aur.tuna.tsinghua.edu.cn”",
+        "buildDir": "/home/lingang/.cache/yay",
+        "absdir": "/home/lingang/.cache/yay/abs",
+        "editor": "",
+        "editorflags": "",
+        "makepkgbin": "makepkg",
+        "makepkgconf": "",
+        "pacmanbin": "pacman",
+        "pacmanconf": "/etc/pacman.conf",
+        "redownload": "no",
+        "rebuild": "no",
+        "answerclean": "",
+        "answerdiff": "",
+        "answeredit": "",
+        "answerupgrade": "",
+        "gitbin": "git",
+        "gpgbin": "gpg",
+        "gpgflags": "",
+        "mflags": "",
+        "sortby": "votes",
+        "searchby": "name-desc",
+        "gitflags": "",
+        "removemake": "ask",
+        "sudobin": "sudo",
+        "sudoflags": "",
+        "requestsplitn": 150,
+        "sortmode": 0,
+        "completionrefreshtime": 7,
+        "sudoloop": false,
+        "timeupdate": false,
+        "devel": false,
+        "cleanAfter": false,
+        "provides": true,
+        "pgpfetch": true,
+        "upgrademenu": true,
+        "cleanmenu": true,
+        "diffmenu": true,
+        "editmenu": false,
+        "combinedupgrade": false,
+        "useask": false,
+        "batchinstall": false
+}
+
 ```
 
 #### 3.2.2 到AUR官网搜索安装包
@@ -180,7 +255,9 @@ sudo pacman -S 包名
 
 #### 3.3.1 安装
 
-`yay -S fcitx-sogoupinyin`
+```shell
+yay -S fcitx-sogoupinyin
+```
 
 如果出现如下报错
 
