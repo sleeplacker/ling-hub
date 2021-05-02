@@ -16,3 +16,15 @@ void ungetch(int c)
     else
         buf[bufp++] = c;
 }
+void ungets(char s[])
+{
+    int c, len;
+    for (len = 0; (c = s[len]) != '\0'; ++len)
+        ;
+    if (len > (BUFSIZ - bufp))
+        printf("ungets: buffer is not enough\n");
+    while (--len >= 0)
+    {
+        ungetch(s[len]);
+    }
+}

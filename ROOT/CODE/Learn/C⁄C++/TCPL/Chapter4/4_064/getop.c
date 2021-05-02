@@ -14,6 +14,8 @@ int getop(char s[])
         return c; /* 不是数 */
 
     i = 0;
+
+    /* 处理正负号 */
     if (c == '-' || c == '+')
     {
         c1 = getch();     /* 取后一个字符 */
@@ -26,7 +28,7 @@ int getop(char s[])
         {
             s[i] = c;
             c = c1;
-            s[++i]=c;
+            s[++i] = c;
         }
     }
 
