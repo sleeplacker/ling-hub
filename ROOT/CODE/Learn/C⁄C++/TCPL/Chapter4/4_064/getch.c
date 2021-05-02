@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #define BUFSIZE 100
 
 char buf[BUFSIZE];

@@ -1,6 +1,8 @@
-#define MAXVAL 100 /* 栈val的最大深度 */
-int sp = 0;     /* 下一个空闲的位置 */
-double val[MAXVAL];/* 值栈 */
+#include <stdio.h>
+
+#define MAXVAL 100  /* 栈val的最大深度 */
+int sp = 0;         /* 下一个空闲的位置 */
+double val[MAXVAL]; /* 值栈 */
 
 /* push函数：把f压入值栈中 */
 void push(double f)

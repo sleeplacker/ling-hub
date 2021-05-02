@@ -1,15 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h> /* 为了使用atof(函数) */
+#include "calc.h"
 
-#define MAXOP 100  /* 操作数或运算符的最大长度 */
-#define NUMBER '0' /* 标识找到一个数 */
-
-int getop(char[]);
-void push(double);
-double pop(void);
+#define MAXOP 100 /* 操作数或运算符的最大长度 */
 
 /* 逆波兰计算器 */
-/* 编译命令：gcc 4_064_4-1.c 4_065_4-2.c 4_066_4-3.c 4_067_4-4.c */
+/* 编译命令：gcc main.c getch.c getop.c stack.c */
 int main()
 {
     int type;
@@ -37,6 +33,13 @@ int main()
             op2 = pop();
             if (op2 != 0.0)
                 push(pop() / op2);
+            else
+                printf("error: zero divisor\n");
+            break;
+        case '%':
+            op2 = pop();
+            if (op2 != 0.0)
+                push((int)pop() % (int)op2);
             else
                 printf("error: zero divisor\n");
             break;
