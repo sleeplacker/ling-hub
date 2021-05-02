@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <string.h>
 
-#define BUFSIZE 100
+#define BUFSIZE 1
 
-char buf[BUFSIZE];
+int buf[BUFSIZE];
 int bufp = 0;
 
 int getch(void)
@@ -19,12 +20,22 @@ void ungetch(int c)
 void ungets(char s[])
 {
     int c, len;
-    for (len = 0; (c = s[len]) != '\0'; ++len)
-        ;
+    len = strlen(s);
     if (len > (BUFSIZ - bufp))
         printf("ungets: buffer is not enough\n");
     while (--len >= 0)
     {
         ungetch(s[len]);
     }
+}
+
+/* getline函数：将一行读入s中并返回其长度 */
+int getaline(char s[], int lim)
+{
+    int c, i;
+    for (i = 0; i < lim - 1 && (c = getchar()) != EOF && c != '\n'; ++i)
+        s[i] = c;
+    s[i++] = '\n'; /* 这里需要加上换行符，main函数中要等待这个字符来打印信息 */
+    s[i] = '\0';
+    return i;
 }

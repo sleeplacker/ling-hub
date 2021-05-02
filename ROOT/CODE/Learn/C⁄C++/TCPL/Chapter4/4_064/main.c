@@ -7,15 +7,21 @@
 #define PI 3.14159265
 
 /* 逆波兰计算器 */
-/* 编译命令：gcc main.c getch.c getop.c stack.c -lm */
+/* 编译命令：gcc main.c getch.c getop.c stack.c -lm -g */
 int main()
 {
-    int type;
-    double op2;
+    int i, type, var = 0;
+    double op1, op2, v;
     char s[MAXOP];
+    double variable[26];
 
-    while ((type = getop(s)) != EOF)
+    for (i = 0; i < 26; i++)
+        variable[i] = 0.0;
+
+    // while ((type = getop(s)) != EOF)
+    while ((type = getopline(s)) != EOF)
     {
+
         switch (type)
         {
         case NUMBER:
@@ -41,12 +47,31 @@ int main()
         case '%':
             op2 = pop();
             if (op2 != 0.0)
-                push((int)pop() % (int)op2);
+                push(fmod(pop(), op2));
             else
                 printf("error: zero divisor\n");
             break;
+        case '?': /* 查看栈顶元素 */
+            op2 = pop();
+            printf("\t%.8g\n", op2);
+            push(op2);
+            break;
+        case 'c': /* 清空栈 */
+            clear();
+            break;
+        case 'd': /* 复制栈顶元素 */
+            op2 = pop();
+            push(op2);
+            push(op2);
+            break;
+        case 'w': /* 交换栈顶两个元素 */
+            op1 = pop();
+            op2 = pop();
+            push(op1);
+            push(op2);
+            break;
         case 's': /* sin 操作 */
-            push(sin(pop()*PI/180));
+            push(sin(pop() * PI / 180));
             break;
         case 'e': /* exp 操作 */
             push(exp(pop()));
@@ -55,13 +80,27 @@ int main()
             op2 = pop();
             push(pow(pop(), op2));
             break;
+        case '=':
+            pop();
+            if (var >= 'A' && var <= 'Z')
+                variable[var - 'A'] = pop();
+            else
+                printf("error: no variable name\n");
+            break;
         case '\n':
-            printf("\t%.8g\n", pop());
+            v = pop();
+            printf("\t%.8g\n", v);
             break;
         default:
-            printf("error: unknown command %s\n", s);
+            if (type >= 'A' && type <= 'Z')
+                push(variable[type - 'A']);
+            else if (type == 'v')
+                push(v);
+            else
+                printf("error: unknown command %s\n", s);
             break;
         }
+        var = type;
     }
 
     return 0;
