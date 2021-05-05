@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void strcat(char s[], char t[]);
+void strcat(char *s, char *t);
 
 /* 
 用指针方式实现第2章中的函数strcat。 
@@ -17,12 +17,11 @@ int main()
     return 0;
 }
 
-void strcat(char s[], char t[])
+void strcat(char *s, char *t)
 {
-    int i, j;
-    i = j = 0;
-    while (s[i] != '\0')
-        i++;
-    while ((s[i++] = t[j++]) != '\0')
+    while (*s++)
+        ;
+    --s;
+    while (*s++ = *t++)
         ;
 }
