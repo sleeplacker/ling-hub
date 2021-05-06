@@ -13,9 +13,14 @@ double val[MAXVAL]; /* 值栈 */
 void push(double f);
 double pop(void);
 
-/* 逆波兰计算器 */
+/* 
+编写程序expr，以计算从命令行输入的逆波兰表达式的值，
+其中每个运算符或操作数用一个单独的参数表示。例如，命令
+expr 2 3 4 + *
+将计算表达式2x(3+4)的值
+ */
 /* 编译命令：gcc 510.c -lm*/
-/* 运行命令：gcc 510.c -lm*/
+/* 运行命令：./a.out 33 1 2 + /*/
 int main(int argc, char *argv[])
 {
     int type;
