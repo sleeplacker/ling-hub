@@ -16,7 +16,7 @@ entab -m +n
 比较方便的默认行为。
 */
 /* 编译命令：gcc entab.c settab.c tabpos.c -o entab */
-/* 运行命令：./entab 4 8 16 20 */
+/* 运行命令：./entab -1 +4 */
 int main(int argc, char *argv[])
 {
     char tab[MAXLINE + 1];/* tab 中值为1的元素标明了哪些位置应出现\t */

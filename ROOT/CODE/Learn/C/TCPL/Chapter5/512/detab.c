@@ -23,10 +23,6 @@ int main(int argc, char *argv[])
 void detab(char *tab)
 {
     int c, pos = 1;
-    int i;
-    for (i = 0; i <= MAXLINE; ++i)
-        printf("%c", tab[i] + '0');
-    printf("\n");
     while ((c = getchar()) != EOF)
         if (c == '\t')
         {

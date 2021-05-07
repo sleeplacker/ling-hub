@@ -21,7 +21,6 @@ int main(int argc, char *argv[])
     char tab[MAXLINE + 1];
     int i;
     settab(argc, argv, tab);
-    printf("\n");
     detab(tab);
     return 0;
 }
