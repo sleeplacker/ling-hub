@@ -11,7 +11,6 @@ void writelines(char *lineptr[], int nlines);
 
 void qsort(void *lineptr[], int left, int right, int (*comp)(void *, void *), int reverse);
 int numcmp(char *, char *);
-int strcmpNoCase(char *, char *);
 
 /* 
 增加选项 -f，使得排序过程不考虑字母大小写之间
@@ -32,7 +31,7 @@ int main(int argc, char *argv[])
         if ((*argv)[0] == '-')
         {
             optionlen = strlen(*argv);
-            while (optionlen-- >= 1)
+            while (--optionlen >= 1)
                 switch ((*argv)[optionlen])
                 {
                 case 'n':
@@ -53,7 +52,7 @@ int main(int argc, char *argv[])
     }
     if ((nlines = readlines(lineptr, MAXLINES)) >= 0)
     {
-        qsort((void **)lineptr, 0, nlines - 1, (int (*)(void *, void *))(numeric ? numcmp : strcmp), reverse);
+        qsort((void **)lineptr, 0, nlines - 1, (int (*)(void *, void *))(numeric ? numcmp : (format ? strcasecmp : strcmp)), reverse);
         writelines(lineptr, nlines);
         return 0;
     }
@@ -87,10 +86,4 @@ void swap(void *v[], int i, int j)
     temp = v[i];
     v[i] = v[j];
     v[j] = temp;
-}
-
-int strcmpNoCase(char *x, char *y)
-{
-    for()
-    return strcmp(&(toupper(*x)), &(toupper(*y)))
 }
