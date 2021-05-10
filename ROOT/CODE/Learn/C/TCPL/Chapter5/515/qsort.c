@@ -2,15 +2,19 @@
 #include <string.h>
 #include <ctype.h>
 
-#define MAXLINES 5000 /* 待排序的最大行数 */
-
+#define MAXLINES 5000    /* 待排序的最大行数 */
+#define NUMERIC 1        /* 数字排序标识 00..0001*/
+#define DECR 2           /* 倒序标识 00..0010*/
+#define CASEIGNORE 4     /* 不区分大小写标识 00..00100*/
+int options = 0;         /* 操作集 */
 char *lineptr[MAXLINES]; /* 指向文本行的指针数组 */
 
 int readlines(char *lineptr[], int nlines);
 void writelines(char *lineptr[], int nlines);
 
-void qsort(void *lineptr[], int left, int right, int (*comp)(void *, void *), int reverse);
+void qsort(void *lineptr[], int left, int right, int (*comp)(void *, void *));
 int numcmp(char *, char *);
+int strcmpDecr(char *s1, char *s2);
 
 /* 
 增加选项 -f，使得排序过程不考虑字母大小写之间
@@ -20,30 +24,23 @@ int numcmp(char *, char *);
 int main(int argc, char *argv[])
 {
     int nlines;
-    int numeric = 0;
-    int reverse = 1;
-    int format = 0; /* 不区分大小写标志 */
-    int optionlen;  /* 命令行选项的长度，例如 -am 的长度为 3 */
-
     while (argc-- > 1)
     {
         argv++;
         if ((*argv)[0] == '-')
         {
-            optionlen = strlen(*argv);
-            while (--optionlen >= 1)
-                switch ((*argv)[optionlen])
+            while (*(++argv[0]))
+                switch (*argv[0])
                 {
                 case 'n':
-                    numeric = 1;
+                    options |= NUMERIC;
                     break;
                 case 'r':
-                    reverse = -1;
+                    options |= DECR;
                     break;
                 case 'f':
-                    format = 1;
+                    options |= CASEIGNORE;
                     break;
-
                 default:
                     printf("invalid option\n");
                     break;
@@ -52,7 +49,16 @@ int main(int argc, char *argv[])
     }
     if ((nlines = readlines(lineptr, MAXLINES)) >= 0)
     {
-        qsort((void **)lineptr, 0, nlines - 1, (int (*)(void *, void *))(numeric ? numcmp : (format ? strcasecmp : strcmp)), reverse);
+
+        if (options & NUMERIC)
+            qsort((void **)lineptr, 0, nlines - 1, (int (*)(void *, void *))numcmp);
+        else if (options & DECR)
+            qsort((void **)lineptr, 0, nlines - 1, (int (*)(void *, void *))strcmpDecr);
+        else if (options & CASEIGNORE)
+            qsort((void **)lineptr, 0, nlines - 1, (int (*)(void *, void *))strcasecmp);
+        else
+            qsort((void **)lineptr, 0, nlines - 1, (int (*)(void *, void *))strcmp);
+
         writelines(lineptr, nlines);
         return 0;
     }
@@ -63,7 +69,7 @@ int main(int argc, char *argv[])
     }
 }
 
-void qsort(void *v[], int left, int right, int (*comp)(void *, void *), int reverse)
+void qsort(void *v[], int left, int right, int (*comp)(void *, void *))
 {
     int i, last;
     void swap(void *v[], int, int);
@@ -73,11 +79,11 @@ void qsort(void *v[], int left, int right, int (*comp)(void *, void *), int reve
     swap(v, left, (left + right) / 2);
     last = left;
     for (i = left + 1; i <= right; i++)
-        if (reverse * (*comp)(v[i], v[left]) < 0)
+        if ((*comp)(v[i], v[left]) < 0)
             swap(v, ++last, i);
     swap(v, left, last);
-    qsort(v, left, last - 1, comp, reverse);
-    qsort(v, last + 1, right, comp, reverse);
+    qsort(v, left, last - 1, comp);
+    qsort(v, last + 1, right, comp);
 }
 
 void swap(void *v[], int i, int j)
@@ -86,4 +92,10 @@ void swap(void *v[], int i, int j)
     temp = v[i];
     v[i] = v[j];
     v[j] = temp;
+}
+
+/* 字符串逆序排序 */
+int strcmpDecr(char *s1, char *s2)
+{
+    return -strcmp(s1, s2);
 }
