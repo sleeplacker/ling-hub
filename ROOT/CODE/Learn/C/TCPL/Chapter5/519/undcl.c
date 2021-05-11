@@ -15,6 +15,7 @@ void undcl(void);
 
 int gettoken(void);
 int tokentype;
+int pretokentype; /* 保存上一个标记类型 */
 char token[MAXTOKEN];
 char name[MAXTOKEN];
 char datatype[MAXTOKEN];
@@ -40,6 +41,8 @@ int gettoken(void)
     int c, getch(void);
     void ungetch(int);
     char *p = token;
+
+    pretokentype = tokentype; /* 保存上次标记类型 */
 
     while ((c = getch()) == ' ' || c == '\t')
         ;
@@ -85,10 +88,23 @@ void undcl(void)
         strcpy(out, token);
         while ((type = gettoken()) != '\n')
             if (type == PARENS || type == BRACKETS)
+            {
+                /* 
+                如果圆括号或方括号(即函数或数组，这两种运算符都比
+                指针运算符优先级高)的上一个标记类型时指针，才需要
+                在指针标记左右加圆括号 
+                */
+                if (pretokentype == '*')
+                {
+                    sprintf(temp, "(%s)", out);
+                    strcpy(out, temp);
+                }
                 strcat(out, token);
+            }
             else if (type == '*')
             {
-                sprintf(temp, "(*%s)", out);
+
+                sprintf(temp, "*%s", out);
                 strcpy(out, temp);
             }
             else if (type == NAME)
