@@ -9,11 +9,12 @@ int getword(char *word, int lim);
 常亮、注释及预处理器控制指令。请编写一个更完善的
 getword函数 */
 /* 编译命令：gcc getword.c getch.c */
-/* 执行命令：./a.out < text */
+/* 执行命令：./a.out < text.txt */
 int main()
 {
     char word[MAXWORDLEN];
-    while (getword(word, MAXWORDLEN))
+    int ret;
+    while ((ret = getword(word, MAXWORDLEN)) && ret != EOF)
     {
         printf("%s\n", word);
     }
@@ -28,22 +29,20 @@ int getword(char *word, int lim)
     char *w = word;
 
     while (isspace(c = getch()))
-    {
         ;
-        if (c != EOF)
-            *w++ = c;
-        if (!isalpha(c))
-        {
-            *w = '\0';
-            return c;
-        }
-        for (; --lim > 0; w++)
-            if (!isalnum(*w = getch()))
-            {
-                ungetch(*w);
-                break;
-            }
+    if (c != EOF)
+        *w++ = c;
+    if (!isalpha(c))
+    {
         *w = '\0';
-        return word[0];
+        return c;
     }
+    for (; --lim > 0; w++)
+        if (!isalnum(*w = getch()))
+        {
+            ungetch(*w);
+            break;
+        }
+    *w = '\0';
+    return word[0];
 }
