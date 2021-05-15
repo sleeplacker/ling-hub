@@ -4,29 +4,18 @@
 
 #define MAXWORDLEN 100
 
-int getword(char *word, int lim);
-int getch(void);
-void ungetch(int);
-
 int getword(char *word, int lim)
 {
-    int c, d, comment(void);
+    int c, getch(void);
+    void ungetch(int);
     char *w = word;
 
     while (isspace(c = getch()) && c != ' ')
         ;
     if (c != EOF)
         *w++ = c;
-    if (isalpha(c) || c == '_')
-    {
-        for (; --lim > 0; w++)
-            if (!isalnum(*w = getch()) && *w != '_')
-            {
-                ungetch(*w);
-                break;
-            }
-    }
-    else if (c == '\'' || c == '"')
+
+    if (c == '\'' || c == '"')
     {
         for (; --lim > 0; w++)
             if ((*w = getch()) == '\\')
@@ -39,23 +28,17 @@ int getword(char *word, int lim)
             else if (*w == EOF)
                 break;
     }
-    else if (c == '/')
-        if ((d = getch()) == '*')
-            c = comment();
-        else
-            ungetch(d);
+    else if (!isalpha(c))
+    {
+        *w = '\0';
+        return c;
+    }
+    for (; --lim > 0; w++)
+        if (!isalnum(*w = getch()))
+        {
+            ungetch(*w);
+            break;
+        }
     *w = '\0';
-    return c;
-}
-
-int comment(void)
-{
-    int c;
-    while ((c = getch()) != EOF)
-        if (c == '*')
-            if ((c = getch()) == '/')
-                break;
-            else
-                ungetch(c);
-    return c;
+    return word[0];
 }

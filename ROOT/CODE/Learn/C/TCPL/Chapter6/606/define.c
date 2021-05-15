@@ -32,6 +32,7 @@ void ungets(char *);
 发现getch和ungetch函数非常有用。
  */
 /* 编译命令：gcc define.c getch.c getword.c */
+/* 执行命令：./a.out < define.c >xxx.c */
 int main()
 {
     char w[MAXWORD];
@@ -104,7 +105,7 @@ void getdef(void)
         {
             skipblanks();
             for (i = 0; i < MAXWORD - 1; i++)
-                if ((def[i] == getch()) == EOF || def[i] == '\n')
+                if ((def[i] = getch()) == EOF || def[i] == '\n')
                     break;
             def[i] = '\0';
             if (i <= 0)
@@ -121,6 +122,8 @@ void getdef(void)
         else
             undef(name);
     }
+    else if (strcmp(dir, "include") == 0)
+        printf("#%s", dir);
     else
         error(dir[0], "getdef: expecting a directive after #");
 }
