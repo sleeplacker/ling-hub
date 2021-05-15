@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
 
 #define MAXWORD 100
 #define HASHSIZE 101
@@ -16,7 +17,7 @@ static struct nlist *hashtable[HASHSIZE];
 unsigned hash(char *);
 void error(int, char *);
 int getch(void);
-void getdef(voide);
+void getdef(void);
 int getword(char *, int);
 struct nlist *install(char *, char *);
 struct nlist *lookup(char *);
@@ -63,6 +64,27 @@ struct nlist *lookup(char *s)
         if (strcmp(s, np->name) == 0)
             return np;
     return NULL;
+}
+
+struct nlist *install(char *name, char *defn)
+{
+    struct nlist *np;
+    unsigned hashval;
+
+    if ((np = lookup(name)) == NULL)
+    {
+        np = (struct nlist *)malloc(sizeof(*np));
+        if (np == NULL || (np->name = strdup(name)) == NULL)
+            return NULL;
+        hashval = hash(name);
+        np->next = hashtable[hashval];
+        hashtable[hashval] = np;
+    }
+    else
+        free((void *)np->defn);            /* 新的同名宏定义会覆盖老的定义内容 */
+    if ((np->defn = strdup(defn)) == NULL) /* 加入/修改hash定义 */
+        return NULL;
+    return np;
 }
 
 void getdef(void)

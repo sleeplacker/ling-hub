@@ -13,11 +13,11 @@ int getword(char *word, int lim)
     int c, d, comment(void);
     char *w = word;
 
-    while (isspace(c = getch()))
+    while (isspace(c = getch()) && c != ' ')
         ;
     if (c != EOF)
         *w++ = c;
-    if (isalpha(c) || c == '_' || c == '#')
+    if (isalpha(c) || c == '_')
     {
         for (; --lim > 0; w++)
             if (!isalnum(*w = getch()) && *w != '_')
