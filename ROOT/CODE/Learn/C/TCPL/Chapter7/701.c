@@ -13,7 +13,7 @@ int main(int argc, char const *argv[])
     int c;
     printf("prog = %s\n", argv[0]);
     while ((c = getchar()) != EOF)
-        if (!strcmp(argv[0], "lower"))
+        if (!strcmp(argv[0], "./lower"))
             putchar(tolower(c));
         else
             putchar(toupper(c));
