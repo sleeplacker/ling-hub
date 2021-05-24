@@ -1,4 +1,5 @@
 #include "mystdio.h"
+
 #define PERMS 0666 /* 所有者、所有者组和其他成员都可以读写 */
 
 /* fopen函数：打开文件，并返回文件指针 */

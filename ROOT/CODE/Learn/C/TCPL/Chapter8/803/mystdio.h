@@ -32,6 +32,7 @@ enum _flags
 int _fillbuf(FILE *);
 int _flushbuf(int, FILE *);
 FILE *fopen(char *name, char *mode);
+int fclose(FILE *fp);
 
 #define feof(p) (((p)->flag & _EOF) != 0)
 #define ferror(p) (((p)->flag & _ERR) != 0)
@@ -45,4 +46,4 @@ FILE *fopen(char *name, char *mode);
                         : _flushbuf((x), p))
 
 #define getchar() getc(stdin)
-#define putchar putc((x), stdout)
+#define putchar(x) putc((x), stdout)

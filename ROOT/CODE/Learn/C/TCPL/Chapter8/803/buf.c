@@ -58,6 +58,35 @@ int _flushbuf(int x, FILE *fp)
     return x;
 }
 
+/* fflush函数：刷新与文件fp关联的缓冲区 */
+int fflush(FILE *fp)
+{
+    int rc = 0;
+    if (fp < _iob || fp >= _iob + OPEN_MAX)
+        return EOF;
+    if (fp->flag & _WRITE)
+        rc = _flushbuf(0, fp);
+    fp->ptr = fp->base;
+    fp->cnt = (fp->flag & _UNBUF) ? 1 : BUFSIZ;
+    return rc;
+}
+
+/* fclose函数：关闭文件 */
+int fclose(FILE *fp)
+{
+    int rc;                       /* 返回码 */
+    if ((rc = fflush(fp)) != EOF) /* 是否有需要刷新的内容 */
+    {
+        free(fp->base); /* 释放已分配的缓冲区 */
+        fp->ptr = NULL;
+        fp->cnt = 0;
+        fp->base = NULL;
+        fp->flag &= (_READ | _WRITE);
+    }
+    return rc;
+}
+
+/* 初始化3个标准文件 */
 FILE _iob[OPEN_MAX] = {
     {0, (char *)0, (char *)0, _READ, 0},          /* 标准输入文件-只读 */
     {0, (char *)0, (char *)0, _WRITE, 1},         /* 标准输出文件-普通写 */
