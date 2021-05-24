@@ -1,0 +1,6 @@
+We can’t connect to the server at www.cnblogs.com.
+
+If that address is correct, here are three other things you can try:
+
+    Try again later.
+    Check your network connection.
