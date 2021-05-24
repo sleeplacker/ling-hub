@@ -21,6 +21,9 @@ int main(int argc, char *argv[])
     while ((n = read(f1, buf, BUFSIZ)) > 0)
         if (write(f2, buf, n) != n)
             error("cp: write error on file %s", argv[2]);
+    close(f1); /* 关闭文件，但不刷新缓冲区 */
+    sleep(2);
+    unlink("2.txt"); /* 删除文件 */
     return 0;
 }
 
