@@ -10,8 +10,16 @@ typedef struct _iobuf
     int cnt;    /* 剩余的字符数 */
     char *ptr;  /* 下一个字符的位置 */
     char *base; /* 缓冲区的位置 */
-    int flag;   /* 文件访问模式 */
-    int fd;     /* 文件描述符 */
+    struct flag_field
+    {
+        unsigned is_read : 1;
+        unsigned is_write : 1;
+        unsigned is_unbuf : 1;
+        unsigned is_buf : 1;
+        unsigned is_eof : 1;
+        unsigned is_err : 1;
+    } flag; /* 文件访问模式 */
+    int fd; /* 文件描述符 */
 } FILE;
 extern FILE _iob[OPEN_MAX];
 
@@ -31,7 +39,6 @@ enum _flags
 int _fillbuf(FILE *);
 int _flushbuf(int, FILE *);
 FILE *fopen(char *name, char *mode);
-int fclose(FILE *fp);
 
 #define feof(p) (((p)->flag & _EOF) != 0)
 #define ferror(p) (((p)->flag & _ERR) != 0)
@@ -45,4 +52,4 @@ int fclose(FILE *fp);
                         : _flushbuf((x), p))
 
 #define getchar() getc(stdin)
-#define putchar(x) putc((x), stdout)
+#define putchar putc((x), stdout)

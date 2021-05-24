@@ -5,9 +5,9 @@
 int _fillbuf(FILE *fp)
 {
     int bufsize;
-    if ((fp->flag & (_READ | _EOF | _ERR)) != _READ)
+    if (fp->flag.is_read == 0 || fp->flag.is_eof == 1 || fp->flag.is_err == 1)
         return EOF;
-    bufsize = (fp->flag & _UNBUF) ? 1 : BUFSIZ;
+    bufsize = (fp->flag.is_unbuf == 1) ? 1 : BUFSIZ;
     if (fp->base == NULL) /* 还未分配缓冲区 */
         if ((fp->base = (char *)malloc(bufsize)) == NULL)
             return EOF; /* 不能分配缓冲区 */
@@ -16,9 +16,9 @@ int _fillbuf(FILE *fp)
     if (--fp->cnt < 0)
     {
         if (fp->cnt == -1)
-            fp->flag |= _EOF;
+            fp->flag.is_eof = 1;
         else
-            fp->flag |= _ERR;
+            fp->flag.is_err = 1;
         fp->cnt = 0;
         return EOF;
     }

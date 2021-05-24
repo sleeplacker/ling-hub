@@ -1,7 +1,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-// #define NULL 0
 #define EOF (-1)
 #define BUFSIZ 8192
 #define OPEN_MAX 20 /* 一次最多可打开的文件数 */
@@ -30,8 +29,10 @@ enum _flags
 };
 
 int _fillbuf(FILE *);
-// int _flushbuf(int, FILE *);
+int _flushbuf(int, FILE *);
 FILE *fopen(char *name, char *mode);
+int fclose(FILE *fp);
+int fseek(FILE *fp, long offset, int origin);
 
 #define feof(p) (((p)->flag & _EOF) != 0)
 #define ferror(p) (((p)->flag & _ERR) != 0)
@@ -40,9 +41,9 @@ FILE *fopen(char *name, char *mode);
 #define getc(p) (--(p)->cnt >= 0                  \
                      ? (unsigned char)*(p)->ptr++ \
                      : _fillbuf(p))
-// #define putc(x, p) (--(p)->cnt >= 0         \
-//                         ? *(p)->ptr++ = (x) \
-//                         : _flushbuf((x), p))
+#define putc(x, p) (--(p)->cnt >= 0         \
+                        ? *(p)->ptr++ = (x) \
+                        : _flushbuf((x), p))
 
 #define getchar() getc(stdin)
-// #define putchar putc((x), stdout)
+#define putchar(x) putc((x), stdout)

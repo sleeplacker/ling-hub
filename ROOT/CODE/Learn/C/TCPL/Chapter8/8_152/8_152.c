@@ -7,7 +7,9 @@
 #define PERMS 0666 /* 对于所有者、所有者组和其他成员均可读写 */
 
 void error(char *, ...);
+
 /* cp函数：将f1复制到f2 */
+/* 执行命令：./a.out 1.txt 2.txt */
 int main(int argc, char *argv[])
 {
     int f1, f2, n;
