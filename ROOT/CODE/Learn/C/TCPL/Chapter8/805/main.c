@@ -15,7 +15,6 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-// int stat(char *, struct stat *);
 void dirwalk(char *, void (*fcn)(char *));
 
 /* fszie函数：打印文件name的长度 */
@@ -29,5 +28,5 @@ void fsize(char *name)
     }
     if ((stbuf.st_mode & S_IFMT) == S_IFDIR)
         dirwalk(name, fsize);
-    printf("%8ld %s\n", stbuf.st_size, name);
+    printf("i结点编号=%5u  文件模式(八进制)=%6o   文件链接个数=%u   文件长度=%ld 文件名=%s\n", stbuf.st_ino, stbuf.st_mode, stbuf.st_nlink, stbuf.st_size, name);
 }
