@@ -8,14 +8,19 @@ int fseek(FILE *fp, long offset, int origin)
 位置值。编写函数fseek，并确保该函数与库中其他函数使用
 的缓冲能够协同工作。
  */
-/* 编译命令：gcc main.c buf.c fopen.c fseek.c */
+/* 编译命令：gcc main.c buf.c fopen.c fseek.c -g */
 int main()
-{int c;
+{
+    int c;
     FILE *fpr = fopen("./1.txt", "r");
-    FILE *fpw = fopen("./1.txt", "w");
-    putchar((int)fpr);
-    putchar((int)fpw);
-    if (fseek(fpr, 2, 0) == EOF)
+    /* 现在缓冲区填入6个字符 */
+    getc(fpr);
+    getc(fpr);
+    getc(fpr);
+    getc(fpr);
+    getc(fpr);
+    getc(fpr);
+    if (fseek(fpr, 4, 1) == EOF)/* 从当前位置的第4位开始 */
         putchar('F');
     else
     {

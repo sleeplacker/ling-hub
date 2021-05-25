@@ -8,7 +8,7 @@ int fseek(FILE *fp, long offset, int origin)
     if (fp->flag & _READ)
     {
         if (origin == 1)       /* 是否从当前位置开始读取 */
-            offset -= fp->cnt; /* 记住缓冲区中的内容 */
+            offset -= fp->cnt; /* 跳过缓冲区 */
         rc = lseek(fp->fd, offset, origin);
         fp->cnt = 0; /* 没有字符在缓冲区 */
     }
