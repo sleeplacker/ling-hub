@@ -64,3 +64,32 @@ p++;
 ```
 
 对那些有可能对参数进行多次求值的宏，一定要提高警惕。头文件<ctype.c>中的两个宏toupper和tolower是很好的学习例子。
+
+
+
+### 3 查看linux最大打开文件数量
+
+```shell
+$ ulimit -a
+real-time non-blocking time  (microseconds, -R) unlimited
+core file size              (blocks, -c) unlimited
+data seg size               (kbytes, -d) unlimited
+scheduling priority                 (-e) 0
+file size                   (blocks, -f) unlimited
+pending signals                     (-i) 31223
+max locked memory           (kbytes, -l) 64
+max memory size             (kbytes, -m) unlimited
+open files                          (-n) 8192
+pipe size                (512 bytes, -p) 8
+POSIX message queues         (bytes, -q) 819200
+real-time priority                  (-r) 0
+stack size                  (kbytes, -s) 8192
+cpu time                   (seconds, -t) unlimited
+max user processes                  (-u) 31223
+virtual memory              (kbytes, -v) unlimited
+file locks                          (-x) unlimited
+```
+
+其中第9行表示最大打开文件数量为8192个，这个数量包含socekt连接等。
+
+
