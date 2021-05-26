@@ -251,6 +251,25 @@ sudo pacman -S 包名
 
 或者直接下载 tar.gz 包进行安装
 
+#### 3.2.5 安装错误解决
+
+如果安装时遇到下面报错
+
+```
+错误：visual-studio-code-bin: 来自 "lilac (build machine) <lilac@build.archlinuxcn.org>" 的签名是未知信任的
+:: 文件 /var/cache/pacman/pkg/visual-studio-code-bin-1.56.2-1-x86_64.pkg.tar.zst 已损坏 (无效或已损坏的软件包 (PGP 签名)).
+打算删除吗？ [Y/n] n
+
+```
+
+运行下面命令后重新安装即可
+
+```shell
+sudo pacman -S archlinuxcn-keyring
+```
+
+
+
 ### 3.3 安装搜狗输入法
 
 #### 3.3.1 安装

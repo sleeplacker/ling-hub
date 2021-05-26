@@ -120,3 +120,19 @@ unsigned bfree(char *p, unsigned n)
     free((void *)(hp + 1));
     return hp->s.size;
 }
+
+void printFreeList()
+{
+    Header *p = freep;
+    if (p == NULL) /* 没有空闲链表 */
+        printf("空闲链表不存在");
+    else if (p->s.ptr == &base)
+        printf("空闲链表为空");
+    else
+        do
+        {
+            printf("%d  ", p->s.size);
+            p = p->s.ptr;
+        } while (p != &base);
+    printf("\n");
+}

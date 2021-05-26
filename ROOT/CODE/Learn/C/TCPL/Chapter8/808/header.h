@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define NALLOC 1024 /* 最小申请单元数 */
+#define NALLOC 8 /* 最小申请单元数 */
 
 typedef long Align; /* 按照long类型的边界对齐 */
 
@@ -20,3 +20,4 @@ void *malloc(unsigned nbytes);
 void free(void *ap);
 void *calloc(unsigned n, unsigned size);
 unsigned bfree(char *p, unsigned n);
+void printFreeList();

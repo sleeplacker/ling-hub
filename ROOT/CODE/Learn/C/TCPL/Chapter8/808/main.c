@@ -11,18 +11,20 @@ char out[128]; /* 外部数组，将把它加入空闲链表 */
 /* 编译命令：gcc main.c malloc.c -fno-builtin-malloc -fno-builtin-calloc -g */
 int main(int argc, char *argv[])
 {
-    int i,f;
-
+    int i, f;
     char *s = (char *)malloc(1); /* 初始化空闲链表 */
-
+    for (i = 0; i < 128; ++i)
+        out[i] = 'A';
+    printf("外部数组原内容：%s\n", out);
+    printFreeList();
     Header *hp = (Header *)out;
     f = bfree((char *)out, 128);
+    printFreeList();
     printf("加入空闲链表的块长度：%d\n", f);
     printf("新的空闲块的大小(单位：%d 字节)：%d\n", sizeof(Header), hp->s.size);
-    printf("外部数组原内容：%s\n", out);
     s = (char *)malloc(100); /* 使用空闲链表 */
-    for(i=0;i<128;++i)
-    *s++='A';
-    printf("外部数组现内容：%s\n", out);
+    for (i = 0; i < 100; ++i)
+        *s++ = 'B';
+    printf("外部数组现内容：%s\n", out + sizeof(Header));/* out现在只想mallco分配的块，所以需要跳过头部才能看到内容 */
     return 0;
 }
