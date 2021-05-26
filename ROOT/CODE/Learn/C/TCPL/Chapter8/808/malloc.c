@@ -121,6 +121,7 @@ unsigned bfree(char *p, unsigned n)
     return hp->s.size;
 }
 
+/* 打印空闲链表 */
 void printFreeList()
 {
     Header *p = freep;
