@@ -1,0 +1,1 @@
+#define CUR_SYS "sys_bsd"

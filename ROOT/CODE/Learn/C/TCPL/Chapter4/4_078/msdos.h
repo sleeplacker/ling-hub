@@ -1,0 +1,1 @@
+#define CUR_SYS "ms_dos"
