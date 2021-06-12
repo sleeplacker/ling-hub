@@ -1,6 +1,6 @@
 package com.lg.test;
 
-// java -Xms5m -Xmx8m com.lg.test.DumpTest
+// IBMjdk java -Xms5m -Xmx8m -XX:+HeapDumpOnOutOfMemoryError  -XX:HeapDumpPath=C:\Users\1\Desktop\ com.lg.test.DumpTest
 public class DumpTest {
 	public static void main(String[] args) {
 		System.getProperties().forEach((k, v) -> {
