@@ -147,15 +147,15 @@ IBM JDK：.phd 或 .phd.hax
 
 SUN JDK: .hprof 或 .hprof.hax
 
-### 2 下载 IBM 分析工具(TMDA)
+### 2 分析工具
+
+#### 2.1 IBM 分析工具(TMDA)
 
 下载地址：https://www.ibm.com/support/pages/ibm-heapanalyzer
 
 下载内容：一个jar文件，ha*.jar，例如 ha457.jar
 
-
-
-### 3 运行jar包
+##### 2.1.1 运行jar包
 
 在包含该jar包的目录运行下面命令
 
@@ -165,10 +165,63 @@ java -Xmx2g -jar ./ha457.jar
 
 
 
-### 4 打开文件和查看信息
+##### 2.1.2 打开文件和查看信息
 
 打开文件方式类似上一篇的 JCA 工具，查看信息慢慢摸索。
 
+
+
+#### 2.2 eclipse分析工具 Memory Analyzer
+
+##### 2.2.1 下载
+
+在 IBM TMDA工具的官网上，写了下面提示信息，也就是建议使用 Memory Analyzer 工具，确实 TMDA 工具不太好用
+
+> **Note**: IBM HeapAnalyzer has no new development and therefore, in general, we recommend using the [Eclipse Memory Analyzer Tool (MAT)](https://www.eclipse.org/mat/) with [IBM DTFJ Extension](https://publib.boulder.ibm.com/httpserv/cookbook/Major_Tools-IBM_Memory_Analyzer_Tool.html#Major_Tools-IBM_Memory_Analyzer_Tool_MAT-Standalone_Installation) instead which is open source and has active development, a similar feature set (finding large dominators, leak suspects, etc.), and the IBM Extensions for Memory Analyzer with product-specific analysis engines.
+
+下载地址：https://www.eclipse.org/mat/downloads.php
+
+版本信息，包括下面3种版本：
+
+- Update Site：在eclipse中输入URL进行下载
+- Archived Update Site：eclipse离线插件包
+- Stand-alone Eclipse RCP Applications：单独的安装包，不需要依赖eclipse
+
+> ### Memory Analyzer 1.12.0 Release
+>
+> - Version
+>
+>   : 1.12.0.20210602 |
+>
+>    
+>
+>   Date
+>
+>   : 16 June 2021 |
+>
+>    
+>
+>   Type
+>
+>   : Released
+>
+>   - **Update Site**: http://download.eclipse.org/mat/1.12.0/update-site/
+>   - **Archived Update Site**: [MemoryAnalyzer-1.12.0.202106020830.zip](http://www.eclipse.org/downloads/download.php?file=/mat/1.12.0/MemoryAnalyzer-1.12.0.202106020830.zip)
+>   - **Stand-alone Eclipse RCP Applications**
+>     [![img](https://www.eclipse.org/mat/home/icon-save.gif)](http://www.eclipse.org/downloads/download.php?file=/mat/1.12.0/rcp/MemoryAnalyzer-1.12.0.20210602-win32.win32.x86_64.zip)  [Windows (x86_64)](http://www.eclipse.org/downloads/download.php?file=/mat/1.12.0/rcp/MemoryAnalyzer-1.12.0.20210602-win32.win32.x86_64.zip)
+>     [![img](https://www.eclipse.org/mat/home/icon-save.gif)](http://www.eclipse.org/downloads/download.php?file=/mat/1.12.0/rcp/MemoryAnalyzer-1.12.0.20210602-macosx.cocoa.x86_64.dmg)  [Mac OSX (Mac/Cocoa/x86_64)](http://www.eclipse.org/downloads/download.php?file=/mat/1.12.0/rcp/MemoryAnalyzer-1.12.0.20210602-macosx.cocoa.x86_64.dmg)
+>     [![img](https://www.eclipse.org/mat/home/icon-save.gif)](http://www.eclipse.org/downloads/download.php?file=/mat/1.12.0/rcp/MemoryAnalyzer-1.12.0.20210602-linux.gtk.x86_64.zip)  [Linux (x86_64/GTK+)](http://www.eclipse.org/downloads/download.php?file=/mat/1.12.0/rcp/MemoryAnalyzer-1.12.0.20210602-linux.gtk.x86_64.zip)
+>     [![img](https://www.eclipse.org/mat/home/icon-save.gif)](http://www.eclipse.org/downloads/download.php?file=/mat/1.12.0/rcp/MemoryAnalyzer-1.12.0.20210602-linux.gtk.ppc64le.zip)  [Linux (PPC64le/GTK+)](http://www.eclipse.org/downloads/download.php?file=/mat/1.12.0/rcp/MemoryAnalyzer-1.12.0.20210602-linux.gtk.ppc64le.zip)
+
+**注意：各个版本的 Memory Analyzer 需要依赖的jdk版本不一样，如果jdk版本不匹配，启动 Memory Analyzer 时会报错**。
+
+
+
+##### 2.2.2 IBM 插件(DTFJ)安装
+
+这里以安装版本(Stand-alone Eclipse RCP Applications)为例，首先解压 MemoryAnalyzer-1.10.0.202002252112.zip，双击 MemoryAnalyzer.exe，然后点击右上角的 help->Install new Softwar，然后输入下面这个URL进行插件安装。
+
+http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/runtimes/tools/dtfj/
 
 
 
