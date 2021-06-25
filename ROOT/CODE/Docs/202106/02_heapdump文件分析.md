@@ -225,3 +225,73 @@ http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/runtimes/tools/dtf
 
 
 
+##### 2.2.3 IBM jdk 查看默认dump事件
+
+```
+C:\D\Java\jdk_1.8_64_IBM\bin> ./java -Xdump:what
+
+Registered dump agents
+----------------------
+-Xdump:system:
+    events=gpf+abort+traceassert+corruptcache,
+    label=C:\D\Java\jdk_1.8_64_IBM\bin\core.%Y%m%d.%H%M%S.%pid.%seq.dmp,
+    range=1..0,
+    priority=999,
+    request=serial
+----------------------
+-Xdump:system:
+    events=systhrow,
+    filter=java/lang/OutOfMemoryError,
+    label=C:\D\Java\jdk_1.8_64_IBM\bin\core.%Y%m%d.%H%M%S.%pid.%seq.dmp,
+    range=1..1,
+    priority=999,
+    request=exclusive+compact+prepwalk
+----------------------
+-Xdump:heap:
+    events=systhrow,
+    filter=java/lang/OutOfMemoryError,
+    label=C:\D\Java\jdk_1.8_64_IBM\bin\heapdump.%Y%m%d.%H%M%S.%pid.%seq.phd,
+    range=1..4,
+    priority=500,
+    request=exclusive+compact+prepwalk,
+    opts=PHD
+----------------------
+-Xdump:java:
+    events=gpf+user+abort+traceassert+corruptcache,
+    label=C:\D\Java\jdk_1.8_64_IBM\bin\javacore.%Y%m%d.%H%M%S.%pid.%seq.txt,
+    range=1..0,
+    priority=400,
+    request=exclusive+preempt
+----------------------
+-Xdump:java:
+    events=systhrow,
+    filter=java/lang/OutOfMemoryError,
+    label=C:\D\Java\jdk_1.8_64_IBM\bin\javacore.%Y%m%d.%H%M%S.%pid.%seq.txt,
+    range=1..4,
+    priority=400,
+    request=exclusive+preempt
+----------------------
+-Xdump:snap:
+    events=gpf+abort+traceassert+corruptcache,
+    label=C:\D\Java\jdk_1.8_64_IBM\bin\Snap.%Y%m%d.%H%M%S.%pid.%seq.trc,
+    range=1..0,
+    priority=300,
+    request=serial
+----------------------
+-Xdump:snap:
+    events=systhrow,
+    filter=java/lang/OutOfMemoryError,
+    label=C:\D\Java\jdk_1.8_64_IBM\bin\Snap.%Y%m%d.%H%M%S.%pid.%seq.trc,
+    range=1..4,
+    priority=300,
+    request=serial
+----------------------
+-Xdump:jit:
+    events=gpf+abort,
+    label=C:\D\Java\jdk_1.8_64_IBM\bin\jitdump.%Y%m%d.%H%M%S.%pid.%seq.dmp,
+    range=1..0,
+    priority=200,
+    request=serial
+----------------------
+```
+
