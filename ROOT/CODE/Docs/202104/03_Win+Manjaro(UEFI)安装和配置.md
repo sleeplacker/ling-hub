@@ -353,6 +353,35 @@ yay -S deepin-wine-wechat
 
 
 
+### 3.7 软件卸载
+
+有时候安装命令使用的包名和卸载命令使用的包名不一样，例如安装使用下面命令能成功安装
+
+```shell
+yay -S eclipse
+```
+
+但是卸载使用下面命令就不能成功卸载
+
+```shell
+yay -R eclipse
+```
+
+原因是卸载需要完整包名，可以使用下面命令查看
+
+```shell
+$ yay -Q eclipse
+eclipse-platform 4.20-1
+```
+
+然后使用完整包名进行卸载
+
+```shell
+yay -R eclipse-platform
+```
+
+
+
 ## 4 系统常用设置
 
 ### 4.1 关闭每次开机打开上次窗口
