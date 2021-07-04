@@ -401,6 +401,41 @@ sudo pacman -S archlinuxcn-keyring
 
 
 
+### 3.9  为软件添加桌面快捷方式
+
+在软件安装目录找到启动文件，例如eclipse启动文件路径为：/opt/eclipse/eclipse，快捷方式图标路径为：/opt/eclipse/icon.xpm；在桌面上新建一个文件 eclipse，用文本编辑器打开，然后将下面内容拷贝进去，然后将该文件的权限修改为能执行即可。
+
+```
+ [Desktop Entry]
+
+Type=Application
+
+Name=eclipse
+
+Icon=/opt/eclipse/icon.xpm
+
+Exec=/opt/eclipse/eclipse
+
+Terminal=false
+```
+
+如果想要在打开软件时启动命令行终端，则设置 Terminal=true，下面是设置redis-server的快捷方式的配置
+
+```
+ 
+ [Desktop Entry]
+
+Type=Application
+
+Name=redis-server
+
+Exec=/opt/redis-6.2.4/src/redis-server
+
+Terminal=true
+```
+
+
+
 ## 4 系统常用设置
 
 ### 4.1 关闭每次开机打开上次窗口
