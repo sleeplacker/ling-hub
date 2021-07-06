@@ -32,7 +32,7 @@ public class Chapter04 {
 		System.out.println("We need to set up just enough state so that a user can list an item");
 		String seller = "userX";
 		String item = "itemX";
-		conn.sadd("inventory:" + seller, item);
+		conn.sadd("inventory:" + seller, item);// 添加属于seller用户的包裹item
 		Set<String> i = conn.smembers("inventory:" + seller);
 
 		System.out.println("The user's inventory has:");
@@ -96,26 +96,43 @@ public class Chapter04 {
 		benchmarkUpdateToken(conn, 5);
 	}
 
+	/**
+	 * 将商品添加到市场
+	 * 
+	 * @param conn
+	 * @param itemId
+	 * @param sellerId
+	 * @param price
+	 * @return
+	 */
 	public boolean listItem(Jedis conn, String itemId, String sellerId, double price) {
 
 		String inventory = "inventory:" + sellerId;
 		String item = itemId + '.' + sellerId;
-		long end = System.currentTimeMillis() + 5000;
+		long end = System.currentTimeMillis() + 5000;// 当期时间后5秒
 
 		while (System.currentTimeMillis() < end) {
-			conn.watch(inventory);
+			/* Redis Watch 命令用于监视一个(或多个) key ，如果在事务执行之前这个(或这些) key 被其他命令所改动，那么事务将被打断 */
+			conn.watch(inventory);// 监视商品
+			/* Redis Sismember 命令判断成员元素是否是集合的成员。 */
 			if (!conn.sismember(inventory, itemId)) {
-				conn.unwatch();
+				/* Redis Unwatch 命令用于取消 WATCH 命令对所有 key 的监视。 */
+				conn.unwatch();// 如果商品不再存在于卖家的包裹中，则不再监视且返回false
 				return false;
 			}
 
-			Transaction trans = conn.multi();
+			/*
+			 * Redis Multi 命令用于标记一个事务块的开始。 事务块内的多条命令会按照先后顺序被放进一个队列当中，最后由 EXEC
+			 * 命令原子性(atomic)地执行。
+			 */
+			Transaction trans = conn.multi();// 启动事务用于将商品添加到市场
 			trans.zadd("market:", price, item);
 			trans.srem(inventory, itemId);
-			List<Object> results = trans.exec();
+			/* Redis Exec 命令用于执行所有事务块内的命令。 */
+			List<Object> results = trans.exec();// 提交事务
 			// null response indicates that the transaction was aborted due to
 			// the watched key changing.
-			if (results == null) {
+			if (results == null) {// 用户的包裹已经发生了变化，重试
 				continue;
 			}
 			return true;
@@ -123,33 +140,44 @@ public class Chapter04 {
 		return false;
 	}
 
+	/**
+	 * 购买商品
+	 * @param conn
+	 * @param buyerId
+	 * @param itemId
+	 * @param sellerId
+	 * @param lprice
+	 * @return
+	 */
 	public boolean purchaseItem(Jedis conn, String buyerId, String itemId, String sellerId, double lprice) {
 
 		String buyer = "users:" + buyerId;
 		String seller = "users:" + sellerId;
 		String item = itemId + '.' + sellerId;
 		String inventory = "inventory:" + buyerId;
-		long end = System.currentTimeMillis() + 10000;
+		long end = System.currentTimeMillis() + 10000;//交易时间最多10秒
 
 		while (System.currentTimeMillis() < end) {
-			conn.watch("market:", buyer);
+			conn.watch("market:", buyer);//对商品买卖市场以及买家的个人信息进行监视
 
-			double price = conn.zscore("market:", item);
-			double funds = Double.parseDouble(conn.hget(buyer, "funds"));
+			double price = conn.zscore("market:", item);//当前在市场中的商品价格
+			double funds = Double.parseDouble(conn.hget(buyer, "funds"));//当前买家的余额
 			if (price != lprice || price > funds) {
+//				如果价格有变化或者买家余额不足，则终止交易
 				conn.unwatch();
 				return false;
 			}
 
-			Transaction trans = conn.multi();
-			trans.hincrBy(seller, "funds", (int) price);
-			trans.hincrBy(buyer, "funds", (int) -price);
-			trans.sadd(inventory, itemId);
-			trans.zrem("market:", item);
-			List<Object> results = trans.exec();
+			Transaction trans = conn.multi();//启动交易事务
+			trans.hincrBy(seller, "funds", (int) price);//增加卖家的余额
+			trans.hincrBy(buyer, "funds", (int) -price);//减去买家的余额
+			trans.sadd(inventory, itemId);//将商品移入买家包裹
+			trans.zrem("market:", item);//从市场中删除商品
+			List<Object> results = trans.exec();//提交事务
 			// null response indicates that the transaction was aborted due to
 			// the watched key changing.
 			if (results == null) {
+//				如果买家的个人信息或者商品买卖市场在交易过程中出现了变化，那么进行重试
 				continue;
 			}
 			return true;
@@ -163,7 +191,7 @@ public class Chapter04 {
 			@SuppressWarnings("rawtypes")
 			Class[] args = new Class[] { Jedis.class, String.class, String.class, String.class };
 			Method[] methods = new Method[] { this.getClass().getDeclaredMethod("updateToken", args),
-					this.getClass().getDeclaredMethod("updateTokenPipeline", args), };
+					this.getClass().getDeclaredMethod("updateTokenPipeline", args) };
 			for (Method method : methods) {
 				int count = 0;
 				long start = System.currentTimeMillis();
@@ -194,8 +222,9 @@ public class Chapter04 {
 
 	public void updateTokenPipeline(Jedis conn, String token, String user, String item) {
 		long timestamp = System.currentTimeMillis() / 1000;
-		Pipeline pipe = conn.pipelined();
-		pipe.multi();
+		/* Redis 管道技术可以在服务端未响应时，客户端可以继续向服务端发送请求，并最终一次性读取所有服务端的响应。 */
+		Pipeline pipe = conn.pipelined();//使用流水线，以实现将多个命令一次性发到服务器
+		pipe.multi();//启动流水线
 		pipe.hset("login:", token, user);
 		pipe.zadd("recent:", timestamp, token);
 		if (item != null) {
@@ -203,6 +232,6 @@ public class Chapter04 {
 			pipe.zremrangeByRank("viewed:" + token, 0, -26);
 			pipe.zincrby("viewed:", -1, item);
 		}
-		pipe.exec();
+		pipe.exec();//提交流水线
 	}
 }

@@ -6,9 +6,9 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="lib/jedis-2.2.0.jar"/>
 	<classpathentry kind="lib" path="lib/gson-2.8.0.jar"/>
 	<classpathentry kind="lib" path="lib/javatuples-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-csv-20070730.jar"/>
+	<classpathentry kind="lib" path="lib/jedis-2.2.0.jar" sourcepath="/home/lingang/下载/jedis-2.2.0-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
