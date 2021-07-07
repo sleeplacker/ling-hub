@@ -436,6 +436,22 @@ Terminal=true
 
 
 
+### 3.10 为命令配置环境变量
+
+进入目录
+
+```
+/etc/environment
+```
+
+在最后一行增加
+
+```
+export PATH=$PATH:/opt/redis-6.2.4/src
+```
+
+
+
 ## 4 系统常用设置
 
 ### 4.1 关闭每次开机打开上次窗口
