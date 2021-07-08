@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/redisson-3.16.0.jar" sourcepath="/home/lingang/GitRepository/ling-hub/ROOT/CODE/Learn/Redis/RedisPractices/lib/sources/redisson-3.16.0-sources.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.7.30.jar"/>
+	<classpathentry kind="lib" path="lib/netty-buffer-4.1.65.Final.jar"/>
+	<classpathentry kind="lib" path="lib/netty-codec-4.1.65.Final.jar"/>
+	<classpathentry kind="lib" path="lib/netty-common-4.1.65.Final.jar"/>
+	<classpathentry kind="lib" path="lib/netty-handler-4.1.65.Final.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-annotations-2.12.1.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-core-2.12.1.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-dataformat-yaml-2.12.1.jar"/>
+	<classpathentry kind="lib" path="lib/netty-resolver-4.1.65.Final.jar"/>
+	<classpathentry kind="lib" path="lib/netty-codec-dns-4.1.65.Final.jar"/>
+	<classpathentry kind="lib" path="lib/netty-resolver-dns-4.1.65.Final.jar"/>
+	<classpathentry kind="lib" path="lib/cache-api-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-marshalling-2.0.11.Final.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-marshalling-river-2.0.11.Final.jar"/>
+	<classpathentry kind="lib" path="lib/jodd-bean-5.1.6.jar"/>
+	<classpathentry kind="lib" path="lib/jodd-core-5.1.6.jar"/>
+	<classpathentry kind="lib" path="lib/netty-transport-4.1.65.Final.jar"/>
+	<classpathentry kind="lib" path="lib/reactive-streams-1.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/snakeyaml-1.27.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-databind-2.12.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
