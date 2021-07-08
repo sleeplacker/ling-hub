@@ -102,4 +102,12 @@
   ```
 
   我们需要的依赖包在当前目录的 target 目录中。
+  
+- 下载源码和文档
+
+  ```shell
+  mvn -f pom.xml dependency:sources -DdownloadSources=true -DdownloadJavadocs=true
+  ```
+
+  
 
