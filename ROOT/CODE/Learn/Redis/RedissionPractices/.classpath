@@ -6,7 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="lib/redisson-3.16.0.jar" sourcepath="/home/lingang/GitRepository/ling-hub/ROOT/CODE/Learn/Redis/RedisPractices/lib/sources/redisson-3.16.0-sources.jar"/>
+	<classpathentry kind="lib" path="lib/redisson-3.16.0.jar" sourcepath="/home/lingang/GitRepository/ling-hub/ROOT/CODE/Learn/Redis/RedissionPractices/lib/sources/redisson-3.16.0-sources.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.7.30.jar"/>
 	<classpathentry kind="lib" path="lib/netty-buffer-4.1.65.Final.jar"/>
 	<classpathentry kind="lib" path="lib/netty-codec-4.1.65.Final.jar"/>
